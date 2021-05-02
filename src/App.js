@@ -34,8 +34,8 @@ function Main() {
         <Nav/>
       </div>
       <Switch>
-        <Route path="/" exact render={props => (<Ambulance {...props} user={user}/>)}></Route>
-        <Route path="/Beds" component={Beds}></Route>
+        <Route path="/" exact component={props => (<Ambulance {...props} user={user}/>)}></Route>
+        <Route path="/Beds" component={props => (<Beds {...props} user={user}/>)}></Route>
         {/* <Route path="/" component={Ambulance}></Route>
         <Route path="/" component={Ambulance}></Route>
         <Route path="/" component={Ambulance}></Route>

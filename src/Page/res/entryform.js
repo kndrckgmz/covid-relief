@@ -1,7 +1,8 @@
 import {useState} from 'react';
-import fire, {db} from './fire_config';
+import {db} from './fire_config';
+import firebase from 'firebase/app';
 
-const Form = () =>{
+const Form = ({collectionname}) =>{
 
     const [inputtry, setTry] = useState("");
     const [btntxt, setBtnTxt] = useState("ADD LINK");
@@ -11,14 +12,12 @@ const Form = () =>{
     const [inputtiming, setInputTime] = useState("");
     const [inputsource, setInputSource] = useState("");
     const [inputcontactname, setInputCName] = useState("");
-    const [inputcontactnum, setInputCNum] = useState();
+    const [inputcontactnum, setInputCNum] = useState("");
     const [inputcontactemail, setInputCEmail] = useState("");
     const [inputlink, setInputLink] = useState("");
-    const [inputverified, setInputVerified] = useState();
+    const [inputverified, setInputVerified] = useState(false);
     const [inputverifiedby, setInputVerifiedBy] = useState("");
     const [inputcomments, setInputComment] = useState("");
-    const [inputlastupdate, setInputLastUpdate] = useState();
-    const [inputverifieddate, setInputVerifiedDate] = useState();
 
     const nameinput = (e) => {
         setInputName(e.target.value);
@@ -68,19 +67,17 @@ const Form = () =>{
         setInputComment(e.target.value);
     }
 
-    console.log();
-
     const setLink = (e) =>{
     e.preventDefault();
     if (inputname!=="")
     {   
-        // setInputVerifiedDate(fire.firestore.FieldValue.serverTimestamp());
-        // setInputLastUpdate(fire.firestore.FieldValue.serverTimestamp());
         setBtnTxt("PLEASE WAIT");
         let btn = document.getElementById("add-btn");
         btn.disabled=true;
         btn.style.backgroundColor="var(--lgrey)";
-        db.collection("AmbulanceService").add({
+        let docRef = db.collection(`${collectionname}`).doc();
+        docRef.set({
+            id:docRef.id,
             name : inputname,
             description : inputdesc,
             location_coverd : inputlocation,
@@ -91,36 +88,36 @@ const Form = () =>{
             link_to_go : inputlink,
             verified : inputverified,
             verified_by : inputverifiedby,
-            verified_date : fire.firestore.Timestamp.now(),
+            verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
             source : inputsource,
             comments : inputcomments,
-            last_update_time : fire.firestore.Timestamp.now()
+            last_update_time : new firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+            setInputName("");
+            setInputDesc("");
+            setInputLoc("");
+            setInputTime("");
+            setInputCName("");
+            setInputCNum("");
+            setInputCEmail("");
+            setInputLink("");
+            setInputVerified(false);
+            setInputVerifiedBy("");
+            setInputSource("");
+            setInputComment("");
+            setTry("Your Link has Been Added Below.")
+            let success = document.getElementById("add-link");
+            success.style.opacity = 1;
+            success.style.color = "var(--accent)";
+            setTimeout(()=>{
+                success.style.color = "unset";
+                success.style.opacity = 0;
+                btn.disabled=false;
+                btn.style.backgroundColor="var(--accent)";
+                setBtnTxt("ADD LINK");
+            },1500);
         });
-        setInputName("");
-        setInputDesc("");
-        setInputLoc("");
-        setInputTime("");
-        setInputLastUpdate();
-        setInputCName("");
-        setInputCNum("");
-        setInputCEmail("");
-        setInputLink("");
-        setInputVerified(false);
-        setInputVerifiedBy("");
-        setInputVerifiedDate();
-        setInputSource("");
-        setInputComment("");
-        setTry("Your Link has Been Added Below.")
-        let success = document.getElementById("add-link");
-        success.style.opacity = 1;
-        success.style.color = "var(--accent)";
-        setTimeout(()=>{
-            success.style.color = "unset";
-            success.style.opacity = 0;
-            btn.disabled=false;
-            btn.style.backgroundColor="var(--accent)";
-            setBtnTxt("ADD LINK");
-        },1000);
     }
     else{
         setTry("Please Enter All Fields.")
@@ -185,7 +182,7 @@ const Form = () =>{
                 <div className="verified-input-flex">
                 <div className="checkbox-flex" >   
                     <label className="checkbox-label">Verified</label>
-                    <input className="checkbox" id="verified" onClick={verifiedinput} type="checkbox" placeholder="Enter Title"></input>
+                    <input className="checkbox" id="verified" defaultChecked={inputverified} onClick={verifiedinput} type="checkbox" placeholder="Enter Title"></input>
                 </div>
                 <div className="vinput-flex" >   
                     <label className="vlabel">Verified By</label>

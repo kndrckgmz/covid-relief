@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import {db} from './res/fire_config';
 import moment from 'moment';
-import Ambulancedata from './res/ambulancedata';
+import Data from './res/data';
 import Form from './res/entryform';
 
 const Ambulance = ({user}) => {
@@ -18,18 +18,23 @@ const Ambulance = ({user}) => {
     },[user]);
 
     const [linklist, setLinkList] = useState([]);
+    const [collectionname, setCollectionName] = useState("AmbulanceService");
+    
+    useEffect(()=>{
+        setCollectionName("AmbulanceService");
+    },[]);
+
 
     useEffect(() => {
-        db.collection("AmbulanceService")
+        db.collection(`${collectionname}`).orderBy("last_update_time", "desc")
         .onSnapshot(function(querySnapshot){
-            setLinkList
-            (querySnapshot.docs.map((i)=>({
+            setLinkList(querySnapshot.docs.map ((i)=>({
                 comments:i.data().comments,
                 contact_email:i.data().cantact_email,
                 contact_name:i.data().contact_name,
                 contact_number:i.data().contact_number,
                 description:i.data().description,
-                id: i.id,
+                id: i.data().id,
                 link_to_go:i.data().link_to_go,
                 location_covered:i.data().location_covered,
                 name:i.data().name,
@@ -37,20 +42,21 @@ const Ambulance = ({user}) => {
                 timings:i.data().timings,
                 verified:i.data().verified,
                 verified_by:i.data().verified_by,
-                verified_date:moment(i.data().verified_date.toDate()).calendar(),
-                last_update_time:moment(i.data().last_update_time.toDate()).calendar()
-            }))
-            );
-        });
-    }, []); 
+                verified_date:i.data().verified_date 
+                                ? moment(i.data().verified_date.toDate()).calendar()
+                                : "Null",
+                last_update_time:i.data().last_update_time 
+                                    ? moment(i.data().last_update_time.toDate()).calendar()
+                                    : "Null"
+            })));
+            });
+    }, [collectionname]);
 
     return(
         <div className="content" id="top">
-            <Form/>
-        
-        <div className="list-container">
+        <Form collectionname={collectionname}/>
             {linklist.map((i)=>(
-                <Ambulancedata
+                <Data
                 key={i.id}
                 comments={i.comments}
                 contact_email={i.cantact_email}
@@ -67,16 +73,15 @@ const Ambulance = ({user}) => {
                 verified={i.verified}
                 verified_by={i.verified_by}
                 verified_date={i.verified_date}
+                user={user}
+                collectionname={collectionname}
                 />
             ))}
-        </div>
-
-        <a className="end" href="#top">PAGE END
+            <a className="end" href="#top">PAGE END
             <br/>
             <br/>
             Click here to go back to the top.   
         </a>
-
         </div>
     );
 };

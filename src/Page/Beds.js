@@ -1,14 +1,32 @@
 import {useState, useEffect} from 'react';
 import {db} from './res/fire_config';
 import moment from 'moment';
-import Beddata from './res/beddata';
+import Form from './res/entryform';
+import Data from './res/data';
 
-const Beds = () => {;
+const Beds = ({user}) => {
+
+    useEffect(()=>{
+        let form=document.getElementById("form");
+        if(user===true){
+            form.style.display="flex";
+        }
+        else
+        {
+            form.style.display="none";
+        }
+    },[user]);
+
     const [linklist, setLinkList] = useState([]);
+    const [collectionname, setCollectionName] = useState("BedAvailability");
+    
+    useEffect(()=>{
+        setCollectionName("BedAvailability");
+    },[]);
 
 
     useEffect(() => {
-        db.collection("BedAvailability")
+        db.collection(`${collectionname}`)
         .onSnapshot(function(querySnapshot){
             setLinkList
             (querySnapshot.docs.map((i)=>({
@@ -17,7 +35,7 @@ const Beds = () => {;
                 contact_name:i.data().contact_name,
                 contact_number:i.data().contact_number,
                 description:i.data().description,
-                id:i.data().id,
+                id:i.id,
                 link_to_go:i.data().link_to_go,
                 location_covered:i.data().location_covered,
                 name:i.data().name,
@@ -25,19 +43,22 @@ const Beds = () => {;
                 timings:i.data().timings,
                 verified:i.data().verified,
                 verified_by:i.data().verified_by,
-                verified_date:moment(i.data().verified_date.toDate()).calendar(),
-                last_update_time:moment(i.data().last_update_time.toDate()).calendar()
+                verified_date:i.data().verified_date 
+                                ? moment(i.data().verified_date.toDate()).calendar()
+                                : "Null",
+                last_update_time:i.data().last_update_time 
+                                    ? moment(i.data().last_update_time.toDate()).calendar()
+                                : "Null"
             }))
             );
         });
-    }, []); 
+    }, [collectionname]); 
 
     return(
         <div className="content" id="top">
-       
-        <div className="list-container">
+            <Form collectionname={collectionname}/>
             {linklist.map((i)=>(
-                <Beddata
+                <Data
                 key={i.id}
                 comments={i.comments}
                 contact_email={i.cantact_email}
@@ -54,17 +75,17 @@ const Beds = () => {;
                 verified={i.verified}
                 verified_by={i.verified_by}
                 verified_date={i.verified_date}
+                user={user}
+                collectionname={collectionname}
                 />
             ))}
-        </div>
-
-        <a className="end" href="#top">PAGE END
+            <a className="end" href="#top">PAGE END
             <br/>
             <br/>
             Click here to go back to the top.   
         </a>
-
         </div>
+
     );
 };
 
