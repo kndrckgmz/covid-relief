@@ -1,22 +1,44 @@
 import {useState, useEffect} from 'react';
 import Modal from './editmodal';
 
-const Editbtn = ({user, id, collectionname}) => {
+const Editbtn = ({
+    user,
+    id, 
+    collectionname, 
+    editlist,
+    setEditList,
+    linklist,
+    setLinkList,
+    editid,
+    setEditId,
+    available}) => {
 
     const [edit, setEdit] = useState();
-    const [editid, setEditId] = useState();
+    const [availabletext, setAvailableText] = useState();
+    
+    useEffect(()=>{
+        let avail = document.getElementById("avail");
+        if(available===true)
+        {
+            setAvailableText("Available");
+            avail.style.color="var(--green)";
+        }
+        else if(available===false)
+        {
+            setAvailableText("Currently Unavailable");
+            avail.style.color="var(--red)";
+        }
+    },[available]);
 
     useEffect(()=>{
         if(user===true){
-            setEdit("flex");
+            setEdit("grid");
         }
         else
         {
             setEdit("none");
         }
     },[user]);
-
-    
 
     const popup = (e) =>{
         let body = document.querySelector("body");
@@ -26,6 +48,10 @@ const Editbtn = ({user, id, collectionname}) => {
         setEditId(e.target.getAttribute("idvalue"));
     }
 
+    useEffect(()=>{
+        setEditList(linklist.filter(i=>i.id===editid));
+    },[editid, setEditList, linklist])
+
     const closemodal = (e) => {
         let cover = document.getElementById("cover2");
         let body = document.querySelector("body");
@@ -33,19 +59,24 @@ const Editbtn = ({user, id, collectionname}) => {
             cover.style.display = "none";
             body.style.overflow = "unset";
         }
+        setEditList([]);
+        setEditId("");
     }
 
     const closemodalx = () => {
         let cover = document.getElementById("cover2");
         let body = document.querySelector("body");
         cover.style.display = "none";
-        body.style.overflow = "unset"; 
+        body.style.overflow = "unset";
+        setEditList([]);
+        setEditId("");
     }
 
     return(
-        <div className="edit-container" style={{display: `${edit}`}}>
-            
-            <div className="edit-btn" onClick={popup} idvalue={id}>EDIT</div>
+        <div className="edit-container" >
+
+            <div className="available" id="avail">{availabletext}</div>
+            <div className="edit-btn" style={{display: `${edit}`}} onClick={popup} idvalue={id}>EDIT</div>
             
         <div className="cover2" id="cover2" onClick={closemodal}>
         <div className="info-box">
@@ -61,7 +92,9 @@ const Editbtn = ({user, id, collectionname}) => {
             <Modal 
             key={id}
             collectionname={collectionname}
-            editid={editid}/>
+            editid={editid}
+            editlist={editlist}
+            setEditList={setEditList}/>
 
 
         </div>

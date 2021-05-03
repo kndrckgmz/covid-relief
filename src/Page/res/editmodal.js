@@ -1,46 +1,17 @@
 import { useEffect, useState } from "react";
-import {db} from './fire_config';
-import moment from 'moment';
 
-const Modal = ({editid, collectionname}) => {
+const Modal = ({editid, collectionname, editlist, setEditList}) => {
 
-    const [editlist, setEditList] = useState([]);
     const [name, setName] = useState("");
     const [id, setId] = useState("");
 
     useEffect(()=>{
-        editlist.map(i=>{
+        editlist.forEach(i=>{
             setName(i.name);
             setId(i.id);
         });
+        
     },[editlist]);
-
-    useEffect(()=>{
-        db.collection(`${collectionname}`).where("id", "==", editid !== undefined ? editid : "")
-        .onSnapshot(function(querySnapshot){
-            setEditList(querySnapshot.docs.map ((i)=>({
-                comments:i.data().comments,
-                contact_email:i.data().cantact_email,
-                contact_name:i.data().contact_name,
-                contact_number:i.data().contact_number,
-                description:i.data().description,
-                id: i.data().id,
-                link_to_go:i.data().link_to_go,
-                location_covered:i.data().location_covered,
-                name:i.data().name,
-                source:i.data().source,
-                timings:i.data().timings,
-                verified:i.data().verified,
-                verified_by:i.data().verified_by,
-                verified_date:i.data().verified_date 
-                                ? moment(i.data().verified_date.toDate()).calendar()
-                                : "Null",
-                last_update_time:i.data().last_update_time 
-                                    ? moment(i.data().last_update_time.toDate()).calendar()
-                                    : "Null"
-            })));
-            });
-    }, [editid, collectionname]);
 
     return (
     <>

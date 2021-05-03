@@ -19,6 +19,8 @@ const Ambulance = ({user}) => {
 
     const [linklist, setLinkList] = useState([]);
     const [collectionname, setCollectionName] = useState("AmbulanceService");
+    const [editlist, setEditList] = useState([]);
+    const [editid, setEditId] = useState();
     
     useEffect(()=>{
         setCollectionName("AmbulanceService");
@@ -47,7 +49,8 @@ const Ambulance = ({user}) => {
                                 : "Null",
                 last_update_time:i.data().last_update_time 
                                     ? moment(i.data().last_update_time.toDate()).calendar()
-                                    : "Null"
+                                    : "Null",
+                available:i.data().available,                    
             })));
             });
     }, [collectionname]);
@@ -73,8 +76,15 @@ const Ambulance = ({user}) => {
                 verified={i.verified}
                 verified_by={i.verified_by}
                 verified_date={i.verified_date}
+                available={i.available}
                 user={user}
                 collectionname={collectionname}
+                linklist={linklist}
+                setLinkList={setLinkList}
+                editlist={editlist}
+                setEditList={setEditList}
+                editid={editid}
+                setEditId={setEditId}
                 />
             ))}
             <a className="end" href="#top">PAGE END

@@ -1,10 +1,10 @@
 import {useState, useEffect} from 'react';
 import {db} from './res/fire_config';
 import moment from 'moment';
-import Form from './res/entryform';
 import Data from './res/data';
+import Form from './res/entryform';
 
-const Beds = ({user}) => {
+const Med = ({user}) => {
 
     useEffect(()=>{
         let form=document.getElementById("form");
@@ -18,26 +18,25 @@ const Beds = ({user}) => {
     },[user]);
 
     const [linklist, setLinkList] = useState([]);
-    const [collectionname, setCollectionName] = useState("BedAvailability");
+    const [collectionname, setCollectionName] = useState("Medicine");
     const [editlist, setEditList] = useState([]);
     const [editid, setEditId] = useState();
     
     useEffect(()=>{
-        setCollectionName("BedAvailability");
+        setCollectionName("Medicine");
     },[]);
 
 
     useEffect(() => {
-        db.collection(`${collectionname}`)
+        db.collection(`${collectionname}`).orderBy("last_update_time", "desc")
         .onSnapshot(function(querySnapshot){
-            setLinkList
-            (querySnapshot.docs.map((i)=>({
+            setLinkList(querySnapshot.docs.map ((i)=>({
                 comments:i.data().comments,
                 contact_email:i.data().cantact_email,
                 contact_name:i.data().contact_name,
                 contact_number:i.data().contact_number,
                 description:i.data().description,
-                id:i.id,
+                id: i.data().id,
                 link_to_go:i.data().link_to_go,
                 location_covered:i.data().location_covered,
                 name:i.data().name,
@@ -50,16 +49,19 @@ const Beds = ({user}) => {
                                 : "Null",
                 last_update_time:i.data().last_update_time 
                                     ? moment(i.data().last_update_time.toDate()).calendar()
-                                : "Null",
-                available:i.data().available, 
-            }))
-            );
-        });
-    }, [collectionname]); 
+                                    : "Null",
+                available:i.data().available,
+                condition:i.data().condition,
+                type:i.data().type,
+                medicine_name:i.data().medicine_name,
+                price:i.data().price
+            })));
+            });
+    }, [collectionname]);
 
     return(
         <div className="content" id="top">
-            <Form collectionname={collectionname}/>
+        <Form collectionname={collectionname}/>
             {linklist.map((i)=>(
                 <Data
                 key={i.id}
@@ -78,6 +80,11 @@ const Beds = ({user}) => {
                 verified={i.verified}
                 verified_by={i.verified_by}
                 verified_date={i.verified_date}
+                available={i.available}
+                medcondition={i.condition}
+                medtype={i.type}
+                medicine_name={i.medicine_name}
+                medprice={i.price}
                 user={user}
                 collectionname={collectionname}
                 linklist={linklist}
@@ -94,8 +101,7 @@ const Beds = ({user}) => {
             Click here to go back to the top.   
         </a>
         </div>
-
     );
 };
 
-export default Beds;
+export default Med;

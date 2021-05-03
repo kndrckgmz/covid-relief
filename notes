@@ -1,3 +1,4 @@
+//Common
 comments
 contact_email
 contact_name
@@ -13,3 +14,59 @@ timings
 verified
 verified_by
 verified_date
+available
+
+//oxygen
+condition... num !!
+type... num !!
+capacity !!
+price !!
+
+//medicine
+• condition: Number !!
+• type: number !!
+• medicine_name: String !!
+• price: String !!
+
+// blood donor
+type: number !!
+blood_group: string !!
+
+//plasma donor
+type: number !!
+blood_group: string !!
+covid_recovery_date:String !!
+vaccinated: Boolean !!
+
+//REMDESIVIR
+condition.. num !!
+
+//food
+type: num !!
+
+
+"AmbulanceService"
+"BedAvailability"
+"BloodDonors"
+"Food"
+"HomeTesting"
+"Medicine"
+"OnlineDoctorConsultation"
+"Oxygen"
+"PlasmaDonors"
+"Remdesivir"
+"TeleCounselling"
+
+inputavailable,
+inputprice,
+inputcapacity,
+inputmedname,
+inputbloodgroup,
+inputrecoverydate,
+inputvaccinated,
+inputomrcondition,
+inputoxygentype,
+inputmedtype,
+inputpbtype,
+inputfoodtype,
+inputcosultationtype,

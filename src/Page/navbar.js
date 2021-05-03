@@ -6,14 +6,15 @@ const Nav = () => {
         <div className="navbar">
             <div className="navlinks">
                 <NavLink to="/" exact className="link">Ambulance</NavLink>
-                <NavLink to="/Beds" className="link">Beds</NavLink>
-                <NavLink to="/Blood" className="link">Blood</NavLink>
+                <NavLink to="/Beds" className="link">Bed Availablity</NavLink>
+                <NavLink to="/Blood" className="link">Blood Donors</NavLink>
+                <NavLink to="/Medicine" className="link">Medicine</NavLink>
                 <NavLink to="/Food" className="link">Food</NavLink>
                 <NavLink to="/Testing" className="link">Home Testing</NavLink>
                 <NavLink to="/Consultation" className="link">Online Consultation</NavLink>
                 <NavLink to="/Oxygen" className="link">Oxygen</NavLink>
-                <NavLink to="/Plasma" className="link">Plasma</NavLink>
-                <NavLink to="/Remediesivir" className="link">Remedesivir</NavLink>
+                <NavLink to="/Plasma" className="link">Plasma Donors</NavLink>
+                <NavLink to="/Remedesivir" className="link">Remedesivir</NavLink>
                 <NavLink to="/Counselling" className="link">TeleCounselling</NavLink>
             </div>
         </div>
