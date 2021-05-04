@@ -81,7 +81,7 @@ const Plasma = ({user}) => {
                 verified_by={i.verified_by}
                 verified_date={i.verified_date}
                 available={i.available}
-                type={i.type}
+                pbtype={i.type}
                 blood_group={i.blood_group}
                 covid_recovery_date={i.covid_recovery_date}
                 vaccinated={i.vaccinated}

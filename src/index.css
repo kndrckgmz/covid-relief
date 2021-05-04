@@ -72,73 +72,6 @@
   font-size: 1.6rem;
 }
 
-.cover2 {
-  display: none;
-  place-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 10px 0px;
-  height: 100vh;
-  width: 100vw;
-  background-color: #00000080;
-  z-index: 3;
-  overflow-y: auto;
-}
-
-.info-box {
-  border: none;
-  width: 60vw;
-  border-radius: 10px;
-  background-color: var(--dback);
-  box-shadow: 1px 1px 10px 5px #00000020;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.head-container1 {
-  width: 100%;
-  height: 15%;
-  padding: 20px;
-  border-radius: 10px 10px 0px 0px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: var(--accent);
-}
-
-.info-header {
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: var(--white);
-}
-
-.close-popup1 {
-  padding: 2px;
-  cursor: pointer;
-}
-
-.x11 {
-  position: relative;
-  top: 9px;
-  height: 4px;
-  width: 20px;
-  background-color: var(--white);
-  border-radius: 8px;
-  transform: rotate(45deg);
-}
-
-.x21 {
-  position: relative;
-  top: 5px;
-  height: 4px;
-  width: 20px;
-  border-radius: 8px;
-  background-color: var(--white);
-  transform: rotate(-45deg);
-}
-
 .share-flex1 {
   width: 100%;
   height: 100%;
@@ -160,16 +93,6 @@
   font-size: 1.2rem;
   color: var(--lgrey);
   transition: ease-in-out 0.3s;
-}
-
-.para {
-  margin: 10px 0;
-  font-size: 1rem;
-  color: var(--lgrey);
-}
-
-.sup {
-  color: var(--accent);
 }
 
 .navbar {
@@ -343,7 +266,7 @@
   border: none;
   background-color: var(--black);
   border-radius: 50px;
-  padding: 0 0 0 5px;
+  padding: 0 0 0 4px;
   transition: all 0.3s;
 }
 .switch::after {
@@ -470,6 +393,155 @@
 .edit-btn:hover {
   background-color: var(--lgrey);
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.22);
+  transition: ease-in-out 0.2s;
+}
+
+.edit-cover {
+  display: none;
+  place-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 10px 0px;
+  height: 100vh;
+  width: 100vw;
+  background-color: #00000080;
+  z-index: 3;
+  overflow-y: auto;
+}
+
+.edit-modal {
+  border: none;
+  width: 60vw;
+  border-radius: 10px;
+  background-color: var(--dback);
+  box-shadow: 1px 1px 10px 5px #00000020;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0 1.5rem 0;
+}
+
+.edit-box {
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+}
+
+.edit-head-container {
+  width: 100%;
+  height: 4rem;
+  padding: 0 2rem;
+  border-radius: 10px 10px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--accent);
+}
+
+.edit-header {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.edit-close-popup {
+  margin: 0 1.5rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.edit-x1 {
+  position: absolute;
+  height: 4px;
+  width: 20px;
+  background-color: var(--white);
+  border-radius: 8px;
+  transform: rotate(45deg);
+}
+
+.edit-x2 {
+  position: absolute;
+  height: 4px;
+  width: 20px;
+  border-radius: 8px;
+  background-color: var(--white);
+  transform: rotate(-45deg);
+}
+
+.edit-input {
+  height: 35px;
+  width: 60%;
+  padding: 0.8rem 0.8rem;
+  background-color: var(--dback);
+  border: none;
+  border-bottom: 1px solid var(--accent);
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--white);
+}
+
+.edit-input:focus {
+  outline: none !important;
+  color: var(--accent);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition-property: border-color, box-shadow;
+  transition-duration: 0.15s, 0.15s;
+  transition-timing-function: ease-in-out, ease-in-out;
+  transition-delay: 0s, 0s;
+}
+
+.edit-input::-webkit-input-placeholder,
+.edit-input:-ms-input-placeholder,
+.edit-input::placeholder {
+  color: var(--mgrey);
+}
+
+.edit-btn-container {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-btn-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.edit-d-btn,
+.edit-u-btn {
+  width: 49%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--accent);
+  background-color: var(--back);
+  transition: ease-in-out 0.2s;
+}
+
+.edit-d-btn {
+  color: var(--red);
+  background-color: var(--back);
+  transition: ease-in-out 0.2s;
+}
+
+.edit-d-btn:hover {
+  color: var(--white);
+  background-color: var(--red);
+  box-shadow: 0 0 4px 5px #00000023;
+  transition: ease-in-out 0.2s;
+}
+
+.edit-u-btn:hover {
+  color: var(--white);
+  background-color: var(--accent);
+  box-shadow: 0 0 4px 5px #00000023;
   transition: ease-in-out 0.2s;
 }
 

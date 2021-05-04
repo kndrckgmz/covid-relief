@@ -78,7 +78,7 @@ const Rem = ({user}) => {
                 verified_by={i.verified_by}
                 verified_date={i.verified_date}
                 available={i.available}
-                condition={i.condition}
+                omrcondition={i.condition}
                 user={user}
                 collectionname={collectionname}
                 linklist={linklist}

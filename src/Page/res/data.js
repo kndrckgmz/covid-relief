@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import Editbtn from './edit';
-
 const Data = (
     {user,
     id,
@@ -19,7 +18,12 @@ const Data = (
     verified_by,
     verified_date,
     available,
-    medcondition,
+    covid_recovery_date,
+    vaccinated,
+    oxytype,
+    oxyprice,
+    oxycapacity,
+    omrcondition,
     medtype,
     medicine_name,
     medprice,
@@ -33,7 +37,9 @@ const Data = (
     editlist, 
     setEditList,
     editid,
-    setEditId}
+    setEditId,
+    editname,
+    setEditName}
     ) => {
         
     const [verifiedtext, setVerifiedText] = useState();
@@ -43,9 +49,41 @@ const Data = (
     const [pbtypetext, setPBTypetext] = useState();
     const [foodtypetext, setFoodTypetext] = useState();
     const [consulttext, setConsultConditionText] = useState();
-    const [medconditiontext, setMedConditionText] = useState();
+    const [omrconditiontext, setOMRConditionText] = useState();
     const [medtypetext, setMedTypeText] = useState();
-    
+    const [oxytypetext, setOxyTypeText] = useState();
+    const [vaccinatedtext, setVaccinatedText] = useState();
+
+
+    useEffect(()=>{
+        if(vaccinated===true)
+        {
+            setVaccinatedText("Yes");
+        }
+        else
+        {
+            setVaccinatedText("No");
+        }
+    },[vaccinated]);
+
+    useEffect(()=>{
+        if(oxytype===0)
+        {
+            setOxyTypeText("Cylinder");
+        }
+        else if(oxytype===1)
+        {
+            setOxyTypeText("Concentrator");
+        }
+        else if(oxytype===2)
+        {
+            setMedTypeText("Both");
+        }
+        else
+        {
+            setOxyTypeText("No Data");
+        }
+    },[oxytype]);
 
     useEffect(()=>{
         if(medtype===0)
@@ -56,30 +94,38 @@ const Data = (
         {
             setMedTypeText("Syrup");
         }
+        else 
+        {
+            setMedTypeText("No Data");
+        }
     },[medtype]);
 
     useEffect(()=>{
-        if(medcondition===0)
+        if(omrcondition===0)
         {
-            setMedConditionText("No Stock");
+            setOMRConditionText("No Stock");
         }
-        else if(medcondition===1)
+        else if(omrcondition===1)
         {
-            setMedConditionText("Black Market");
+            setOMRConditionText("Black Market");
         }
-        else if(medcondition===2)
+        else if(omrcondition===2)
         {
-            setMedConditionText("Purchase");
+            setOMRConditionText("Purchase");
         }
-        else if(medcondition===3)
+        else if(omrcondition===3)
         {
-            setMedConditionText("Waiting Period");
+            setOMRConditionText("Waiting Period");
         }
-        else if(medcondition===4)
+        else if(omrcondition===4)
         {
-            setMedConditionText("Rental");
+            setOMRConditionText("Rental");
         }
-    },[medcondition]);
+        else 
+        {
+            setOMRConditionText("No Data");
+        }
+    },[omrcondition]);
 
     useEffect(()=>{
         if(consultationcondition===0)
@@ -89,6 +135,10 @@ const Data = (
         else if(consultationcondition===1)
         {
             setConsultConditionText("Home");
+        }
+        else 
+        {
+            setConsultConditionText("No Data");
         }
     },[consultationcondition]);
 
@@ -105,6 +155,10 @@ const Data = (
         {
             setFoodTypetext("Other");
         }
+        else 
+        {
+            setFoodTypetext("No Data");
+        }
     },[foodtype]);
 
     useEffect(()=>{
@@ -119,6 +173,10 @@ const Data = (
         else if(pbtype===2)
         {
             setPBTypetext("Blood Bank");
+        }
+        else 
+        {
+            setPBTypetext("No Data");
         }
     },[pbtype]);
 
@@ -147,6 +205,9 @@ const Data = (
             setColor("var(--yellow)");
         }
     }, [verified, verified_by, verified_date]);
+
+    
+
 
 
     return(
@@ -185,7 +246,9 @@ const Data = (
             setLinkList={setLinkList}
             editid={editid}
             setEditId={setEditId}
-            available={available}/>
+            available={available}
+            editname={editname}
+            setEditName={setEditName}/>
 
             <div className="content-flex">
 
@@ -255,7 +318,7 @@ const Data = (
                     return (
                         <div className="extra">
                         <div className="data-container">Condition: 
-                            <div className="data">{medconditiontext}</div>
+                            <div className="data">{omrconditiontext}</div>
                         </div>
                         <div className="data-container">Type: 
                             <div className="data">{medtypetext}</div>
@@ -284,16 +347,16 @@ const Data = (
                     return (
                         <div className="extra">
                         <div className="data-container">Condition: 
-                            <div className="data">{contact_name}</div>
+                            <div className="data">{omrconditiontext}</div>
                         </div>
                         <div className="data-container">Type: 
-                            <div className="data">{contact_name}</div>
+                            <div className="data">{oxytypetext}</div>
                         </div>
                         <div className="data-container">Capacity: 
-                            <div className="data">{contact_name}</div>
+                            <div className="data">{oxycapacity}</div>
                         </div>
                         <div className="data-container">Price: 
-                            <div className="data">{contact_name}</div>
+                            <div className="data">{oxyprice}</div>
                         </div>
                         </div>
                     );
@@ -303,16 +366,16 @@ const Data = (
                     return (
                         <div className="extra">
                         <div className="data-container">Blood Group: 
-                            <div className="data">{contact_name}</div>
+                            <div className="data">{blood_group}</div>
                         </div>
                         <div className="data-container">Type: 
-                            <div className="data">{contact_name}</div>
+                            <div className="data">{pbtypetext}</div>
                         </div>
                         <div className="data-container">Covid Recovery Date: 
-                            <div className="data">{contact_name}</div>
+                            <div className="data">{covid_recovery_date}</div>
                         </div>
                         <div className="data-container">Vaccinated: 
-                            <div className="data">{contact_name}</div>
+                            <div className="data">{vaccinatedtext}</div>
                         </div>
                         </div>
                     );
@@ -322,7 +385,7 @@ const Data = (
                     return (
                         <div className="extra">
                         <div className="data-container">Condition: 
-                            <div className="data">{contact_name}</div>
+                            <div className="data">{omrconditiontext}</div>
                         </div>
                         </div>
                     );
@@ -341,7 +404,6 @@ const Data = (
             }
 
             </div>            
-
         </div>
     );
 };

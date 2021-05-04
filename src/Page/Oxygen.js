@@ -81,10 +81,10 @@ const Oxygen = ({user}) => {
                 verified_by={i.verified_by}
                 verified_date={i.verified_date}
                 available={i.available}
-                condition={i.condition}
-                type={i.type}
-                capacity={i.capacity}
-                price={i.price}
+                oxycondition={i.condition}
+                oxytype={i.type}
+                oxycapacity={i.capacity}
+                oxyprice={i.price}
                 user={user}
                 collectionname={collectionname}
                 linklist={linklist}

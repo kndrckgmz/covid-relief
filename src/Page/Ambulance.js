@@ -21,6 +21,7 @@ const Ambulance = ({user}) => {
     const [collectionname, setCollectionName] = useState("AmbulanceService");
     const [editlist, setEditList] = useState([]);
     const [editid, setEditId] = useState();
+    const [editname, setEditName] = useState("");
     
     useEffect(()=>{
         setCollectionName("AmbulanceService");
@@ -85,6 +86,8 @@ const Ambulance = ({user}) => {
                 setEditList={setEditList}
                 editid={editid}
                 setEditId={setEditId}
+                editname={editname}
+                setEditName={setEditName}
                 />
             ))}
             <a className="end" href="#top">PAGE END

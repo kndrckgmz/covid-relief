@@ -78,6 +78,7 @@ const Beds = ({user}) => {
                 verified={i.verified}
                 verified_by={i.verified_by}
                 verified_date={i.verified_date}
+                available={i.available}
                 user={user}
                 collectionname={collectionname}
                 linklist={linklist}
