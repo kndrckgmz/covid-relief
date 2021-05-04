@@ -21,6 +21,19 @@ const Beds = ({user}) => {
     const [collectionname, setCollectionName] = useState("BedAvailability");
     const [editlist, setEditList] = useState([]);
     const [editid, setEditId] = useState();
+    const [editname, setEditName] = useState("");
+    const [editdesc, setEditDesc] = useState("");
+    const [editlocation, setEditLoc] = useState("");
+    const [edittiming, setEditTime] = useState("");
+    const [editsource, setEditSource] = useState("");
+    const [editcontactname, setEditCName] = useState("");
+    const [editcontactnum, setEditCNum] = useState("");
+    const [editcontactemail, setEditCEmail] = useState("");
+    const [editlink, setEditLink] = useState("");
+    const [editverified, setEditVerified] = useState();
+    const [editverifiedby, setEditVerifiedBy] = useState("");
+    const [editcomments, setEditComment] = useState("");
+    const [editavailable, setEditAvailable] = useState();
     
     useEffect(()=>{
         setCollectionName("BedAvailability");
@@ -87,6 +100,32 @@ const Beds = ({user}) => {
                 setEditList={setEditList}
                 editid={editid}
                 setEditId={setEditId}
+                editname={editname}
+                setEditName={setEditName}
+                editdesc={editdesc}
+                setEditDesc={setEditDesc}
+                editlocation={editlocation}
+                setEditLoc={setEditLoc}
+                edittiming={edittiming}
+                setEditTime={setEditTime}
+                editsource={editsource}
+                setEditSource={setEditSource}
+                editcontactname={editcontactname}
+                setEditCName={setEditCName}
+                editcontactemail={editcontactemail}
+                setEditCEmail={setEditCEmail}
+                editcontactnum={editcontactnum}
+                setEditCNum={setEditCNum}
+                editlink={editlink}
+                setEditLink={setEditLink}
+                editverified={editverified}
+                setEditVerified={setEditVerified}
+                editverifiedby={editverifiedby}
+                setEditVerifiedBy={setEditVerifiedBy}
+                editcomments={editcomments}
+                setEditComment={setEditComment}
+                editavailable={editavailable}
+                setEditAvailable={setEditAvailable}
                 />
             ))}
             <a className="end" href="#top">PAGE END

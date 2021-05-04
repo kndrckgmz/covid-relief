@@ -12,7 +12,55 @@ const Editbtn = ({
     setEditId,
     available,
     editname,
-    setEditName}) => {
+    setEditName,
+    editdesc,
+    setEditDesc,
+    editlocation,
+    setEditLoc,
+    edittiming,
+    setEditTime,
+    editsource,
+    setEditSource,
+    editcontactname,
+    setEditCName,
+    editcontactemail,
+    setEditCEmail,
+    editcontactnum,
+    setEditCNum,
+    editlink,
+    setEditLink,
+    editverified,
+    setEditVerified,
+    editverifiedby,
+    setEditVerifiedBy,
+    editcomments,
+    setEditComment,
+    editavailable,
+    setEditAvailable,
+    editprice,
+    setEditPrice,
+    editcapacity, 
+    setEditCapacity,
+    editmedname,
+    setEditMedName,
+    editmedtype,
+    setEditMedType,
+    editbloodgroup,
+    setEditBloodGroup,
+    editrecoverydate,
+    setEditRecoveryDate,
+    editvaccinated,
+    setEditVaccinated,
+    editomrcondition,
+    setEditOMRCondition,
+    editoxygentype,
+    setEditOxygenType,
+    editpbtype,
+    setEditPBType,
+    editfoodtype,
+    setEditFoodType,
+    editconsultationtype,
+    setEditConsultationType,}) => {
 
     const [edit, setEdit] = useState();
     const [availabletext, setAvailableText] = useState();
@@ -60,8 +108,10 @@ const Editbtn = ({
         if (e.target === cover) {
             cover.style.display = "none";
             body.style.overflow = "unset";
+            // window.location.reload();
+            setEditId("");
         }
-        setEditId("");
+        
     }
 
     const closemodalx = () => {
@@ -70,6 +120,7 @@ const Editbtn = ({
         cover.style.display = "none";
         body.style.overflow = "unset";
         setEditId("");
+        // window.location.reload();
     }
 
     return(
@@ -97,7 +148,56 @@ const Editbtn = ({
             editlist={editlist}
             setEditList={setEditList}
             editname={editname}
-            setEditName={setEditName}/>     
+            setEditName={setEditName}
+            editDesc={editdesc}
+            setEditDesc={setEditDesc}
+            editlocation={editlocation}
+            setEditLoc={setEditLoc}
+            edittiming={edittiming}
+            setEditTime={setEditTime}
+            editsource={editsource}
+            setEditSource={setEditSource}
+            editcontactname={editcontactname}
+            setEditCName={setEditCName}
+            editcontactemail={editcontactemail}
+            setEditCEmail={setEditCEmail}
+            editcontactnum={editcontactnum}
+            setEditCNum={setEditCNum}
+            editlink={editlink}
+            setEditLink={setEditLink}
+            editverified={editverified}
+            setEditVerified={setEditVerified}
+            editverifiedby={editverifiedby}
+            setEditVerifiedBy={setEditVerifiedBy}
+            editcomments={editcomments}
+            setEditComment={setEditComment}
+            editavailable={editavailable}
+            setEditAvailable={setEditAvailable}
+
+            editprice={editprice}
+            setEditPrice={setEditPrice}
+            editcapacity={editcapacity}
+            setEditCapacity={setEditCapacity}
+            editmedname={editmedname}
+            setEditMedName={setEditMedName}
+            editmedtype={editmedtype}
+            setEditMedType={setEditMedType}
+            editbloodgroup={editbloodgroup}
+            setEditBloodGroup={setEditBloodGroup}
+            editrecoverydate={editrecoverydate}
+            setEditRecoveryDate={setEditRecoveryDate}
+            editvaccinated={editvaccinated}
+            setEditVaccinated={setEditVaccinated}
+            editomrcondition={editomrcondition}
+            setEditOMRCondition={setEditOMRCondition}
+            editoxygentype={editoxygentype}
+            setEditOxygenType={setEditOxygenType}
+            editpbtype={editpbtype}
+            setEditPBType={setEditPBType}
+            editfoodtype={editfoodtype}
+            setEditFoodType={setEditFoodType}
+            editconsultationtype={editconsultationtype}
+            setEditConsultationType={setEditConsultationType}/>     
   
         </div>
         </div>

@@ -21,6 +21,24 @@ const Med = ({user}) => {
     const [collectionname, setCollectionName] = useState("Medicine");
     const [editlist, setEditList] = useState([]);
     const [editid, setEditId] = useState();
+    const [editname, setEditName] = useState("");
+    const [editdesc, setEditDesc] = useState("");
+    const [editlocation, setEditLoc] = useState("");
+    const [edittiming, setEditTime] = useState("");
+    const [editsource, setEditSource] = useState("");
+    const [editcontactname, setEditCName] = useState("");
+    const [editcontactnum, setEditCNum] = useState("");
+    const [editcontactemail, setEditCEmail] = useState("");
+    const [editlink, setEditLink] = useState("");
+    const [editverified, setEditVerified] = useState();
+    const [editverifiedby, setEditVerifiedBy] = useState("");
+    const [editcomments, setEditComment] = useState("");
+    const [editavailable, setEditAvailable] = useState();
+    const [editprice, setEditPrice] = useState("");
+    const [editcapacity, setEditCapacity] = useState("");
+    const [editmedname, setEditMedName] = useState("");
+    const [editomrcondition, setEditOMRCondition] = useState();
+    const [editmedtype, setEditMedType] = useState();
     
     useEffect(()=>{
         setCollectionName("Medicine");
@@ -93,6 +111,42 @@ const Med = ({user}) => {
                 setEditList={setEditList}
                 editid={editid}
                 setEditId={setEditId}
+                editname={editname}
+                setEditName={setEditName}
+                editdesc={editdesc}
+                setEditDesc={setEditDesc}
+                editlocation={editlocation}
+                setEditLoc={setEditLoc}
+                edittiming={edittiming}
+                setEditTime={setEditTime}
+                editsource={editsource}
+                setEditSource={setEditSource}
+                editcontactname={editcontactname}
+                setEditCName={setEditCName}
+                editcontactemail={editcontactemail}
+                setEditCEmail={setEditCEmail}
+                editcontactnum={editcontactnum}
+                setEditCNum={setEditCNum}
+                editlink={editlink}
+                setEditLink={setEditLink}
+                editverified={editverified}
+                setEditVerified={setEditVerified}
+                editverifiedby={editverifiedby}
+                setEditVerifiedBy={setEditVerifiedBy}
+                editcomments={editcomments}
+                setEditComment={setEditComment}
+                editavailable={editavailable}
+                setEditAvailable={setEditAvailable}
+                editprice={editprice}
+                setEditPrice={setEditPrice}
+                editcapacity={editcapacity}
+                setEditCapacity={setEditCapacity}
+                editmedname={editmedname}
+                setEditMedName={setEditMedName}
+                editmedtype={editmedtype}
+                setEditMedType={setEditMedType}
+                editomrcondition={editomrcondition}
+                setEditOMRCondition={setEditOMRCondition}
                 />
             ))}
             <a className="end" href="#top">PAGE END

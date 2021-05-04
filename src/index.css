@@ -99,7 +99,7 @@
   min-height: 50px;
   min-width: 100%;
   width: 100vw;
-  background-color: var(--back);
+  background-color: var(--dback);
   display: grid;
   place-items: center;
   overflow-y: auto;
@@ -112,12 +112,11 @@
   flex-direction: row;
   justify-content: space-around;
   padding: 0px 10px;
-  color: var(--lgrey);
 }
 
 .link {
   margin: 0 1rem;
-  color: var(--dback);
+  color: var(--lgrey);
   text-decoration: none;
   font-size: 1rem;
   max-width: 200px;
@@ -128,12 +127,13 @@
   cursor: pointer;
   transition: ease-in-out 0.1s;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .link.active,
 .link:hover {
-  color: var(--black);
-  border-bottom: 3px solid var(--black);
+  color: var(--accent);
+  border-bottom: 3px solid var(--accent);
   transition: ease-in-out 0.1s;
 }
 
@@ -487,9 +487,10 @@
 .edit-input:focus {
   outline: none !important;
   color: var(--accent);
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  transition-property: border-color, box-shadow;
-  transition-duration: 0.15s, 0.15s;
+  border-bottom: 3px solid var(--accent);
+  transition: border-color 0.15s ease-in-out, border-bottom 0.2s ease-in-out;
+  transition-property: border-color, border-bottom;
+  transition-duration: 0.15s, 0.2s;
   transition-timing-function: ease-in-out, ease-in-out;
   transition-delay: 0s, 0s;
 }
@@ -509,12 +510,12 @@
 .edit-btn-flex {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 .edit-d-btn,
 .edit-u-btn {
-  width: 49%;
+  width: 43%;
   height: 40px;
   border: none;
   border-radius: 5px;
