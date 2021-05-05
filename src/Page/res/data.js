@@ -27,7 +27,7 @@ const Data = (
     medtype,
     medicine_name,
     medprice,
-    consultationcondition,
+    consultationtype,
     foodtype,
     pbtype,
     blood_group,
@@ -64,7 +64,6 @@ const Data = (
     setEditComment,
     editavailable,
     setEditAvailable,
-
     editprice,
     setEditPrice,
     editcapacity, 
@@ -117,15 +116,15 @@ const Data = (
     },[vaccinated]);
 
     useEffect(()=>{
-        if(oxytype===0)
+        if(oxytype==="0")
         {
             setOxyTypeText("Cylinder");
         }
-        else if(oxytype===1)
+        else if(oxytype==="1")
         {
             setOxyTypeText("Concentrator");
         }
-        else if(oxytype===2)
+        else if(oxytype==="2")
         {
             setMedTypeText("Both");
         }
@@ -136,11 +135,11 @@ const Data = (
     },[oxytype]);
 
     useEffect(()=>{
-        if(medtype===0)
+        if(medtype==="0")
         {
             setMedTypeText("Tablet");
         }
-        else if(medtype===1)
+        else if(medtype==="1")
         {
             setMedTypeText("Syrup");
         }
@@ -151,23 +150,23 @@ const Data = (
     },[medtype]);
 
     useEffect(()=>{
-        if(omrcondition===0)
+        if(omrcondition==="0")
         {
             setOMRConditionText("No Stock");
         }
-        else if(omrcondition===1)
+        else if(omrcondition==="1")
         {
             setOMRConditionText("Black Market");
         }
-        else if(omrcondition===2)
+        else if(omrcondition==="2")
         {
             setOMRConditionText("Purchase");
         }
-        else if(omrcondition===3)
+        else if(omrcondition==="3")
         {
             setOMRConditionText("Waiting Period");
         }
-        else if(omrcondition===4)
+        else if(omrcondition==="4")
         {
             setOMRConditionText("Rental");
         }
@@ -178,11 +177,11 @@ const Data = (
     },[omrcondition]);
 
     useEffect(()=>{
-        if(consultationcondition===0)
+        if(consultationtype==="0")
         {
             setConsultConditionText("Online");
         }
-        else if(consultationcondition===1)
+        else if(consultationtype==="1")
         {
             setConsultConditionText("Home");
         }
@@ -190,18 +189,18 @@ const Data = (
         {
             setConsultConditionText("No Data");
         }
-    },[consultationcondition]);
+    },[consultationtype]);
 
     useEffect(()=>{
-        if(foodtype===0)
+        if(foodtype==="0")
         {
             setFoodTypetext("Home Chef");
         }
-        else if(foodtype===1)
+        else if(foodtype==="1")
         {
             setFoodTypetext("NGO");
         }
-        else if(foodtype===2)
+        else if(foodtype==="2")
         {
             setFoodTypetext("Other");
         }
@@ -212,15 +211,15 @@ const Data = (
     },[foodtype]);
 
     useEffect(()=>{
-        if(pbtype===0)
+        if(pbtype==="0")
         {
             setPBTypetext("Platform");
         }
-        else if(pbtype===1)
+        else if(pbtype==="1")
         {
             setPBTypetext("Individual");
         }
-        else if(pbtype===2)
+        else if(pbtype==="2")
         {
             setPBTypetext("Blood Bank");
         }
@@ -233,14 +232,14 @@ const Data = (
 
     //verification check
     useEffect(() => {
-        if(verified===0)
+        if(verified==="0")
         {
             setVerifiedText("Verified"); 
             setVerifiedByText(verified_by);
             setVerifiedDateText(verified_date);
             setColor("var(--green)");
         }
-        else if(verified===1)
+        else if(verified==="1")
         {
             setVerifiedText("Not Verified");
             setVerifiedByText("Null");
@@ -278,9 +277,6 @@ const Data = (
                         <div className="data-container">Verified By: 
                         <div className="data">{verifiedbytext}</div>
                         </div>
-                        <div className="data-container">Verification Date: 
-                        <div className="data">{verifieddatetext}</div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -299,7 +295,7 @@ const Data = (
             available={available}
             editname={editname}
             setEditName={setEditName}
-            editDesc={editdesc}
+            editdesc={editdesc}
             setEditDesc={setEditDesc}
             editlocation={editlocation}
             setEditLoc={setEditLoc}

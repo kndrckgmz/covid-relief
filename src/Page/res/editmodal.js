@@ -3,7 +3,8 @@ import {db} from './fire_config';
 import firebase from 'firebase/app';
 
 const Modal = ({
-    editid, 
+    editid,
+    setEditId,
     collectionname, 
     editlist,
     editname,
@@ -161,7 +162,7 @@ const Modal = ({
             editlist.forEach(i=>{
                 setEditName(i.name);
                 setEditDesc(i.description);
-                setEditLoc(i.location_coverd);
+                setEditLoc(i.location_covered);
                 setEditTime(i.timings);
                 setEditCName(i.contact_name);
                 setEditCNum(i.contact_number); 
@@ -181,7 +182,7 @@ const Modal = ({
             editlist.forEach(i=>{
                 setEditName(i.name);
                 setEditDesc(i.description);
-                setEditLoc(i.location_coverd);
+                setEditLoc(i.location_covered);
                 setEditTime(i.timings);
                 setEditCName(i.contact_name);
                 setEditCNum(i.contact_number); 
@@ -203,7 +204,7 @@ const Modal = ({
             editlist.forEach(i=>{
                 setEditName(i.name);
                 setEditDesc(i.description);
-                setEditLoc(i.location_coverd);
+                setEditLoc(i.location_covered);
                 setEditTime(i.timings);
                 setEditCName(i.contact_name);
                 setEditCNum(i.contact_number); 
@@ -214,36 +215,15 @@ const Modal = ({
                 setEditSource(i.source);
                 setEditComment(i.comments);
                 setEditAvailable(i.available);
-                setEditMedType(i.type);
-                setEditMedName(i.medicine_name);
-                setEditOMRCondition(i.condition);
-                setEditPrice(i.price);
+                setEditFoodType(i.type);
             });
         }
-        else if (collectionname==="HomeTesting")
+        else if (collectionname==="OnlineDoctorConsultation")
         {   
             editlist.forEach(i=>{
                 setEditName(i.name);
                 setEditDesc(i.description);
-                setEditLoc(i.location_coverd);
-                setEditTime(i.timings);
-                setEditCName(i.contact_name);
-                setEditCNum(i.contact_number); 
-                setEditCEmail(i.contact_email); 
-                setEditLink(i.link_to_go);
-                setEditVerified(i.verified);
-                setEditVerifiedBy(i.verified_by);
-                setEditSource(i.source);
-                setEditComment(i.comments);
-                setEditAvailable(i.available);
-            });
-        }
-        else if (collectionname==="OnlineConsultation")
-        {   
-            editlist.forEach(i=>{
-                setEditName(i.name);
-                setEditDesc(i.description);
-                setEditLoc(i.location_coverd);
+                setEditLoc(i.location_covered);
                 setEditTime(i.timings);
                 setEditCName(i.contact_name);
                 setEditCNum(i.contact_number); 
@@ -262,7 +242,7 @@ const Modal = ({
             editlist.forEach(i=>{
                 setEditName(i.name);
                 setEditDesc(i.description);
-                setEditLoc(i.location_coverd);
+                setEditLoc(i.location_covered);
                 setEditTime(i.timings);
                 setEditCName(i.contact_name);
                 setEditCNum(i.contact_number); 
@@ -284,7 +264,7 @@ const Modal = ({
             editlist.forEach(i=>{
                 setEditName(i.name );
                 setEditDesc(i.description);
-                setEditLoc(i.location_coverd);
+                setEditLoc(i.location_covered);
                 setEditTime(i.timings);
                 setEditCName(i.contact_name);
                 setEditCNum(i.contact_number); 
@@ -297,7 +277,7 @@ const Modal = ({
                 setEditAvailable(i.available);
                 setEditBloodGroup(i.blood_group);
                 setEditPBType(i.type);
-                setEditRecoveryDate(i.recovery_date);
+                setEditRecoveryDate(i.covid_recovery_date);
                 setEditVaccinated(i.vaccinated);
             });
         }
@@ -306,7 +286,7 @@ const Modal = ({
             editlist.forEach(i=>{
                 setEditName(i.name);
                 setEditDesc(i.description);
-                setEditLoc(i.location_coverd);
+                setEditLoc(i.location_covered);
                 setEditTime(i.timings);
                 setEditCName(i.contact_name);
                 setEditCNum(i.contact_number); 
@@ -320,77 +300,8 @@ const Modal = ({
                 setEditOMRCondition(i.condition);
             });
         }
-        else if (collectionname==="TeleCounselling")
-        {   
-            editlist.forEach(i=>{
-                setEditName(i.name);
-                setEditDesc(i.description);
-                setEditLoc(i.location_coverd);
-                setEditTime(i.timings);
-                setEditCName(i.contact_name);
-                setEditCNum(i.contact_number); 
-                setEditCEmail(i.contact_email); 
-                setEditLink(i.link_to_go);
-                setEditVerified(i.verified);
-                setEditVerifiedBy(i.verified_by);
-                setEditSource(i.source);
-                setEditComment(i.comments);
-                setEditAvailable(i.available);
-            });
-        }
         
-    },[editlist,
-        collectionname,
-        editname,
-        setEditName,
-        editdesc,
-        setEditDesc,
-        editlocation,
-        setEditLoc,
-        edittiming,
-        setEditTime,
-        editsource,
-        setEditSource,
-        editcontactname,
-        setEditCName,
-        editcontactemail,
-        setEditCEmail,
-        editcontactnum,
-        setEditCNum,
-        editlink,
-        setEditLink,
-        editverified,
-        setEditVerified,
-        editverifiedby,
-        setEditVerifiedBy,
-        editcomments,
-        setEditComment,
-        editavailable,
-        setEditAvailable,
-        editprice,
-        setEditPrice,
-        editcapacity, 
-        setEditCapacity,
-        editmedname,
-        setEditMedName,
-        editmedtype,
-        setEditMedType,
-        editbloodgroup,
-        setEditBloodGroup,
-        editrecoverydate,
-        setEditRecoveryDate,
-        editvaccinated,
-        setEditVaccinated,
-        editomrcondition,
-        setEditOMRCondition,
-        editoxygentype,
-        setEditOxygenType,
-        editpbtype,
-        setEditPBType,
-        editfoodtype,
-        setEditFoodType,
-        editconsultationtype,
-        setEditConsultationType]);
+    },[editlist, editid]);
 
     const deleteData = () => {
         db.collection(`${collectionname}`).doc(editid).delete();
@@ -400,7 +311,7 @@ const Modal = ({
         if (collectionname==="AmbulanceService"||collectionname==="BedAvailability"||collectionname==="HomeTesting"||collectionname==="TeleCounselling")
         {
             db.collection(`${collectionname}`).doc(editid).update({
-                id: editid,
+                id:editid,
                 name : editname,
                 description : editdesc,
                 location_coverd : editlocation,
@@ -426,16 +337,311 @@ const Modal = ({
                 setEditCNum("");
                 setEditCEmail("");
                 setEditLink("");
-                setEditVerified(1);
+                setEditVerified("");
                 setEditVerifiedBy("");
                 setEditSource("");
                 setEditComment("");
                 setEditAvailable(false);
+                setEditId("");
             });
         }
-    
-            
-        
+        else if (collectionname==="BloodDonors")
+        {   
+            db.collection(`${collectionname}`).doc(editid).update({
+                id: editid,
+                name : editname,
+                description : editdesc,
+                location_covered : editlocation,
+                timings : edittiming,
+                contact_name : editcontactname,
+                contact_number : editcontactnum,
+                contact_email : editcontactemail,
+                link_to_go : editlink,
+                verified : editverified,
+                verified_by : editverifiedby,
+                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                source : editsource,
+                comments : editcomments,
+                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                available : editavailable,
+                type: editpbtype,
+                blood_group: editbloodgroup
+            })
+            .then(() => {
+                setEditName("");
+                setEditDesc("");
+                setEditLoc("");
+                setEditTime("");
+                setEditCName("");
+                setEditCNum("");
+                setEditCEmail("");
+                setEditLink("");
+                setEditVerified("");
+                setEditVerifiedBy("");
+                setEditSource("");
+                setEditComment("");
+                setEditAvailable(false);
+                setEditPBType("");
+                setEditBloodGroup("");
+                setEditId("");           
+            });
+        }
+        else if (collectionname==="Medicine")
+        {   
+            db.collection(`${collectionname}`).doc(editid).update({
+                id:editid,
+                name : editname,
+                description : editdesc,
+                location_covered : editlocation,
+                timings : edittiming,
+                contact_name : editcontactname,
+                contact_number : editcontactnum,
+                contact_email : editcontactemail,
+                link_to_go : editlink,
+                verified : editverified,
+                verified_by : editverifiedby,
+                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                source : editsource,
+                comments : editcomments,
+                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                available : editavailable,
+                type: editmedtype,
+                condition : editomrcondition,
+                medicine_name : editmedname,
+                price : editprice
+            })
+            .then(() => {
+                setEditName("");
+                setEditDesc("");
+                setEditLoc("");
+                setEditTime("");
+                setEditCName("");
+                setEditCNum("");
+                setEditCEmail("");
+                setEditLink("");
+                setEditVerified("");
+                setEditVerifiedBy("");
+                setEditSource("");
+                setEditComment("");
+                setEditAvailable(false);
+                setEditMedType("");
+                setEditMedName("");
+                setEditPrice("");
+                setEditOMRCondition("");
+                setEditId("");            
+            });
+        }
+        else if (collectionname==="Food")
+        {   
+            db.collection(`${collectionname}`).doc(editid).update({
+                name : editname,
+                description : editdesc,
+                location_covered : editlocation,
+                timings : edittiming,
+                contact_name : editcontactname,
+                contact_number : editcontactnum,
+                contact_email : editcontactemail,
+                link_to_go : editlink,
+                verified : editverified,
+                verified_by : editverifiedby,
+                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                source : editsource,
+                comments : editcomments,
+                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                available : editavailable,
+                type: editfoodtype,
+            })
+            .then(() => {
+                setEditName("");
+                setEditDesc("");
+                setEditLoc("");
+                setEditTime("");
+                setEditCName("");
+                setEditCNum("");
+                setEditCEmail("");
+                setEditLink("");
+                setEditVerified("");
+                setEditVerifiedBy("");
+                setEditSource("");
+                setEditComment("");
+                setEditAvailable(false);
+                setEditFoodType("");
+                setEditId(""); 
+            });
+        }
+        else if (collectionname==="OnlineDoctorConsultation")
+        {   
+            db.collection(`${collectionname}`).doc(editid).update({
+                name : editname,
+                description : editdesc,
+                location_covered : editlocation,
+                timings : edittiming,
+                contact_name : editcontactname,
+                contact_number : editcontactnum,
+                contact_email : editcontactemail,
+                link_to_go : editlink,
+                verified : editverified,
+                verified_by : editverifiedby,
+                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                source : editsource,
+                comments : editcomments,
+                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                available : editavailable,
+                type: editconsultationtype,
+            })
+            .then(() => {
+                setEditName("");
+                setEditDesc("");
+                setEditLoc("");
+                setEditTime("");
+                setEditCName("");
+                setEditCNum("");
+                setEditCEmail("");
+                setEditLink("");
+                setEditVerified("");
+                setEditVerifiedBy("");
+                setEditSource("");
+                setEditComment("");
+                setEditAvailable(false);
+                setEditConsultationType("");
+                let cover = document.getElementById("cover2");
+                let body = document.querySelector("body");
+                cover.style.display = "none";
+                body.style.overflow = "unset";
+                setEditId("");     
+            });
+        }        
+        else if (collectionname==="Oxygen")
+        {   
+            db.collection(`${collectionname}`).doc(editid).update({
+                name : editname,
+                description : editdesc,
+                location_covered : editlocation,
+                timings : edittiming,
+                contact_name : editcontactname,
+                contact_number : editcontactnum,
+                contact_email : editcontactemail,
+                link_to_go : editlink,
+                verified : editverified,
+                verified_by : editverifiedby,
+                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                source : editsource,
+                comments : editcomments,
+                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                available : editavailable,
+                condition : editomrcondition,
+                type : editoxygentype,
+                capacity : editcapacity,
+                price : editprice
+            })
+            .then(() => {
+                setEditName("");
+                setEditDesc("");
+                setEditLoc("");
+                setEditTime("");
+                setEditCName("");
+                setEditCNum("");
+                setEditCEmail("");
+                setEditLink("");
+                setEditVerified("");
+                setEditVerifiedBy("");
+                setEditSource("");
+                setEditComment("");
+                setEditAvailable(false);
+                setEditOMRCondition("");
+                setEditOxygenType("");
+                setEditCapacity("");
+                setEditPrice("");
+                let cover = document.getElementById("cover2");
+                let body = document.querySelector("body");
+                cover.style.display = "none";
+                body.style.overflow = "unset";
+                setEditId("");
+            });
+        }
+        else if (collectionname==="Remedesivir")
+        {   
+            db.collection(`${collectionname}`).doc(editid).update({
+                name : editname,
+                description : editdesc,
+                location_covered : editlocation,
+                timings : edittiming,
+                contact_name : editcontactname,
+                contact_number : editcontactnum,
+                contact_email : editcontactemail,
+                link_to_go : editlink,
+                verified : editverified,
+                verified_by : editverifiedby,
+                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                source : editsource,
+                comments : editcomments,
+                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                available : editavailable,
+                condition : editomrcondition,
+            })
+            .then(() => {
+                setEditName("");
+                setEditDesc("");
+                setEditLoc("");
+                setEditTime("");
+                setEditCName("");
+                setEditCNum("");
+                setEditCEmail("");
+                setEditLink("");
+                setEditVerified("");
+                setEditVerifiedBy("");
+                setEditSource("");
+                setEditComment("");
+                setEditAvailable(false);
+                setEditOMRCondition("");
+                setEditId("");
+            });
+        }
+        else if (collectionname==="PlasmaDonors")
+        {   
+            db.collection(`${collectionname}`).doc(editid).update({
+                name : editname,
+                description : editdesc,
+                location_covered : editlocation,
+                timings : edittiming,
+                contact_name : editcontactname,
+                contact_number : editcontactnum,
+                contact_email : editcontactemail,
+                link_to_go : editlink,
+                verified : editverified,
+                verified_by : editverifiedby,
+                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                source : editsource,
+                comments : editcomments,
+                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                available : editavailable,
+                type: editpbtype,
+                blood_group: editbloodgroup,
+                covid_recovery_date: editrecoverydate,
+                vaccinated:editvaccinated
+            })
+            .then(() => {
+                setEditName("");
+                setEditDesc("");
+                setEditLoc("");
+                setEditTime("");
+                setEditCName("");
+                setEditCNum("");
+                setEditCEmail("");
+                setEditLink("");
+                setEditVerified("");
+                setEditVerifiedBy("");
+                setEditSource("");
+                setEditComment("");
+                setEditAvailable(false);
+                setEditPBType("");
+                setEditBloodGroup("");
+                setEditRecoveryDate("");
+                setEditVaccinated("");
+                setEditId("");
+            });
+        }
+               
     };
 
     return (
@@ -490,7 +696,7 @@ const Modal = ({
 <div className="form-data-title">Meta-data</div>
     <div className="input-flex" >   
         <label className="label">Verified<div className="red">*</div></label>
-        <input className="edit-input" value={editverified} onClick={verifiedinput} type="number" min="0" max="2" placeholder="0:Yes, 1:No, 2:Pending"></input>
+        <input className="edit-input" value={editverified} onChange={verifiedinput} type="number" min="0" max="2" placeholder="0:Yes, 1:No, 2:Pending"></input>
         </div>
     <div className="input-flex" >   
         <label className="label">Verified By</label>
@@ -507,7 +713,7 @@ const Modal = ({
     <div className="input-flex">
         <label className="label">Available</label>
         <div className="checkbox-container">
-        <input className="checkbox" type="checkbox" id="checkedit1" defaultChecked={editavailable} onClick={availableinput}/>
+        <input className="checkbox" type="checkbox" id="checkedit1" checked={editavailable} onChange={availableinput}/>
         <label htmlFor="checkedit1" className="switch"></label> 
         </div>    
     </div>
@@ -623,7 +829,7 @@ const Modal = ({
                 <div className="input-flex">
                     <label className="label">Vaccinated</label>
                     <div className="checkbox-container">
-                        <input className="checkbox" type="checkbox" id="checkedit2" checked={editvaccinated} onClick={vaccinatedinput} />
+                        <input className="checkbox" type="checkbox" id="checkedit2" checked={editvaccinated} onChange={vaccinatedinput} />
                         <label htmlFor="checkedit2" className="switch"></label> 
                     </div>    
                 </div>

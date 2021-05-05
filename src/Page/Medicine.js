@@ -20,7 +20,7 @@ const Med = ({user}) => {
     const [linklist, setLinkList] = useState([]);
     const [collectionname, setCollectionName] = useState("Medicine");
     const [editlist, setEditList] = useState([]);
-    const [editid, setEditId] = useState();
+    const [editid, setEditId] = useState("");
     const [editname, setEditName] = useState("");
     const [editdesc, setEditDesc] = useState("");
     const [editlocation, setEditLoc] = useState("");
@@ -30,15 +30,15 @@ const Med = ({user}) => {
     const [editcontactnum, setEditCNum] = useState("");
     const [editcontactemail, setEditCEmail] = useState("");
     const [editlink, setEditLink] = useState("");
-    const [editverified, setEditVerified] = useState();
+    const [editverified, setEditVerified] = useState("");
     const [editverifiedby, setEditVerifiedBy] = useState("");
     const [editcomments, setEditComment] = useState("");
     const [editavailable, setEditAvailable] = useState();
     const [editprice, setEditPrice] = useState("");
     const [editcapacity, setEditCapacity] = useState("");
     const [editmedname, setEditMedName] = useState("");
-    const [editomrcondition, setEditOMRCondition] = useState();
-    const [editmedtype, setEditMedType] = useState();
+    const [editomrcondition, setEditOMRCondition] = useState("");
+    const [editmedtype, setEditMedType] = useState("");
     
     useEffect(()=>{
         setCollectionName("Medicine");
@@ -50,7 +50,7 @@ const Med = ({user}) => {
         .onSnapshot(function(querySnapshot){
             setLinkList(querySnapshot.docs.map ((i)=>({
                 comments:i.data().comments,
-                contact_email:i.data().cantact_email,
+                contact_email:i.data().contact_email,
                 contact_name:i.data().contact_name,
                 contact_number:i.data().contact_number,
                 description:i.data().description,
@@ -84,7 +84,7 @@ const Med = ({user}) => {
                 <Data
                 key={i.id}
                 comments={i.comments}
-                contact_email={i.cantact_email}
+                contact_email={i.contact_email}
                 contact_name={i.contact_name}
                 contact_number={i.contact_number}
                 description={i.description}
@@ -99,7 +99,7 @@ const Med = ({user}) => {
                 verified_by={i.verified_by}
                 verified_date={i.verified_date}
                 available={i.available}
-                medcondition={i.condition}
+                omrcondition={i.condition}
                 medtype={i.type}
                 medicine_name={i.medicine_name}
                 medprice={i.price}

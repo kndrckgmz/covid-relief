@@ -15,7 +15,7 @@ const Form = ({collectionname}) =>{
     const [inputcontactnum, setInputCNum] = useState("");
     const [inputcontactemail, setInputCEmail] = useState("");
     const [inputlink, setInputLink] = useState("");
-    const [inputverified, setInputVerified] = useState();
+    const [inputverified, setInputVerified] = useState("");
     const [inputverifiedby, setInputVerifiedBy] = useState("");
     const [inputcomments, setInputComment] = useState("");
     const [inputavailable, setInputAvailable] = useState(false);
@@ -25,12 +25,12 @@ const Form = ({collectionname}) =>{
     const [inputbloodgroup, setInputBloodGroup] = useState("");
     const [inputrecoverydate, setInputRecoveryDate] = useState("");
     const [inputvaccinated, setInputVaccinated] = useState(false);
-    const [inputomrcondition, setInputOMRCondition] = useState();
-    const [inputoxygentype, setInputOxygenType] = useState();
-    const [inputmedtype, setInputMedType] = useState();
-    const [inputpbtype, setInputPBType] = useState();
-    const [inputfoodtype, setInputFoodType] = useState();
-    const [inputcosultationtype, setInputConsultationType] = useState();
+    const [inputomrcondition, setInputOMRCondition] = useState("");
+    const [inputoxygentype, setInputOxygenType] = useState("");
+    const [inputmedtype, setInputMedType] = useState("");
+    const [inputpbtype, setInputPBType] = useState("");
+    const [inputfoodtype, setInputFoodType] = useState("");
+    const [inputcosultationtype, setInputConsultationType] = useState("");
 
 
     const consultationtypeinput = (e) => {
@@ -111,120 +111,559 @@ const Form = ({collectionname}) =>{
     
     const setLink = (e) =>{
     e.preventDefault();
-    if (inputname!==""&&inputcontactname!==""&&inputcontactnum!==""&&inputverified!==undefined)
+    if (inputname!==""&&inputcontactname!==""&&inputcontactnum!=="")
     {
-    if (collectionname==="AmbulanceService"||collectionname==="BedAvailability"||collectionname==="HomeTesting"||collectionname==="TeleCounselling")
-    {
-        setBtnTxt("PLEASE WAIT");
-        let btn = document.getElementById("add-btn");
-        btn.disabled=true;
-        btn.style.backgroundColor="var(--lgrey)";
-        let docRef = db.collection(`${collectionname}`).doc();
-        docRef.set({
-            id:docRef.id,
-            name : inputname,
-            description : inputdesc,
-            location_coverd : inputlocation,
-            timings : inputtiming,
-            contact_name : inputcontactname,
-            contact_number : inputcontactnum,
-            contact_email : inputcontactemail,
-            link_to_go : inputlink,
-            verified : inputverified,
-            verified_by : inputverifiedby,
-            verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
-            source : inputsource,
-            comments : inputcomments,
-            last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
-            available : inputavailable
-        })
-        .then(() => {
-            setInputName("");
-            setInputDesc("");
-            setInputLoc("");
-            setInputTime("");
-            setInputCName("");
-            setInputCNum("");
-            setInputCEmail("");
-            setInputLink("");
-            setInputVerified(1);
-            setInputVerifiedBy("");
-            setInputSource("");
-            setInputComment("");
-            setInputAvailable(false);
-            setTry("Your Link has Been Added Below.")
-            let success = document.getElementById("add-link");
-            success.style.opacity = 1;
-            success.style.color = "var(--accent)";
-            setTimeout(()=>{
-                success.style.color = "unset";
-                success.style.opacity = 0;
-                btn.disabled=false;
-                btn.style.backgroundColor="var(--accent)";
-                setBtnTxt("ADD LINK");
-            },1500);
-        });
+
+            if (collectionname==="AmbulanceService"||collectionname==="BedAvailability"||collectionname==="HomeTesting"||collectionname==="TeleCounselling")
+            {
+                setBtnTxt("PLEASE WAIT");
+                let btn = document.getElementById("add-btn");
+                btn.disabled=true;
+                btn.style.backgroundColor="var(--lgrey)";
+                let docRef = db.collection(`${collectionname}`).doc();
+                docRef.set({
+                    id:docRef.id,
+                    name : inputname,
+                    description : inputdesc,
+                    location_covered : inputlocation,
+                    timings : inputtiming,
+                    contact_name : inputcontactname,
+                    contact_number : inputcontactnum,
+                    contact_email : inputcontactemail,
+                    link_to_go : inputlink,
+                    verified : inputverified,
+                    verified_by : inputverifiedby,
+                    verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                    source : inputsource,
+                    comments : inputcomments,
+                    last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                    available : inputavailable
+                })
+                .then(() => {
+                    setInputName("");
+                    setInputDesc("");
+                    setInputLoc("");
+                    setInputTime("");
+                    setInputCName("");
+                    setInputCNum("");
+                    setInputCEmail("");
+                    setInputLink("");
+                    setInputVerified("");
+                    setInputVerifiedBy("");
+                    setInputSource("");
+                    setInputComment("");
+                    setInputAvailable(false);
+                    setTry("Your Link has Been Added Below.")
+                    let success = document.getElementById("add-link");
+                    success.style.opacity = 1;
+                    success.style.color = "var(--accent)";
+                    setTimeout(()=>{
+                        success.style.color = "unset";
+                        success.style.opacity = 0;
+                        btn.disabled=false;
+                        btn.style.backgroundColor="var(--accent)";
+                        setBtnTxt("ADD LINK");
+                    },1500);
+                });
+            }
+            else if (collectionname==="BloodDonors")
+            {   
+                if(inputbloodgroup!==""&&inputpbtype!=="")
+                {
+                setBtnTxt("PLEASE WAIT");
+                let btn = document.getElementById("add-btn");
+                btn.disabled=true;
+                btn.style.backgroundColor="var(--lgrey)";
+                let docRef = db.collection(`${collectionname}`).doc();
+                docRef.set({
+                    id:docRef.id,
+                    name : inputname,
+                    description : inputdesc,
+                    location_covered : inputlocation,
+                    timings : inputtiming,
+                    contact_name : inputcontactname,
+                    contact_number : inputcontactnum,
+                    contact_email : inputcontactemail,
+                    link_to_go : inputlink,
+                    verified : inputverified,
+                    verified_by : inputverifiedby,
+                    verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                    source : inputsource,
+                    comments : inputcomments,
+                    last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                    available : inputavailable,
+                    type : inputpbtype,
+                    blood_group : inputbloodgroup,
+                })
+                .then(() => {
+                    setInputName("");
+                    setInputDesc("");
+                    setInputLoc("");
+                    setInputTime("");
+                    setInputCName("");
+                    setInputCNum("");
+                    setInputCEmail("");
+                    setInputLink("");
+                    setInputVerified("");
+                    setInputVerifiedBy("");
+                    setInputSource("");
+                    setInputComment("");
+                    setInputAvailable(false);
+                    setInputBloodGroup("")
+                    setInputPBType("");
+                    setTry("Your Link has Been Added Below.")
+                    let success = document.getElementById("add-link");
+                    success.style.opacity = 1;
+                    success.style.color = "var(--accent)";
+                    setTimeout(()=>{
+                        success.style.color = "unset";
+                        success.style.opacity = 0;
+                        btn.disabled=false;
+                        btn.style.backgroundColor="var(--accent)";
+                        setBtnTxt("ADD LINK");
+                    },1500);
+                });
+                }
+                else
+                {
+                    setTry("Please Enter Required Fields.")
+                    let fail = document.getElementById("add-link");
+                    fail.style.opacity = 1;
+                    fail.style.color = "var(--red)";
+                    setTimeout(()=>{
+                        fail.style.color = "unset";
+                        fail.style.opacity = 0;
+                    },2000);
+                }
+            }
+            else if (collectionname==="Medicine")
+            {   
+                if(inputomrcondition!==""&&inputmedtype!==""&&inputmedname!=="")
+                {
+                setBtnTxt("PLEASE WAIT");
+                let btn = document.getElementById("add-btn");
+                btn.disabled=true;
+                btn.style.backgroundColor="var(--lgrey)";
+                let docRef = db.collection(`${collectionname}`).doc();
+                docRef.set({
+                    id:docRef.id,
+                    name : inputname,
+                    description : inputdesc,
+                    location_covered : inputlocation,
+                    timings : inputtiming,
+                    contact_name : inputcontactname,
+                    contact_number : inputcontactnum,
+                    contact_email : inputcontactemail,
+                    link_to_go : inputlink,
+                    verified : inputverified,
+                    verified_by : inputverifiedby,
+                    verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                    source : inputsource,
+                    comments : inputcomments,
+                    last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                    available : inputavailable,
+                    type : inputmedtype,
+                    condition : inputomrcondition,
+                    medicine_name : inputmedname,
+                    price : inputprice,
+                })
+                .then(() => {
+                    setInputName("");
+                    setInputDesc("");
+                    setInputLoc("");
+                    setInputTime("");
+                    setInputCName("");
+                    setInputCNum("");
+                    setInputCEmail("");
+                    setInputLink("");
+                    setInputVerified("");
+                    setInputVerifiedBy("");
+                    setInputSource("");
+                    setInputComment("");
+                    setInputAvailable(false);
+                    setInputMedType("");
+                    setInputMedName("");
+                    setInputOMRCondition("");
+                    setInputPrice("");
+                    setTry("Your Link has Been Added Below.")
+                    let success = document.getElementById("add-link");
+                    success.style.opacity = 1;
+                    success.style.color = "var(--accent)";
+                    setTimeout(()=>{
+                        success.style.color = "unset";
+                        success.style.opacity = 0;
+                        btn.disabled=false;
+                        btn.style.backgroundColor="var(--accent)";
+                        setBtnTxt("ADD LINK");
+                    },1500);
+                });
+                }
+                else
+                {
+                setTry("Please Enter Required Fields.")
+                let fail = document.getElementById("add-link");
+                fail.style.opacity = 1;
+                fail.style.color = "var(--red)";
+                setTimeout(()=>{
+                    fail.style.color = "unset";
+                    fail.style.opacity = 0;
+                },2000);
+                }
+            }
+            else if (collectionname==="Food")
+            {   
+                if(inputfoodtype!=="")
+                {
+                setBtnTxt("PLEASE WAIT");
+                let btn = document.getElementById("add-btn");
+                btn.disabled=true;
+                btn.style.backgroundColor="var(--lgrey)";
+                let docRef = db.collection(`${collectionname}`).doc();
+                docRef.set({
+                    id:docRef.id,
+                    name : inputname,
+                    description : inputdesc,
+                    location_covered : inputlocation,
+                    timings : inputtiming,
+                    contact_name : inputcontactname,
+                    contact_number : inputcontactnum,
+                    contact_email : inputcontactemail,
+                    link_to_go : inputlink,
+                    verified : inputverified,
+                    verified_by : inputverifiedby,
+                    verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                    source : inputsource,
+                    comments : inputcomments,
+                    last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                    available : inputavailable,
+                    type : inputfoodtype,
+                })
+                .then(() => {
+                    setInputName("");
+                    setInputDesc("");
+                    setInputLoc("");
+                    setInputTime("");
+                    setInputCName("");
+                    setInputCNum("");
+                    setInputCEmail("");
+                    setInputLink("");
+                    setInputVerified("");
+                    setInputVerifiedBy("");
+                    setInputSource("");
+                    setInputComment("");
+                    setInputAvailable(false);
+                    setInputFoodType("");
+                    setTry("Your Link has Been Added Below.")
+                    let success = document.getElementById("add-link");
+                    success.style.opacity = 1;
+                    success.style.color = "var(--accent)";
+                    setTimeout(()=>{
+                        success.style.color = "unset";
+                        success.style.opacity = 0;
+                        btn.disabled=false;
+                        btn.style.backgroundColor="var(--accent)";
+                        setBtnTxt("ADD LINK");
+                    },1500);
+                });
+                }
+                else
+                {
+                setTry("Please Enter Required Fields.")
+                let fail = document.getElementById("add-link");
+                fail.style.opacity = 1;
+                fail.style.color = "var(--red)";
+                setTimeout(()=>{
+                    fail.style.color = "unset";
+                    fail.style.opacity = 0;
+                },2000);
+                }
+            }
+            else if (collectionname==="OnlineDoctorConsultation")
+            {   
+                if(inputcosultationtype!=="")
+                {
+                setBtnTxt("PLEASE WAIT");
+                let btn = document.getElementById("add-btn");
+                btn.disabled=true;
+                btn.style.backgroundColor="var(--lgrey)";
+                let docRef = db.collection(`${collectionname}`).doc();
+                docRef.set({
+                    id:docRef.id,
+                    name : inputname,
+                    description : inputdesc,
+                    location_covered : inputlocation,
+                    timings : inputtiming,
+                    contact_name : inputcontactname,
+                    contact_number : inputcontactnum,
+                    contact_email : inputcontactemail,
+                    link_to_go : inputlink,
+                    verified : inputverified,
+                    verified_by : inputverifiedby,
+                    verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                    source : inputsource,
+                    comments : inputcomments,
+                    last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                    available : inputavailable,
+                    type : inputcosultationtype,
+                })
+                .then(() => {
+                    setInputName("");
+                    setInputDesc("");
+                    setInputLoc("");
+                    setInputTime("");
+                    setInputCName("");
+                    setInputCNum("");
+                    setInputCEmail("");
+                    setInputLink("");
+                    setInputVerified("");
+                    setInputVerifiedBy("");
+                    setInputSource("");
+                    setInputComment("");
+                    setInputAvailable(false);
+                    setInputConsultationType();
+                    setTry("Your Link has Been Added Below.")
+                    let success = document.getElementById("add-link");
+                    success.style.opacity = 1;
+                    success.style.color = "var(--accent)";
+                    setTimeout(()=>{
+                        success.style.color = "unset";
+                        success.style.opacity = 0;
+                        btn.disabled=false;
+                        btn.style.backgroundColor="var(--accent)";
+                        setBtnTxt("ADD LINK");
+                    },1500);
+                });
+                }
+                else
+                {
+                setTry("Please Enter Required Fields.")
+                let fail = document.getElementById("add-link");
+                fail.style.opacity = 1;
+                fail.style.color = "var(--red)";
+                setTimeout(()=>{
+                    fail.style.color = "unset";
+                    fail.style.opacity = 0;
+                },2000);
+                }
+            }
+            else if (collectionname==="Oxygen")
+            {   
+                if(inputomrcondition!==""&&inputoxygentype!=="")
+                {
+                setBtnTxt("PLEASE WAIT");
+                let btn = document.getElementById("add-btn");
+                btn.disabled=true;
+                btn.style.backgroundColor="var(--lgrey)";
+                let docRef = db.collection(`${collectionname}`).doc();
+                docRef.set({
+                    id:docRef.id,
+                    name : inputname,
+                    description : inputdesc,
+                    location_covered : inputlocation,
+                    timings : inputtiming,
+                    contact_name : inputcontactname,
+                    contact_number : inputcontactnum,
+                    contact_email : inputcontactemail,
+                    link_to_go : inputlink,
+                    verified : inputverified,
+                    verified_by : inputverifiedby,
+                    verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                    source : inputsource,
+                    comments : inputcomments,
+                    last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                    available : inputavailable,
+                    condition : inputomrcondition,
+                    type : inputoxygentype,
+                    capacity : inputcapacity,
+                    price : inputprice
+                })
+                .then(() => {
+                    setInputName("");
+                    setInputDesc("");
+                    setInputLoc("");
+                    setInputTime("");
+                    setInputCName("");
+                    setInputCNum("");
+                    setInputCEmail("");
+                    setInputLink("");
+                    setInputVerified("");
+                    setInputVerifiedBy("");
+                    setInputSource("");
+                    setInputComment("");
+                    setInputAvailable(false);
+                    setInputOMRCondition("");
+                    setInputOxygenType("");
+                    setInputCapacity("");
+                    setInputPrice("");
+                    setTry("Your Link has Been Added Below.")
+                    let success = document.getElementById("add-link");
+                    success.style.opacity = 1;
+                    success.style.color = "var(--accent)";
+                    setTimeout(()=>{
+                        success.style.color = "unset";
+                        success.style.opacity = 0;
+                        btn.disabled=false;
+                        btn.style.backgroundColor="var(--accent)";
+                        setBtnTxt("ADD LINK");
+                    },1500);
+                });
+                }
+                else
+                {
+                setTry("Please Enter Required Fields.")
+                let fail = document.getElementById("add-link");
+                fail.style.opacity = 1;
+                fail.style.color = "var(--red)";
+                setTimeout(()=>{
+                    fail.style.color = "unset";
+                    fail.style.opacity = 0;
+                },2000);
+                }
+            }
+            else if (collectionname==="PlasmaDonors")
+            {   
+                if(inputpbtype!==""&&inputbloodgroup!=="")
+                {
+                setBtnTxt("PLEASE WAIT");
+                let btn = document.getElementById("add-btn");
+                btn.disabled=true;
+                btn.style.backgroundColor="var(--lgrey)";
+                let docRef = db.collection(`${collectionname}`).doc();
+                docRef.set({
+                    id:docRef.id,
+                    name : inputname,
+                    description : inputdesc,
+                    location_covered : inputlocation,
+                    timings : inputtiming,
+                    contact_name : inputcontactname,
+                    contact_number : inputcontactnum,
+                    contact_email : inputcontactemail,
+                    link_to_go : inputlink,
+                    verified : inputverified,
+                    verified_by : inputverifiedby,
+                    verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                    source : inputsource,
+                    comments : inputcomments,
+                    last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                    available : inputavailable,
+                    type : inputpbtype,
+                    blood_group : inputbloodgroup,
+                    covid_recovery_date : inputrecoverydate,
+                    vaccinated : inputvaccinated,
+                })
+                .then(() => {
+                    setInputName("");
+                    setInputDesc("");
+                    setInputLoc("");
+                    setInputTime("");
+                    setInputCName("");
+                    setInputCNum("");
+                    setInputCEmail("");
+                    setInputLink("");
+                    setInputVerified("");
+                    setInputVerifiedBy("");
+                    setInputSource("");
+                    setInputComment("");
+                    setInputAvailable(false);
+                    setInputPBType("");
+                    setInputBloodGroup("");
+                    setInputRecoveryDate("");
+                    setInputVaccinated(false);
+                    setTry("Your Link has Been Added Below.")
+                    let success = document.getElementById("add-link");
+                    success.style.opacity = 1;
+                    success.style.color = "var(--accent)";
+                    setTimeout(()=>{
+                        success.style.color = "unset";
+                        success.style.opacity = 0;
+                        btn.disabled=false;
+                        btn.style.backgroundColor="var(--accent)";
+                        setBtnTxt("ADD LINK");
+                    },1500);
+                });
+                }
+                else
+                {
+                setTry("Please Enter Required Fields.")
+                let fail = document.getElementById("add-link");
+                fail.style.opacity = 1;
+                fail.style.color = "var(--red)";
+                setTimeout(()=>{
+                    fail.style.color = "unset";
+                    fail.style.opacity = 0;
+                },2000);
+                }
+            }
+            else if (collectionname==="Remedesivir")
+            {   
+                if(inputomrcondition!=="")
+                {
+                setBtnTxt("PLEASE WAIT");
+                let btn = document.getElementById("add-btn");
+                btn.disabled=true;
+                btn.style.backgroundColor="var(--lgrey)";
+                let docRef = db.collection(`${collectionname}`).doc();
+                docRef.set({
+                    id:docRef.id,
+                    name : inputname,
+                    description : inputdesc,
+                    location_covered : inputlocation,
+                    timings : inputtiming,
+                    contact_name : inputcontactname,
+                    contact_number : inputcontactnum,
+                    contact_email : inputcontactemail,
+                    link_to_go : inputlink,
+                    verified : inputverified,
+                    verified_by : inputverifiedby,
+                    verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
+                    source : inputsource,
+                    comments : inputcomments,
+                    last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
+                    available : inputavailable,
+                    condition : inputomrcondition,
+                })
+                .then(() => {
+                    setInputName("");
+                    setInputDesc("");
+                    setInputLoc("");
+                    setInputTime("");
+                    setInputCName("");
+                    setInputCNum("");
+                    setInputCEmail("");
+                    setInputLink("");
+                    setInputVerified("");
+                    setInputVerifiedBy("");
+                    setInputSource("");
+                    setInputComment("");
+                    setInputAvailable(false);
+                    setInputOMRCondition("");
+                    setTry("Your Link has Been Added Below.")
+                    let success = document.getElementById("add-link");
+                    success.style.opacity = 1;
+                    success.style.color = "var(--accent)";
+                    setTimeout(()=>{
+                        success.style.color = "unset";
+                        success.style.opacity = 0;
+                        btn.disabled=false;
+                        btn.style.backgroundColor="var(--accent)";
+                        setBtnTxt("ADD LINK");
+                    },1500);
+                });
+                }
+                else
+                {
+                setTry("Please Enter Required Fields.")
+                let fail = document.getElementById("add-link");
+                fail.style.opacity = 1;
+                fail.style.color = "var(--red)";
+                setTimeout(()=>{
+                    fail.style.color = "unset";
+                    fail.style.opacity = 0;
+                },2000);
+                }
+            }
     }
-    else if (collectionname==="BloodDonors")
-    {   
-        if(inputbloodgroup!==""&&inputpbtype!==undefined)
-        {
-        setBtnTxt("PLEASE WAIT");
-        let btn = document.getElementById("add-btn");
-        btn.disabled=true;
-        btn.style.backgroundColor="var(--lgrey)";
-        let docRef = db.collection(`${collectionname}`).doc();
-        docRef.set({
-            id:docRef.id,
-            name : inputname,
-            description : inputdesc,
-            location_coverd : inputlocation,
-            timings : inputtiming,
-            contact_name : inputcontactname,
-            contact_number : inputcontactnum,
-            contact_email : inputcontactemail,
-            link_to_go : inputlink,
-            verified : inputverified,
-            verified_by : inputverifiedby,
-            verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
-            source : inputsource,
-            comments : inputcomments,
-            last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
-            available : inputavailable,
-            type : inputpbtype,
-            blood_group : inputbloodgroup,
-        })
-        .then(() => {
-            setInputName("");
-            setInputDesc("");
-            setInputLoc("");
-            setInputTime("");
-            setInputCName("");
-            setInputCNum("");
-            setInputCEmail("");
-            setInputLink("");
-            setInputVerified(1);
-            setInputVerifiedBy("");
-            setInputSource("");
-            setInputComment("");
-            setInputAvailable(false);
-            setInputBloodGroup("")
-            setInputPBType();
-            setTry("Your Link has Been Added Below.")
-            let success = document.getElementById("add-link");
-            success.style.opacity = 1;
-            success.style.color = "var(--accent)";
-            setTimeout(()=>{
-                success.style.color = "unset";
-                success.style.opacity = 0;
-                btn.disabled=false;
-                btn.style.backgroundColor="var(--accent)";
-                setBtnTxt("ADD LINK");
-            },1500);
-        });
-        }
-        else
-        {
+    else{
             setTry("Please Enter Required Fields.")
             let fail = document.getElementById("add-link");
             fail.style.opacity = 1;
@@ -234,445 +673,6 @@ const Form = ({collectionname}) =>{
                 fail.style.opacity = 0;
             },2000);
         }
-    }
-    else if (collectionname==="Medicine")
-    {   
-        if(inputomrcondition!==undefined&&inputmedtype!==undefined&&inputmedname!=="")
-        {
-        setBtnTxt("PLEASE WAIT");
-        let btn = document.getElementById("add-btn");
-        btn.disabled=true;
-        btn.style.backgroundColor="var(--lgrey)";
-        let docRef = db.collection(`${collectionname}`).doc();
-        docRef.set({
-            id:docRef.id,
-            name : inputname,
-            description : inputdesc,
-            location_coverd : inputlocation,
-            timings : inputtiming,
-            contact_name : inputcontactname,
-            contact_number : inputcontactnum,
-            contact_email : inputcontactemail,
-            link_to_go : inputlink,
-            verified : inputverified,
-            verified_by : inputverifiedby,
-            verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
-            source : inputsource,
-            comments : inputcomments,
-            last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
-            available : inputavailable,
-            type : inputmedtype,
-            condition : inputomrcondition,
-            medicine_name : inputmedname,
-            price : inputprice,
-        })
-        .then(() => {
-            setInputName("");
-            setInputDesc("");
-            setInputLoc("");
-            setInputTime("");
-            setInputCName("");
-            setInputCNum("");
-            setInputCEmail("");
-            setInputLink("");
-            setInputVerified(1);
-            setInputVerifiedBy("");
-            setInputSource("");
-            setInputComment("");
-            setInputAvailable(false);
-            setInputMedType();
-            setInputMedName("");
-            setInputOMRCondition();
-            setInputPrice("");
-            setTry("Your Link has Been Added Below.")
-            let success = document.getElementById("add-link");
-            success.style.opacity = 1;
-            success.style.color = "var(--accent)";
-            setTimeout(()=>{
-                success.style.color = "unset";
-                success.style.opacity = 0;
-                btn.disabled=false;
-                btn.style.backgroundColor="var(--accent)";
-                setBtnTxt("ADD LINK");
-            },1500);
-        });
-        }
-        else
-        {
-        setTry("Please Enter Required Fields.")
-        let fail = document.getElementById("add-link");
-        fail.style.opacity = 1;
-        fail.style.color = "var(--red)";
-        setTimeout(()=>{
-            fail.style.color = "unset";
-            fail.style.opacity = 0;
-        },2000);
-        }
-    }
-    else if (collectionname==="Food")
-    {   
-        if(inputfoodtype!==undefined)
-        {
-        setBtnTxt("PLEASE WAIT");
-        let btn = document.getElementById("add-btn");
-        btn.disabled=true;
-        btn.style.backgroundColor="var(--lgrey)";
-        let docRef = db.collection(`${collectionname}`).doc();
-        docRef.set({
-            id:docRef.id,
-            name : inputname,
-            description : inputdesc,
-            location_coverd : inputlocation,
-            timings : inputtiming,
-            contact_name : inputcontactname,
-            contact_number : inputcontactnum,
-            contact_email : inputcontactemail,
-            link_to_go : inputlink,
-            verified : inputverified,
-            verified_by : inputverifiedby,
-            verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
-            source : inputsource,
-            comments : inputcomments,
-            last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
-            available : inputavailable,
-            type : inputfoodtype,
-        })
-        .then(() => {
-            setInputName("");
-            setInputDesc("");
-            setInputLoc("");
-            setInputTime("");
-            setInputCName("");
-            setInputCNum("");
-            setInputCEmail("");
-            setInputLink("");
-            setInputVerified(1);
-            setInputVerifiedBy("");
-            setInputSource("");
-            setInputComment("");
-            setInputAvailable(false);
-            setInputFoodType();
-            setTry("Your Link has Been Added Below.")
-            let success = document.getElementById("add-link");
-            success.style.opacity = 1;
-            success.style.color = "var(--accent)";
-            setTimeout(()=>{
-                success.style.color = "unset";
-                success.style.opacity = 0;
-                btn.disabled=false;
-                btn.style.backgroundColor="var(--accent)";
-                setBtnTxt("ADD LINK");
-            },1500);
-        });
-        }
-        else
-        {
-        setTry("Please Enter Required Fields.")
-        let fail = document.getElementById("add-link");
-        fail.style.opacity = 1;
-        fail.style.color = "var(--red)";
-        setTimeout(()=>{
-            fail.style.color = "unset";
-            fail.style.opacity = 0;
-        },2000);
-        }
-    }
-    else if (collectionname==="OnlineDoctorConsultation")
-    {   
-        if(inputcosultationtype!==undefined)
-        {
-        setBtnTxt("PLEASE WAIT");
-        let btn = document.getElementById("add-btn");
-        btn.disabled=true;
-        btn.style.backgroundColor="var(--lgrey)";
-        let docRef = db.collection(`${collectionname}`).doc();
-        docRef.set({
-            id:docRef.id,
-            name : inputname,
-            description : inputdesc,
-            location_coverd : inputlocation,
-            timings : inputtiming,
-            contact_name : inputcontactname,
-            contact_number : inputcontactnum,
-            contact_email : inputcontactemail,
-            link_to_go : inputlink,
-            verified : inputverified,
-            verified_by : inputverifiedby,
-            verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
-            source : inputsource,
-            comments : inputcomments,
-            last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
-            available : inputavailable,
-            type : inputcosultationtype,
-        })
-        .then(() => {
-            setInputName("");
-            setInputDesc("");
-            setInputLoc("");
-            setInputTime("");
-            setInputCName("");
-            setInputCNum("");
-            setInputCEmail("");
-            setInputLink("");
-            setInputVerified(1);
-            setInputVerifiedBy("");
-            setInputSource("");
-            setInputComment("");
-            setInputAvailable(false);
-            setInputConsultationType();
-            setTry("Your Link has Been Added Below.")
-            let success = document.getElementById("add-link");
-            success.style.opacity = 1;
-            success.style.color = "var(--accent)";
-            setTimeout(()=>{
-                success.style.color = "unset";
-                success.style.opacity = 0;
-                btn.disabled=false;
-                btn.style.backgroundColor="var(--accent)";
-                setBtnTxt("ADD LINK");
-            },1500);
-        });
-        }
-        else
-        {
-        setTry("Please Enter Required Fields.")
-        let fail = document.getElementById("add-link");
-        fail.style.opacity = 1;
-        fail.style.color = "var(--red)";
-        setTimeout(()=>{
-            fail.style.color = "unset";
-            fail.style.opacity = 0;
-        },2000);
-        }
-    }
-    else if (collectionname==="Oxygen")
-    {   
-        if(inputomrcondition!==undefined&&inputoxygentype!==undefined)
-        {
-        setBtnTxt("PLEASE WAIT");
-        let btn = document.getElementById("add-btn");
-        btn.disabled=true;
-        btn.style.backgroundColor="var(--lgrey)";
-        let docRef = db.collection(`${collectionname}`).doc();
-        docRef.set({
-            id:docRef.id,
-            name : inputname,
-            description : inputdesc,
-            location_coverd : inputlocation,
-            timings : inputtiming,
-            contact_name : inputcontactname,
-            contact_number : inputcontactnum,
-            contact_email : inputcontactemail,
-            link_to_go : inputlink,
-            verified : inputverified,
-            verified_by : inputverifiedby,
-            verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
-            source : inputsource,
-            comments : inputcomments,
-            last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
-            available : inputavailable,
-            condition : inputomrcondition,
-            type : inputoxygentype,
-            capacity : inputcapacity,
-            price : inputprice
-        })
-        .then(() => {
-            setInputName("");
-            setInputDesc("");
-            setInputLoc("");
-            setInputTime("");
-            setInputCName("");
-            setInputCNum("");
-            setInputCEmail("");
-            setInputLink("");
-            setInputVerified(1);
-            setInputVerifiedBy("");
-            setInputSource("");
-            setInputComment("");
-            setInputAvailable(false);
-            setInputOMRCondition();
-            setInputOxygenType();
-            setInputCapacity("");
-            setInputPrice("");
-            setTry("Your Link has Been Added Below.")
-            let success = document.getElementById("add-link");
-            success.style.opacity = 1;
-            success.style.color = "var(--accent)";
-            setTimeout(()=>{
-                success.style.color = "unset";
-                success.style.opacity = 0;
-                btn.disabled=false;
-                btn.style.backgroundColor="var(--accent)";
-                setBtnTxt("ADD LINK");
-            },1500);
-        });
-        }
-        else
-        {
-        setTry("Please Enter Required Fields.")
-        let fail = document.getElementById("add-link");
-        fail.style.opacity = 1;
-        fail.style.color = "var(--red)";
-        setTimeout(()=>{
-            fail.style.color = "unset";
-            fail.style.opacity = 0;
-        },2000);
-        }
-    }
-    else if (collectionname==="PlasmaDonors")
-    {   
-        if(inputpbtype!==undefined&&inputbloodgroup!=="")
-        {
-        setBtnTxt("PLEASE WAIT");
-        let btn = document.getElementById("add-btn");
-        btn.disabled=true;
-        btn.style.backgroundColor="var(--lgrey)";
-        let docRef = db.collection(`${collectionname}`).doc();
-        docRef.set({
-            id:docRef.id,
-            name : inputname,
-            description : inputdesc,
-            location_coverd : inputlocation,
-            timings : inputtiming,
-            contact_name : inputcontactname,
-            contact_number : inputcontactnum,
-            contact_email : inputcontactemail,
-            link_to_go : inputlink,
-            verified : inputverified,
-            verified_by : inputverifiedby,
-            verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
-            source : inputsource,
-            comments : inputcomments,
-            last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
-            available : inputavailable,
-            type : inputpbtype,
-            blood_group : inputbloodgroup,
-            covid_recovery_date : inputrecoverydate,
-            vaccinated : inputvaccinated,
-        })
-        .then(() => {
-            setInputName("");
-            setInputDesc("");
-            setInputLoc("");
-            setInputTime("");
-            setInputCName("");
-            setInputCNum("");
-            setInputCEmail("");
-            setInputLink("");
-            setInputVerified(1);
-            setInputVerifiedBy("");
-            setInputSource("");
-            setInputComment("");
-            setInputAvailable(false);
-            setInputPBType();
-            setInputBloodGroup("");
-            setInputRecoveryDate("");
-            setInputVaccinated(false);
-            setTry("Your Link has Been Added Below.")
-            let success = document.getElementById("add-link");
-            success.style.opacity = 1;
-            success.style.color = "var(--accent)";
-            setTimeout(()=>{
-                success.style.color = "unset";
-                success.style.opacity = 0;
-                btn.disabled=false;
-                btn.style.backgroundColor="var(--accent)";
-                setBtnTxt("ADD LINK");
-            },1500);
-        });
-        }
-        else
-        {
-        setTry("Please Enter Required Fields.")
-        let fail = document.getElementById("add-link");
-        fail.style.opacity = 1;
-        fail.style.color = "var(--red)";
-        setTimeout(()=>{
-            fail.style.color = "unset";
-            fail.style.opacity = 0;
-        },2000);
-        }
-    }
-    else if (collectionname==="Remedesivir")
-    {   
-        if(inputomrcondition!==undefined)
-        {
-        setBtnTxt("PLEASE WAIT");
-        let btn = document.getElementById("add-btn");
-        btn.disabled=true;
-        btn.style.backgroundColor="var(--lgrey)";
-        let docRef = db.collection(`${collectionname}`).doc();
-        docRef.set({
-            id:docRef.id,
-            name : inputname,
-            description : inputdesc,
-            location_coverd : inputlocation,
-            timings : inputtiming,
-            contact_name : inputcontactname,
-            contact_number : inputcontactnum,
-            contact_email : inputcontactemail,
-            link_to_go : inputlink,
-            verified : inputverified,
-            verified_by : inputverifiedby,
-            verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
-            source : inputsource,
-            comments : inputcomments,
-            last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
-            available : inputavailable,
-            condition : inputomrcondition,
-        })
-        .then(() => {
-            setInputName("");
-            setInputDesc("");
-            setInputLoc("");
-            setInputTime("");
-            setInputCName("");
-            setInputCNum("");
-            setInputCEmail("");
-            setInputLink("");
-            setInputVerified(1);
-            setInputVerifiedBy("");
-            setInputSource("");
-            setInputComment("");
-            setInputAvailable(false);
-            setInputOMRCondition();
-            setTry("Your Link has Been Added Below.")
-            let success = document.getElementById("add-link");
-            success.style.opacity = 1;
-            success.style.color = "var(--accent)";
-            setTimeout(()=>{
-                success.style.color = "unset";
-                success.style.opacity = 0;
-                btn.disabled=false;
-                btn.style.backgroundColor="var(--accent)";
-                setBtnTxt("ADD LINK");
-            },1500);
-        });
-        }
-        else
-        {
-        setTry("Please Enter Required Fields.")
-        let fail = document.getElementById("add-link");
-        fail.style.opacity = 1;
-        fail.style.color = "var(--red)";
-        setTimeout(()=>{
-            fail.style.color = "unset";
-            fail.style.opacity = 0;
-        },2000);
-        }
-    }
-    
-    }
-    else{
-        setTry("Please Enter Required Fields.")
-        let fail = document.getElementById("add-link");
-        fail.style.opacity = 1;
-        fail.style.color = "var(--red)";
-        setTimeout(()=>{
-            fail.style.color = "unset";
-            fail.style.opacity = 0;
-        },2000);
-    }
     }
 
     return(
@@ -727,7 +727,7 @@ const Form = ({collectionname}) =>{
             <div className="form-data-title">Meta-data</div>
                 <div className="input-flex" >   
                     <label className="label">Verified<div className="red">*</div></label>
-                    <input className="input" onClick={verifiedinput} type="number" min="0" max="2" placeholder="0:Yes, 1:No, 2:Pending"></input>
+                    <input className="input" value={inputverified} onChange={verifiedinput} type="number" min="0" max="2" placeholder="0:Yes, 1:No, 2:Pending"></input>
                     </div>
                 <div className="input-flex" >   
                     <label className="label">Verified By</label>
@@ -744,7 +744,7 @@ const Form = ({collectionname}) =>{
                 <div className="input-flex">
                     <label className="label">Available</label>
                     <div className="checkbox-container">
-                    <input className="checkbox" type="checkbox" id="check" defaultChecked={inputavailable} onClick={availableinput}/>
+                    <input className="checkbox" type="checkbox" id="check" checked={inputavailable} onClick={availableinput}/>
                     <label htmlFor="check" className="switch"></label> 
                     </div>    
                 </div>

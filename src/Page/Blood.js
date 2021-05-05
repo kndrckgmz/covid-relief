@@ -20,7 +20,7 @@ const Blood = ({user}) => {
     const [linklist, setLinkList] = useState([]);
     const [collectionname, setCollectionName] = useState("BloodDonors");
     const [editlist, setEditList] = useState([]);
-    const [editid, setEditId] = useState();
+    const [editid, setEditId] = useState("");
     const [editname, setEditName] = useState("");
     const [editdesc, setEditDesc] = useState("");
     const [editlocation, setEditLoc] = useState("");
@@ -30,13 +30,13 @@ const Blood = ({user}) => {
     const [editcontactnum, setEditCNum] = useState("");
     const [editcontactemail, setEditCEmail] = useState("");
     const [editlink, setEditLink] = useState("");
-    const [editverified, setEditVerified] = useState();
+    const [editverified, setEditVerified] = useState("");
     const [editverifiedby, setEditVerifiedBy] = useState("");
     const [editcomments, setEditComment] = useState("");
     const [editavailable, setEditAvailable] = useState();
     const [editbloodgroup, setEditBloodGroup] = useState("");
-    const [editpbtype, setEditPBType] = useState();
-    
+    const [editpbtype, setEditPBType] = useState("");
+
     useEffect(()=>{
         setCollectionName("BloodDonors");
     },[]);
@@ -46,7 +46,7 @@ const Blood = ({user}) => {
         .onSnapshot(function(querySnapshot){
             setLinkList(querySnapshot.docs.map ((i)=>({
                 comments:i.data().comments,
-                contact_email:i.data().cantact_email,
+                contact_email:i.data().contact_email,
                 contact_name:i.data().contact_name,
                 contact_number:i.data().contact_number,
                 description:i.data().description,
@@ -78,7 +78,7 @@ const Blood = ({user}) => {
                 <Data
                 key={i.id}
                 comments={i.comments}
-                contact_email={i.cantact_email}
+                contact_email={i.contact_email}
                 contact_name={i.contact_name}
                 contact_number={i.contact_number}
                 description={i.description}

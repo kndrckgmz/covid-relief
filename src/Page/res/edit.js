@@ -65,18 +65,18 @@ const Editbtn = ({
     const [edit, setEdit] = useState();
     const [availabletext, setAvailableText] = useState();
     const [availablecolor, setAvailableColor] = useState(); 
+    const [cover, setCover] = useState("none");
 
     useEffect(()=>{
-
         if(available===true)
         {
             setAvailableText("Available");
-            setAvailableColor("var(--green)");
+            setAvailableColor("var(--accent)");
         }
         else if(available===false)
         {
             setAvailableText("Currently Unavailable");
-            setAvailableColor("var(--red)");
+            setAvailableColor("var(--mgrey)");
         }
     },[available]);
 
@@ -90,11 +90,171 @@ const Editbtn = ({
         }
     },[user]);
 
+    useEffect(()=>{
+        if (collectionname==="AmbulanceService"||collectionname==="BedAvailability"||collectionname==="HomeTesting"||collectionname==="TeleCounselling")
+        {
+            setEditName("");
+            setEditDesc("");
+            setEditLoc("");
+            setEditTime("");
+            setEditCName("");
+            setEditCNum(""); 
+            setEditCEmail(""); 
+            setEditLink("");
+            setEditVerified("");
+            setEditVerifiedBy("");
+            setEditSource("");
+            setEditComment("");
+            setEditAvailable(false);
+        }
+        else if (collectionname==="BloodDonors")
+        {   
+            setEditName("");
+            setEditDesc("");
+            setEditLoc("");
+            setEditTime("");
+            setEditCName("");
+            setEditCNum(""); 
+            setEditCEmail(""); 
+            setEditLink("");
+            setEditVerified("");
+            setEditVerifiedBy("");
+            setEditSource("");
+            setEditComment("");
+            setEditAvailable(false);
+            setEditPBType("");
+            setEditBloodGroup("");
+        }
+        else if (collectionname==="Medicine")
+        {   
+            setEditName("");
+            setEditDesc("");
+            setEditLoc("");
+            setEditTime("");
+            setEditCName("");
+            setEditCNum(""); 
+            setEditCEmail(""); 
+            setEditLink("");
+            setEditVerified("");
+            setEditVerifiedBy("");
+            setEditSource("");
+            setEditComment("");
+            setEditAvailable(false);
+            setEditMedType("");
+            setEditMedName("");
+            setEditOMRCondition("");
+            setEditPrice("");
+            
+        }
+        else if (collectionname==="Food")
+        {   
+            setEditName("");
+            setEditDesc("");
+            setEditLoc("");
+            setEditTime("");
+            setEditCName("");
+            setEditCNum(""); 
+            setEditCEmail(""); 
+            setEditLink("");
+            setEditVerified("");
+            setEditVerifiedBy("");
+            setEditSource("");
+            setEditComment("");
+            setEditAvailable(false);
+            setEditFoodType("");
+        }
+        else if (collectionname==="OnlineDoctorConsultation")
+        {   
+            setEditName("");
+            setEditDesc("");
+            setEditLoc("");
+            setEditTime("");
+            setEditCName("");
+            setEditCNum(""); 
+            setEditCEmail(""); 
+            setEditLink("");
+            setEditVerified("");
+            setEditVerifiedBy("");
+            setEditSource("");
+            setEditComment("");
+            setEditAvailable(false);;
+            setEditConsultationType("");
+        }
+        else if (collectionname==="Oxygen")
+        {   
+            setEditName("");
+            setEditDesc("");
+            setEditLoc("");
+            setEditTime("");
+            setEditCName("");
+            setEditCNum(""); 
+            setEditCEmail(""); 
+            setEditLink("");
+            setEditVerified("");
+            setEditVerifiedBy("");
+            setEditSource("");
+            setEditComment("");
+            setEditAvailable(false);
+            setEditOMRCondition("");
+            setEditOxygenType("");
+            setEditCapacity("");
+            setEditPrice("");
+        }
+        else if (collectionname==="PlasmaDonors")
+        {   
+            setEditName("");
+            setEditDesc("");
+            setEditLoc("");
+            setEditTime("");
+            setEditCName("");
+            setEditCNum(""); 
+            setEditCEmail(""); 
+            setEditLink("");
+            setEditVerified("");
+            setEditVerifiedBy("");
+            setEditSource("");
+            setEditComment("");
+            setEditAvailable(false);
+            setEditBloodGroup("");
+            setEditPBType("");
+            setEditRecoveryDate("");
+            setEditVaccinated(false);
+        }
+        else if (collectionname==="Remedesivir")
+        {   
+            setEditName("");
+            setEditDesc("");
+            setEditLoc("");
+            setEditTime("");
+            setEditCName("");
+            setEditCNum(""); 
+            setEditCEmail(""); 
+            setEditLink("");
+            setEditVerified("");
+            setEditVerifiedBy("");
+            setEditSource("");
+            setEditComment("");
+            setEditAvailable(false);
+            setEditOMRCondition("");
+        }        
+    },[editid]);
+
+
+
+    useEffect(()=>{
+        if(editid==="")
+        {
+            setCover("none")
+            let body = document.querySelector("body");
+            body.style.overflow = "unset";
+        }
+    },[editid])
+
+
     const popup = (e) =>{
         let body = document.querySelector("body");
         body.style.overflow = "hidden";      
-        let cover = document.getElementById("cover2");
-        cover.style.display = "grid";
+        setCover("grid");
         setEditId(e.target.getAttribute("idvalue"));
     }
 
@@ -106,30 +266,26 @@ const Editbtn = ({
         let cover = document.getElementById("cover2");
         let body = document.querySelector("body");
         if (e.target === cover) {
-            cover.style.display = "none";
             body.style.overflow = "unset";
-            // window.location.reload();
+            setCover("none");
             setEditId("");
-        }
-        
+        }   
     }
 
     const closemodalx = () => {
-        let cover = document.getElementById("cover2");
         let body = document.querySelector("body");
-        cover.style.display = "none";
         body.style.overflow = "unset";
+        setCover("none");
         setEditId("");
-        // window.location.reload();
     }
 
     return(
         <div className="edit-container" >
 
-            <div className="available" style={{color: `${availablecolor}`}}>{availabletext}</div>
+            <div className="available" style={{backgroundColor: `${availablecolor}`}}>{availabletext}</div>
             <div className="edit-btn" style={{display: `${edit}`}} onClick={popup} idvalue={id}>EDIT</div>
             
-        <div className="edit-cover" id="cover2" onClick={closemodal}>
+        <div className="edit-cover" id="cover2" style={{display: `${cover}`}} onClick={closemodal}>
  
         <div className="edit-modal">
 
@@ -145,11 +301,12 @@ const Editbtn = ({
             key={id}
             collectionname={collectionname}
             editid={editid}
+            setEditId={setEditId}
             editlist={editlist}
             setEditList={setEditList}
             editname={editname}
             setEditName={setEditName}
-            editDesc={editdesc}
+            editdesc={editdesc}
             setEditDesc={setEditDesc}
             editlocation={editlocation}
             setEditLoc={setEditLoc}

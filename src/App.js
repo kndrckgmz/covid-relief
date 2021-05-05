@@ -12,14 +12,82 @@ import Plasma from './Page/Plasma';
 import Rem from './Page/Remedesivir';
 import Testing from './Page/Testing';
 import Widget from './Page/res/widget';
+import Donor from './Page/res/donor';
+import Login from './Login';
+import fire from './Page/res/fire_config';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 function Main() {
 
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const clearInputs = () =>{
+    setEmail("");
+    setPassword("");
+  } 
+
+  const clearErrors = () =>{
+    setEmailError("");
+    setPasswordError("");
+  } 
+
+  const handleLogin = () => {
+    clearErrors();
+    fire
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .catch((err) => {
+      switch(err.code){
+        case "auth/invalid-email":
+        case "auth/user-disabled":
+        case "auth/user-not-found":
+          setEmailError(err.message);
+          break;
+        case "auth/wrong-password":
+          setPasswordError(err.message);
+          break;  
+      }
+    });
+  }
+
+  const handleSignUp = () => {
+    clearErrors();
+    fire
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .catch((err) => {
+      switch(err.code){
+        case "auth/email-already-in-use":
+        case "auth/invalid-email":
+          setEmailError(err.message);
+          break;
+        case "auth/weak-password":
+          setPasswordError(err.message);
+          break;  
+      }
+    });
+  }
+
+  const handleLogOut = () => {
+    fire.auth().signOut();
+  }
 
   useEffect(()=>{
-    setUser(true);
+      fire.auth().onAuthStateChanged((user) =>{
+        if(user)
+        {
+          clearInputs();
+          setUser(true);
+        }
+        else
+        {
+          setUser(false);
+        }
+      });
   },[]);
 
   return (
@@ -29,10 +97,21 @@ function Main() {
       <div className="header">
         <div className="title-container">
           <div className="title">COVID RELIEF</div>
+          <Donor/>
         </div>
         <Nav/>
       </div>
       <Switch>
+        <Route path="/Login" component={props => (<Login {...props} 
+          email={email}
+          setEmail={setEmail}
+          emailError={emailError}
+          password={password}
+          setPassword={setPassword}
+          passwordError={passwordError}
+          handleLogin={handleLogin}
+          handleLogOut={handleLogOut}
+        />)}></Route>
         <Route path="/" exact component={props => (<Ambulance {...props} user={user}/>)}></Route>
         <Route path="/Beds" component={props => (<Beds {...props} user={user}/>)}></Route>
         <Route path="/Blood" component={props => (<Blood {...props} user={user}/>)}></Route>

@@ -34,18 +34,6 @@ const Ambulance = ({user}) => {
     const [editverifiedby, setEditVerifiedBy] = useState("");
     const [editcomments, setEditComment] = useState("");
     const [editavailable, setEditAvailable] = useState();
-    const [editprice, setEditPrice] = useState("");
-    const [editcapacity, setEditCapacity] = useState("");
-    const [editmedname, setEditMedName] = useState("");
-    const [editbloodgroup, setEditBloodGroup] = useState("");
-    const [editrecoverydate, setEditRecoveryDate] = useState("");
-    const [editvaccinated, setEditVaccinated] = useState();
-    const [editomrcondition, setEditOMRCondition] = useState();
-    const [editoxygentype, setEditOxygenType] = useState();
-    const [editmedtype, setEditMedType] = useState();
-    const [editpbtype, setEditPBType] = useState();
-    const [editfoodtype, setEditFoodType] = useState();
-    const [editconsultationtype, setEditConsultationType] = useState();
     
     useEffect(()=>{
         setCollectionName("AmbulanceService");
@@ -57,7 +45,7 @@ const Ambulance = ({user}) => {
         .onSnapshot(function(querySnapshot){
             setLinkList(querySnapshot.docs.map ((i)=>({
                 comments:i.data().comments,
-                contact_email:i.data().cantact_email,
+                contact_email:i.data().contact_email,
                 contact_name:i.data().contact_name,
                 contact_number:i.data().contact_number,
                 description:i.data().description,
@@ -87,7 +75,7 @@ const Ambulance = ({user}) => {
                 <Data
                 key={i.id}
                 comments={i.comments}
-                contact_email={i.cantact_email}
+                contact_email={i.contact_email}
                 contact_name={i.contact_name}
                 contact_number={i.contact_number}
                 description={i.description}
@@ -110,7 +98,6 @@ const Ambulance = ({user}) => {
                 setEditList={setEditList}
                 editid={editid}
                 setEditId={setEditId}
-
                 editname={editname}
                 setEditName={setEditName}
                 editdesc={editdesc}
@@ -137,30 +124,6 @@ const Ambulance = ({user}) => {
                 setEditComment={setEditComment}
                 editavailable={editavailable}
                 setEditAvailable={setEditAvailable}
-                editprice={editprice}
-                setEditPrice={setEditPrice}
-                editcapacity={editcapacity}
-                setEditCapacity={setEditCapacity}
-                editmedname={editmedname}
-                setEditMedName={setEditMedName}
-                editmedtype={editmedtype}
-                setEditMedType={setEditMedType}
-                editbloodgroup={editbloodgroup}
-                setEditBloodGroup={setEditBloodGroup}
-                editrecoverydate={editrecoverydate}
-                setEditRecoveryDate={setEditRecoveryDate}
-                editvaccinated={editvaccinated}
-                setEditVaccinated={setEditVaccinated}
-                editomrcondition={editomrcondition}
-                setEditOMRCondition={setEditOMRCondition}
-                editoxygentype={editoxygentype}
-                setEditOxygenType={setEditOxygenType}
-                editpbtype={editpbtype}
-                setEditPBType={setEditPBType}
-                editfoodtype={editfoodtype}
-                setEditFoodType={setEditFoodType}
-                editconsultationtype={editconsultationtype}
-                setEditConsultationType={setEditConsultationType}
                 />
             ))}
             <a className="end" href="#top">PAGE END
