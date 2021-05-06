@@ -74,6 +74,7 @@ const Blood = ({user}) => {
     return(
         <div className="content" id="top">
         <Form collectionname={collectionname}/>
+        <div className="card-grid">
             {linklist.map((i)=>(
                 <Data
                 key={i.id}
@@ -136,6 +137,7 @@ const Blood = ({user}) => {
                 setEditPBType={setEditPBType}
                 />
             ))}
+            </div>
             <a className="end" href="#top">PAGE END
             <br/>
             <br/>

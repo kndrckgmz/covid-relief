@@ -11,6 +11,7 @@ const Editbtn = ({
     editid,
     setEditId,
     available,
+    last_update_time,
     editname,
     setEditName,
     editdesc,
@@ -62,33 +63,20 @@ const Editbtn = ({
     editconsultationtype,
     setEditConsultationType,}) => {
 
-    const [edit, setEdit] = useState();
-    const [availabletext, setAvailableText] = useState();
-    const [availablecolor, setAvailableColor] = useState(); 
+
     const [cover, setCover] = useState("none");
+    const [edit, setEdit] = useState("");
 
     useEffect(()=>{
-        if(available===true)
-        {
-            setAvailableText("Available");
-            setAvailableColor("var(--accent)");
-        }
-        else if(available===false)
-        {
-            setAvailableText("Currently Unavailable");
-            setAvailableColor("var(--mgrey)");
-        }
-    },[available]);
-
-    useEffect(()=>{
-        if(user===true){
-            setEdit("grid");
+        if(user!==true){
+            setEdit("none");
         }
         else
         {
-            setEdit("none");
+            setEdit("grid");
         }
-    },[user]);
+    },[user])
+;
 
     useEffect(()=>{
         if (collectionname==="AmbulanceService"||collectionname==="BedAvailability"||collectionname==="HomeTesting"||collectionname==="TeleCounselling")
@@ -282,7 +270,8 @@ const Editbtn = ({
     return(
         <div className="edit-container" >
 
-            <div className="available" style={{backgroundColor: `${availablecolor}`}}>{availabletext}</div>
+            <div className="time-data">Last Updated: {last_update_time}</div>
+                
             <div className="edit-btn" style={{display: `${edit}`}} onClick={popup} idvalue={id}>EDIT</div>
             
         <div className="edit-cover" id="cover2" style={{display: `${cover}`}} onClick={closemodal}>

@@ -73,6 +73,7 @@ const Food = ({user}) => {
     return(
         <div className="content" id="top">
         <Form collectionname={collectionname}/>
+        <div className="card-grid">
             {linklist.map((i)=>(
                 <Data
                 key={i.id}
@@ -131,6 +132,7 @@ const Food = ({user}) => {
                 setEditFoodType={setEditFoodType}
                 />
             ))}
+            </div>
             <a className="end" href="#top">PAGE END
             <br/>
             <br/>

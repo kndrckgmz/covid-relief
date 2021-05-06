@@ -15,7 +15,7 @@ const Nav = () => {
                 <NavLink to="/Consultation" className="link">Online Consultation</NavLink>
                 <NavLink to="/Oxygen" className="link">Oxygen</NavLink>
                 <NavLink to="/Plasma" className="link">Plasma Donors</NavLink>
-                <NavLink to="/Remedesivir" className="link">Remedesivir</NavLink>
+                <NavLink to="/Remedesivir" className="link">Remdesivir</NavLink>
                 <NavLink to="/Counselling" className="link">TeleCounselling</NavLink>
             </div>
         </div>

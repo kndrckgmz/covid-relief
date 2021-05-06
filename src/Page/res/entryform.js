@@ -675,12 +675,32 @@ const Form = ({collectionname}) =>{
         }
     }
 
-    return(
-      <>  
-            <div className="form-container" id="form">
+    const forminput = () =>{
+        let l1 = document.getElementById("l1");
+        let l2 = document.getElementById("l2");
+        l1.classList.toggle("line1-open");
+        l2.classList.toggle("line2-open");
+
+        let form = document.getElementById("entry-form");
+        form.classList.toggle("form-container-open");
+
+        let btn = document.getElementById("btn-flex");
+        btn.classList.toggle("btn-flex-open");
+    };
+
+    return( 
+      <div className="entry-form" id="form">
+            <div className="form-title-container" onClick={forminput}>
+                <div className="form-title">Add New Data</div>
+                    <div className="form-btn" >
+                        <div className="line1" id="l1"></div>
+                        <div className="line2" id="l2"></div>
+                    </div>
+                </div>
+
+            <div className="form-container" id="entry-form">
 
             <div className="add-content-flex">
-            
             <div className="form-details" id="form-input">
             <div className="form-data-title">Service Details</div>
                 <div className="input-flex" >   
@@ -892,14 +912,13 @@ const Form = ({collectionname}) =>{
                 })()
             }
              </div>
-            <div className="btn-flex">
-                <div className="try" id="add-link">{inputtry}</div>
 
-                <button className="add-link-btn" onClick={setLink} id="add-btn">{btntxt}</button>
-            </div>
         </div>
-            
-     </>   
+        <div className="btn-flex" id="btn-flex">
+            <div className="try" id="add-link">{inputtry}</div>
+            <button className="add-link-btn" onClick={setLink} id="add-btn">{btntxt}</button>
+        </div>
+    </div>      
     );
 
 };

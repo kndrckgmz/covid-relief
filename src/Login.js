@@ -37,19 +37,6 @@ const Login = ({logincheck, setLoginCheck}) => {
     });
   }
 
-
-  // switch(err.code){
-  //   case "auth/invalid-email":
-  //   case "auth/user-disabled":
-  //   case "auth/user-not-found":
-  //     setEmailError(err.message);
-  //     break;
-  //   case "auth/wrong-password":
-  //     setPasswordError(err.message);
-  //     break;  
-  // }
-
-
   const clearInputs = () =>{
     setEmail("");
     setPassword("");

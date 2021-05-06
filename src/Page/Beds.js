@@ -41,7 +41,7 @@ const Beds = ({user}) => {
 
 
     useEffect(() => {
-        db.collection(`${collectionname}`)
+        db.collection(`${collectionname}`).orderBy("last_update_time", "desc")
         .onSnapshot(function(querySnapshot){
             setLinkList
             (querySnapshot.docs.map((i)=>({
@@ -72,7 +72,8 @@ const Beds = ({user}) => {
 
     return(
         <div className="content" id="top">
-            <Form collectionname={collectionname}/>
+        <Form collectionname={collectionname}/>
+        <div className="card-grid">
             {linklist.map((i)=>(
                 <Data
                 key={i.id}
@@ -128,6 +129,7 @@ const Beds = ({user}) => {
                 setEditAvailable={setEditAvailable}
                 />
             ))}
+        </div>
             <a className="end" href="#top">PAGE END
             <br/>
             <br/>

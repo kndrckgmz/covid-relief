@@ -73,6 +73,7 @@ const Rem = ({user}) => {
     return(
         <div className="content" id="top">
         <Form collectionname={collectionname}/>
+        <div className="card-grid">
             {linklist.map((i)=>(
                 <Data
                 key={i.id}
@@ -131,6 +132,7 @@ const Rem = ({user}) => {
                 setEditOMRCondition={setEditOMRCondition}
                 />
             ))}
+            </div>
             <a className="end" href="#top">PAGE END
             <br/>
             <br/>

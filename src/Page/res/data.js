@@ -90,7 +90,9 @@ const Data = (
     setEditConsultationType,
     }
     ) => {
-        
+
+    const [availabletext, setAvailableText] = useState();
+    const [availablecolor, setAvailableColor] = useState();     
     const [verifiedtext, setVerifiedText] = useState();
     const [verifiedbytext, setVerifiedByText] = useState();
     const [verifieddatetext, setVerifiedDateText] = useState();
@@ -102,6 +104,20 @@ const Data = (
     const [medtypetext, setMedTypeText] = useState();
     const [oxytypetext, setOxyTypeText] = useState();
     const [vaccinatedtext, setVaccinatedText] = useState();
+
+    
+    useEffect(()=>{
+        if(available===true)
+        {
+            setAvailableText("Available");
+            setAvailableColor("var(--accent)");
+        }
+        else if(available===false)
+        {
+            setAvailableText("Currently Unavailable");
+            setAvailableColor("var(--mgrey)");
+        }
+    },[available]);
 
 
     useEffect(()=>{
@@ -261,10 +277,12 @@ const Data = (
 
     return(
         <div className="card">
-            
             <div className="name-container">
                 <div className="name">{name}</div>
-                <div className="verified-btn">
+                <div className="av-container">
+                    <div className="available" style={{backgroundColor: `${availablecolor}`}}>{availabletext}</div>
+                    <div className="verified-btn">
+
                     <svg xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 24 24">
                         <path className="verification-icon" style={{fill: `${color}`}} id="verification-icon" d="M22.42 11.34l-1.86-2.13l.26-2.82c.05-.5-.29-.96-.77-1.07l-2.76-.62l-1.44-2.44c-.26-.43-.79-.61-1.26-.41L12 2.96L9.41 1.85c-.46-.2-1-.02-1.25.41L6.71 4.69l-2.75.62c-.49.11-.83.56-.78 1.06l.26 2.83l-1.87 2.14c-.33.38-.33.94 0 1.32l1.87 2.13l-.26 2.83c-.05.5.29.96.77 1.07l2.76.63l1.44 2.43c.26.43.8.61 1.26.41L12 21.03l2.59 1.11c.46.2 1 .02 1.25-.41l1.44-2.43l2.76-.63c.49-.11.82-.57.77-1.07l-.26-2.82l1.86-2.13a.98.98 0 0 0 .01-1.31zm-12.19 3.49l-2.12-2.12a.996.996 0 1 1 1.41-1.41l1.41 1.41l3.54-3.54a.996.996 0 1 1 1.41 1.41l-4.24 4.24c-.38.4-1.02.4-1.41.01z"/>
@@ -277,6 +295,7 @@ const Data = (
                         <div className="data-container">Verified By: 
                         <div className="data">{verifiedbytext}</div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -319,6 +338,7 @@ const Data = (
             setEditComment={setEditComment}
             editavailable={editavailable}
             setEditAvailable={setEditAvailable}
+            last_update_time={last_update_time}
 
             editprice={editprice}
             setEditPrice={setEditPrice}
@@ -360,8 +380,8 @@ const Data = (
                     <div className="data-container">Comments: 
                         <div className="data">{comments}</div>
                     </div>
-                    <div className="data-container">Last Updated: 
-                        <div className="data">{last_update_time}</div>
+                    <div className="data-container">Source: 
+                        <div className="data">{source}</div>
                     </div>
                 </div>
 
@@ -377,9 +397,6 @@ const Data = (
                     </div>
                     <div className="data-container">Link: 
                         <a href={link_to_go} target="_blank" without rel="noreferrer" className="data">{link_to_go}</a>
-                    </div>
-                    <div className="data-container">Source: 
-                        <div className="data">{source}</div>
                     </div>
                 </div>
 
