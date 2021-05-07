@@ -239,11 +239,8 @@ const Donor = () => {
         />
       </MuiPickersUtilsProvider>
 
-      <button
-        type="submit"
-      >
-        SUBMIT
-      </button>
+  
+      <button type="submit">SUBMIT</button>
       <ToastContainer />
     </form>
     </div>

@@ -705,19 +705,19 @@ const Form = ({collectionname}) =>{
             <div className="form-data-title">Service Details</div>
                 <div className="input-flex" >   
                     <label className="label">Name<div className="red">*</div></label>
-                    <input className="input" value={inputname} onChange={nameinput} type="text" placeholder="Service Name"></input>
+                    <input className="input" value={inputname} onChange={nameinput} type="text" placeholder="Service Name" maxLength="50"></input>
                 </div>
                 <div className="input-flex" >   
                     <label className="label">Description</label>
-                    <input className="input" value={inputdesc} onChange={descinput} type="text" placeholder="Service Description"></input>
+                    <input className="input" value={inputdesc} onChange={descinput} type="text" placeholder="Service Description" maxLength="50"></input>
                 </div>
                 <div className="input-flex" >   
                     <label className="label">Location</label>
-                    <input className="input" value={inputlocation} onChange={locinput} type="text" placeholder="Service Location"></input>
+                    <input className="input" value={inputlocation} onChange={locinput} type="text" placeholder="Service Location" maxLength="50"></input>
                 </div>
                 <div className="input-flex" >   
                     <label className="label">Timings</label>
-                    <input className="input" value={inputtiming} onChange={timeinput} type="text" placeholder="Service Timings"></input>
+                    <input className="input" value={inputtiming} onChange={timeinput} type="text" placeholder="Service Timings" maxLength="50"></input>
                 </div>
             </div>
             
@@ -725,15 +725,15 @@ const Form = ({collectionname}) =>{
             <div className="form-data-title">Contact Information</div>
                 <div className="input-flex" >   
                     <label className="label">Contact Name<div className="red">*</div></label>
-                    <input className="input" value={inputcontactname} onChange={cnameinput} type="text" placeholder="Contact Name"></input>
+                    <input className="input" value={inputcontactname} onChange={cnameinput} type="text" placeholder="Contact Name" maxLength="50" ></input>
                 </div>
                 <div className="input-flex" >   
                     <label className="label">Contact Number<div className="red">*</div></label>
-                    <input className="input" value={inputcontactnum} onChange={cnuminput} type="tel" placeholder="Contact Number"></input>
+                    <input className="input" value={inputcontactnum} onChange={cnuminput} type="tel" placeholder="Contact Number" minLength="10" maxLength="13"></input>
                 </div>
                 <div className="input-flex" >   
                     <label className="label">Contact Email</label>
-                    <input className="input" value={inputcontactemail} onChange={cemailinput} type="email" placeholder="Contact E-mail"></input>
+                    <input className="input" value={inputcontactemail} onChange={cemailinput} type="email" placeholder="Contact E-mail" maxlength="50"></input>
                 </div>
                 <div className="input-flex" >   
                     <label className="label">Link</label>
@@ -755,11 +755,11 @@ const Form = ({collectionname}) =>{
                 </div>
                 <div className="input-flex" >       
                     <label className="label">Source</label>
-                    <input className="input" value={inputsource} onChange={sourceinput} type="text" placeholder="Enter Source "></input>
+                    <input className="input" value={inputsource} onChange={sourceinput} type="text" placeholder="Enter Source" maxLength="50"></input>
                 </div>
                 <div className="input-flex" >       
                     <label className="label">Comments</label>
-                    <input className="input" value={inputcomments} onChange={commentinput} type="text" placeholder="Comments"></input>
+                    <input className="input" value={inputcomments} onChange={commentinput} type="text" placeholder="Comments" maxLength="50"></input>
                 </div>
                 <div className="input-flex">
                     <label className="label">Available</label>
@@ -815,7 +815,7 @@ const Form = ({collectionname}) =>{
                             </div>
                             <div className="input-flex" >   
                                 <label className="label">Medicine Name<div className="red">*</div></label>
-                                <input className="input" value={inputmedname} onChange={mednameinput} type="text" placeholder="Name"></input>
+                                <input className="input" value={inputmedname} onChange={mednameinput} type="text" placeholder="Name" maxLength="50"></input>
                             </div>
                             <div className="input-flex" >       
                                 <label className="label">Price</label>

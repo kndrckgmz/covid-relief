@@ -314,7 +314,7 @@ const Modal = ({
                 id:editid,
                 name : editname,
                 description : editdesc,
-                location_coverd : editlocation,
+                location_covered : editlocation,
                 timings : edittiming,
                 contact_name : editcontactname,
                 contact_number : editcontactnum,
@@ -654,19 +654,19 @@ const Modal = ({
         <div className="form-data-title">Service Details</div>
         <div className="input-flex">   
         <label className="label">Name<div className="red">*</div></label>
-        <input className="edit-input" value={editname} onChange={nameinput} type="text" placeholder="Service Name"></input>
+        <input className="edit-input" value={editname} onChange={nameinput} type="text" placeholder="Service Name" maxLength="50"></input>
         </div>
         <div className="input-flex" >   
         <label className="label">Description</label>
-        <input className="edit-input" value={editdesc} onChange={descinput} type="text" placeholder="Service Description"></input>
+        <input className="edit-input" value={editdesc} onChange={descinput} type="text" placeholder="Service Description" maxLength="50"></input>
         </div>
         <div className="input-flex" >   
         <label className="label">Location</label>
-        <input className="edit-input" value={editlocation} onChange={locinput} type="text" placeholder="Service Location"></input>
+        <input className="edit-input" value={editlocation} onChange={locinput} type="text" placeholder="Service Location" maxLength="50"></input>
         </div>
         <div className="input-flex" >   
         <label className="label">Timings</label>
-        <input className="edit-input" value={edittiming} onChange={timeinput} type="text" placeholder="Service Timings"></input>
+        <input className="edit-input" value={edittiming} onChange={timeinput} type="text" placeholder="Service Timings" maxLength="50"></input>
         </div>
         </div>
 
@@ -674,15 +674,15 @@ const Modal = ({
         <div className="form-data-title">Contact Information</div>
         <div className="input-flex" >   
         <label className="label">Contact Name<div className="red">*</div></label>
-        <input className="edit-input" value={editcontactname} onChange={cnameinput} type="text" placeholder="Contact Name"></input>
+        <input className="edit-input" value={editcontactname} onChange={cnameinput} type="text" placeholder="Contact Name" maxLength="50"></input>
         </div>
         <div className="input-flex" >   
         <label className="label">Contact Number<div className="red">*</div></label>
-        <input className="edit-input" value={editcontactnum} onChange={cnuminput} type="tel" placeholder="Contact Number"></input>
+        <input className="edit-input" value={editcontactnum} onChange={cnuminput} type="tel" placeholder="Contact Number" minLength="10" maxLength="13"></input>
         </div>
     <div className="input-flex" >   
         <label className="label">Contact Email</label>
-        <input className="edit-input" value={editcontactemail} onChange={cemailinput} type="email" placeholder="Contact E-mail"></input>
+        <input className="edit-input" value={editcontactemail} onChange={cemailinput} type="email" placeholder="Contact E-mail" maxLength="50"></input>
     </div>
     <div className="input-flex" >   
         <label className="label">Link</label>
@@ -704,11 +704,11 @@ const Modal = ({
     </div>
     <div className="input-flex" >       
         <label className="label">Source</label>
-        <input className="edit-input" value={editsource} onChange={sourceinput} type="text" placeholder="Enter Source "></input>
+        <input className="edit-input" value={editsource} onChange={sourceinput} type="text" placeholder="Enter Source " maxLength="50"></input>
     </div>
     <div className="input-flex" >       
         <label className="label">Comments</label>
-        <input className="edit-input" value={editcomments} onChange={commentinput} type="text" placeholder="Comments"></input>
+        <input className="edit-input" value={editcomments} onChange={commentinput} type="text" placeholder="Comments" maxLength="50"></input>
     </div>
     <div className="input-flex">
         <label className="label">Available</label>
@@ -764,7 +764,7 @@ const Modal = ({
                 </div>
                 <div className="input-flex" >   
                     <label className="label">Medicine Name<div className="red">*</div></label>
-                    <input className="edit-input" value={editmedname} onChange={mednameinput} type="text" placeholder="Name"></input>
+                    <input className="edit-input" value={editmedname} onChange={mednameinput} type="text" placeholder="Name" maxLength="50"></input>
                 </div>
                 <div className="input-flex" >       
                     <label className="label">Price</label>
