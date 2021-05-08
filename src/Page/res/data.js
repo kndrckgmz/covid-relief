@@ -115,7 +115,7 @@ const Data = (
         else if(available===false)
         {
             setAvailableText("Currently Unavailable");
-            setAvailableColor("var(--mgrey)");
+            setAvailableColor("var(--lgrey)");
         }
     },[available]);
 
@@ -260,7 +260,7 @@ const Data = (
             setVerifiedText("Not Verified");
             setVerifiedByText("Null");
             setVerifiedDateText("Null");
-            setColor("var(--dgrey)");
+            setColor("var(--lgrey)");
         }
         else
         {
@@ -271,20 +271,10 @@ const Data = (
         }
     }, [verified, verified_by, verified_date]);
 
-    // const info = (e) =>{
-    //     let a = e.target.getAttribute("idvalue");
-    //     let b = document.getElementsById("info");
-    //     if (a)
-    //     {
-    //         e.target.style.height="15rem";
-    //     }
-    //     else if (a===null)
-    //     {
-    //         b.style.height="2rem";
-    //     } 
-    // };
-
-
+    const getClickableLink = (link_to_go) => {
+        return link_to_go.startsWith("http://") || link_to_go.startsWith("https://") ?
+        link_to_go:`https://${link_to_go}`;
+      };
 
     return(
         <div className="card">
@@ -384,17 +374,20 @@ const Data = (
                     <div className="data-container">Location: 
                         <div className="data">{location_covered !== "" ? location_covered : "No Data"}</div>
                     </div>
-                    <div className="data-container">Contact Details: 
-                        <div className="data">{contact_name}</div>/
-                        <a  className="data" href={`tel:${contact_number}`}>{contact_number}</a>/
-                        <div className="data">{contact_email}</div>/
-                        <a href={link_to_go !== "" ? link_to_go : ""} target="_blank" without rel="noreferrer" className="data">{link_to_go !== "" ? link_to_go : "Link Unavailable"}</a>             
+                    <div className="data-container">Contact Details:
+                        <div className="contact-info">
+                        <div className="data">{contact_name}/</div>
+                        <a  className="data" href={`tel:${contact_number}`}>{contact_number}/</a>
+                        <div className="data">{contact_email}/</div>
+                        <a href={link_to_go !== "" ? getClickableLink(link_to_go) : ""} target="_blank" without rel="noreferrer" className="data">{link_to_go !== "" ? getClickableLink(link_to_go) : "Link Unavailable"}/</a>             
+                        </div>
                     </div>
                 </div>    
                 
 
             </div>
             <div className="more-info">
+            <div className="info-flex">
             <div className="extra">
                 <div className="data-container">Timings: 
                     <div className="data">{timings !== "" ? timings : "No Data"}</div>
@@ -509,12 +502,13 @@ const Data = (
                 }
 
                 })()
-            }     
-
+            }
+            </div>    
                 <svg xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 24 24" className="svg-container">
-                     <path className="arrow" d="M18 15a1 1 0 0 1-.64-.23L12 10.29l-5.37 4.32a1 1 0 0 1-1.41-.15a1 1 0 0 1 .15-1.41l6-4.83a1 1 0 0 1 1.27 0l6 5a1 1 0 0 1 .13 1.41A1 1 0 0 1 18 15z"/></svg>
-               
+                 viewBox="0 0 24 24" 
+                 className="svg-container">
+                    <path className="arrow" d="M18 15a1 1 0 0 1-.64-.23L12 10.29l-5.37 4.32a1 1 0 0 1-1.41-.15a1 1 0 0 1 .15-1.41l6-4.83a1 1 0 0 1 1.27 0l6 5a1 1 0 0 1 .13 1.41A1 1 0 0 1 18 15z"/>
+                </svg>   
             </div>          
         </div>
     );

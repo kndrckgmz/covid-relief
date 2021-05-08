@@ -20,7 +20,7 @@
     "react-toastify": "^7.0.4"
   },
   "scripts": {
-    "build:dev": "env-cmd -f .env.development npm run build && firebase deploy -P dev",
+    "build:dev": "env-cmd -f .env.dev npm run build && firebase deploy -P dev",
     "build:prod": "env-cmd -f .env.production npm run build && firebase deploy -P prod",
     "start": "react-scripts start",
     "build": "react-scripts build",

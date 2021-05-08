@@ -5,7 +5,7 @@ import firebase from 'firebase/app';
 const Form = ({collectionname}) =>{
 
     const [inputtry, setTry] = useState("");
-    const [btntxt, setBtnTxt] = useState("ADD LINK");
+    const [btntxt, setBtnTxt] = useState("ADD");
     const [inputname, setInputName] = useState("");
     const [inputdesc, setInputDesc] = useState("");
     const [inputlocation, setInputLoc] = useState("");
@@ -162,7 +162,7 @@ const Form = ({collectionname}) =>{
                         success.style.opacity = 0;
                         btn.disabled=false;
                         btn.style.backgroundColor="var(--accent)";
-                        setBtnTxt("ADD LINK");
+                        setBtnTxt("ADD");
                     },1500);
                 });
             }
@@ -220,7 +220,7 @@ const Form = ({collectionname}) =>{
                         success.style.opacity = 0;
                         btn.disabled=false;
                         btn.style.backgroundColor="var(--accent)";
-                        setBtnTxt("ADD LINK");
+                        setBtnTxt("ADD");
                     },1500);
                 });
                 }
@@ -294,7 +294,7 @@ const Form = ({collectionname}) =>{
                         success.style.opacity = 0;
                         btn.disabled=false;
                         btn.style.backgroundColor="var(--accent)";
-                        setBtnTxt("ADD LINK");
+                        setBtnTxt("ADD");
                     },1500);
                 });
                 }
@@ -362,7 +362,7 @@ const Form = ({collectionname}) =>{
                         success.style.opacity = 0;
                         btn.disabled=false;
                         btn.style.backgroundColor="var(--accent)";
-                        setBtnTxt("ADD LINK");
+                        setBtnTxt("ADD");
                     },1500);
                 });
                 }
@@ -430,7 +430,7 @@ const Form = ({collectionname}) =>{
                         success.style.opacity = 0;
                         btn.disabled=false;
                         btn.style.backgroundColor="var(--accent)";
-                        setBtnTxt("ADD LINK");
+                        setBtnTxt("ADD");
                     },1500);
                 });
                 }
@@ -504,7 +504,7 @@ const Form = ({collectionname}) =>{
                         success.style.opacity = 0;
                         btn.disabled=false;
                         btn.style.backgroundColor="var(--accent)";
-                        setBtnTxt("ADD LINK");
+                        setBtnTxt("ADD");
                     },1500);
                 });
                 }
@@ -578,7 +578,7 @@ const Form = ({collectionname}) =>{
                         success.style.opacity = 0;
                         btn.disabled=false;
                         btn.style.backgroundColor="var(--accent)";
-                        setBtnTxt("ADD LINK");
+                        setBtnTxt("ADD");
                     },1500);
                 });
                 }
@@ -646,7 +646,7 @@ const Form = ({collectionname}) =>{
                         success.style.opacity = 0;
                         btn.disabled=false;
                         btn.style.backgroundColor="var(--accent)";
-                        setBtnTxt("ADD LINK");
+                        setBtnTxt("ADD");
                     },1500);
                 });
                 }
@@ -709,7 +709,7 @@ const Form = ({collectionname}) =>{
                 </div>
                 <div className="input-flex" >   
                     <label className="label">Description</label>
-                    <input className="input" value={inputdesc} onChange={descinput} type="text" placeholder="Service Description" maxLength="50"></input>
+                    <input className="input" value={inputdesc} onChange={descinput} type="text" placeholder="Service Description" maxLength="100"></input>
                 </div>
                 <div className="input-flex" >   
                     <label className="label">Location</label>

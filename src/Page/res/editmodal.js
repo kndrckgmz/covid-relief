@@ -658,7 +658,7 @@ const Modal = ({
         </div>
         <div className="input-flex" >   
         <label className="label">Description</label>
-        <input className="edit-input" value={editdesc} onChange={descinput} type="text" placeholder="Service Description" maxLength="50"></input>
+        <input className="edit-input" value={editdesc} onChange={descinput} type="text" placeholder="Service Description" maxLength="100"></input>
         </div>
         <div className="input-flex" >   
         <label className="label">Location</label>

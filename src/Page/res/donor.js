@@ -60,15 +60,19 @@ const Donor = () => {
 
   const useStyles = makeStyles((theme) => ({
     formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
+      margin: "1rem",
+      marginTop: "0",
+      fontWeight: "500",
     },
     checkbox: {
-      backgroundColor: "blue",
-    }, 
+      marginLeft: "2rem",
+      width: 10,
+      height: 10,
+      color:"var(--accent)"
+    },
+    datepicker:{
+      margin: "1rem",
+    }
   }));
 
   const handleSubmit = (e) => {
@@ -112,6 +116,7 @@ const Donor = () => {
     setVaccinated(false);
     setVaccinatedDate(null);
   };
+
   const classes = useStyles();
 
   return (
@@ -131,16 +136,17 @@ const Donor = () => {
     </div>
     
     <div className="cover3" id="cover3" onClick={closemodal}>
-    <form className="form" onSubmit={handleSubmit}>
-      <div className="edit-head-container">
+    <div className="form-popup">
+    <div className="edit-head-container">
                 <div className="edit-header">Neravu Plasma Donors</div>
                 <div className="edit-close-popup" onClick={closemodalx}>
                     <div className="edit-x1"></div>
                     <div className="edit-x2"></div>
                 </div>
       </div>
+    <form className="form" onSubmit={handleSubmit}>
 
-      <label>Full Name</label>
+    
       <input
         placeholder="Full Name"
         value={name}
@@ -148,7 +154,21 @@ const Donor = () => {
         required
       />
 
-      <label>Place</label>
+      <input
+        placeholder="Number"
+        value={number}
+        onChange={(e) => setNumber(e.target.value)}
+        required
+      />
+
+ 
+      <input
+        placeholder="Age"
+        value={age}
+        onChange={(e) => setAge(e.target.value)}
+        required
+      />
+
       <input
         placeholder="Place"
         value={place}
@@ -156,7 +176,55 @@ const Donor = () => {
         required
       />
 
-      <label>Blood Group</label>
+      <InputLabel>Vaccinated</InputLabel>
+      <Checkbox
+        checked={vaccinated}
+        onChange={(e) =>
+          setVaccinated(
+            e.target.type === "checkbox" ? e.target.checked : e.target.value
+          )
+        }
+        color="var(--accent)"
+        className={classes.checkbox }
+      />
+
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          placeholder="Vaccination Date"
+          disableToolbar
+          variant="inline"
+          format="dd/MM/yyyy"
+          margin="normal"
+          id="recovery-date-picker-inline"
+          value={vaccinateddate}
+          onChange={handleVaccinatedDateChange}
+          autoOk={true}
+          KeyboardButtonProps={{
+            "aria-label": "change date",
+          }}
+          className={classes.datepicker}
+        />
+      </MuiPickersUtilsProvider>
+
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          placeholder="Recovery Date"
+          disableToolbar
+          variant="inline"
+          format="dd/MM/yyyy"
+          margin="normal"
+          id="recovery-date-picker-inline"
+          value={dateofrecovery}
+          onChange={handleDateOfRecoveryChange}
+          autoOk={true}
+          KeyboardButtonProps={{
+            "aria-label": "change date",
+          }}
+          className={classes.datepicker}
+          required
+        />
+      </MuiPickersUtilsProvider>
+
       <FormControl className={classes.formControl}>
         <InputLabel id="bloodgroup-select-label">Blood Group</InputLabel>
         <Select
@@ -177,72 +245,12 @@ const Donor = () => {
         </Select>
       </FormControl>
 
-      <label>Date of recovery</label>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
-          format="dd/MM/yyyy"
-          margin="normal"
-          id="recovery-date-picker-inline"
-          value={dateofrecovery}
-          onChange={handleDateOfRecoveryChange}
-          autoOk={true}
-          KeyboardButtonProps={{
-            "aria-label": "change date",
-          }}
-          required
-        />
-      </MuiPickersUtilsProvider>
-
-      <label>Contact Number</label>
-      <input
-        placeholder="Number"
-        value={number}
-        onChange={(e) => setNumber(e.target.value)}
-        required
-      />
-
-      <label>Age</label>
-      <input
-        placeholder="Age"
-        value={age}
-        onChange={(e) => setAge(e.target.value)}
-        required
-      />
-
-      <label>Vaccinated</label>
-      <Checkbox
-        checked={vaccinated}
-        onChange={(e) =>
-          setVaccinated(
-            e.target.type === "checkbox" ? e.target.checked : e.target.value
-          )
-        }
-        InputProps={{ checkbox: classes.backgroundColor }}
-      />
-
-      <label>Vaccination Date</label>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
-          format="dd/MM/yyyy"
-          margin="normal"
-          id="recovery-date-picker-inline"
-          value={vaccinateddate}
-          onChange={handleVaccinatedDateChange}
-          autoOk={true}
-          KeyboardButtonProps={{
-            "aria-label": "change date",
-          }}
-        />
-      </MuiPickersUtilsProvider>
-
   
       <button type="submit">SUBMIT</button>
       <ToastContainer />
+    
     </form>
+    </div>
     </div>
 
     </>
