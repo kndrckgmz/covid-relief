@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "./fire_config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Checkbox from "@material-ui/core/Checkbox";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import {
@@ -14,6 +13,10 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const Donor = () => {
   const [name, setName] = useState("");
@@ -25,9 +28,8 @@ const Donor = () => {
   const [vaccinated, setVaccinated] = useState(false);
   const [vaccinateddate, setVaccinatedDate] = useState(null);
 
-  const [loader, setLoader] = useState(false);
 
-     const donate = () =>{
+  const donate = () =>{
       let body = document.querySelector("body");
       body.style.overflow = "hidden";      
       let cover = document.getElementById("cover3");
@@ -58,26 +60,36 @@ const Donor = () => {
     setVaccinatedDate(vaccinateddate);
   };
 
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(() => ({
     formControl: {
       margin: "1rem",
       marginTop: "0",
       fontWeight: "500",
+      color:"var(--accent)",
     },
-    checkbox: {
-      marginLeft: "2rem",
-      width: 10,
+    label:{
+      marginLeft:"1rem",
+      color:"var(--accent)",
+      fontWeight:"bold",
+    },
+    radioGroup: {
+      margin: "1rem",
+      width: 100,
       height: 10,
-      color:"var(--accent)"
+      color:"var(--accent)",
+    },
+    radio:{
+      color:"var(--accent)",
     },
     datepicker:{
       margin: "1rem",
     }
   }));
 
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoader(true);
     db.collection("NeravuPlasmaDonors")
       .add({
         name: name,
@@ -100,11 +112,9 @@ const Donor = () => {
           draggable: true,
           progress: undefined,
         });
-        setLoader(false);
       })
       .catch((error) => {
         alert(error.message);
-        setLoader(false);
       });
 
     setName("");
@@ -117,12 +127,16 @@ const Donor = () => {
     setVaccinatedDate(null);
   };
 
+  const handleChange = (event) => {
+    setVaccinated(event.target.value);
+  };
+
   const classes = useStyles();
 
   return (
 
     <>
-    <div className="donate-container" onClick={donate}> 
+    <div className="donate-container" onClick={donate} id="donate"> 
         <div className="donate-title">BECOME A PLASMA DONOR!</div>
         <svg xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 24 24"
@@ -138,7 +152,7 @@ const Donor = () => {
     <div className="cover3" id="cover3" onClick={closemodal}>
     <div className="form-popup">
     <div className="edit-head-container">
-                <div className="edit-header">Neravu Plasma Donors</div>
+                <div className="edit-header">Plasma Donor Registration</div>
                 <div className="edit-close-popup" onClick={closemodalx}>
                     <div className="edit-x1"></div>
                     <div className="edit-x2"></div>
@@ -176,26 +190,35 @@ const Donor = () => {
         required
       />
 
-      <InputLabel>Vaccinated</InputLabel>
-      <Checkbox
-        checked={vaccinated}
-        onChange={(e) =>
-          setVaccinated(
-            e.target.type === "checkbox" ? e.target.checked : e.target.value
-          )
-        }
-        color="var(--accent)"
-        className={classes.checkbox }
-      />
+      <FormControl component="fieldset">
+        <FormLabel component="legend"
+        className={classes.label}>Vaccinated *</FormLabel>
+          <RadioGroup aria-label="vaccinted" name="vaccinated" 
+          value={vaccinated} 
+          className={classes.radioGroup}
+          onChange={handleChange}>
+          <FormControlLabel value="true" 
+                  control={<Radio 
+                  color="var(--accent)"
+                  className={classes.radio}
+                  required/>} label="Yes" />
+          <FormControlLabel value="false" 
+                  control={<Radio 
+                  color="var(--accent)"
+                  className={classes.radio}
+                  required/>} label="No" />
+          </RadioGroup>
+      </FormControl>
 
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider
+      utils={DateFnsUtils}>
         <KeyboardDatePicker
           placeholder="Vaccination Date"
           disableToolbar
           variant="inline"
           format="dd/MM/yyyy"
           margin="normal"
-          id="recovery-date-picker-inline"
+          id="vax-date"
           value={vaccinateddate}
           onChange={handleVaccinatedDateChange}
           autoOk={true}
@@ -221,7 +244,6 @@ const Donor = () => {
             "aria-label": "change date",
           }}
           className={classes.datepicker}
-          required
         />
       </MuiPickersUtilsProvider>
 

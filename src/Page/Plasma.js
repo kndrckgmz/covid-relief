@@ -35,7 +35,7 @@ const Plasma = ({user}) => {
     const [editcomments, setEditComment] = useState("");
     const [editavailable, setEditAvailable] = useState();
     const [editbloodgroup, setEditBloodGroup] = useState("");
-    const [editrecoverydate, setEditRecoveryDate] = useState("");
+    const [editrecoverydate, setEditRecoveryDate] = useState(null);
     const [editvaccinated, setEditVaccinated] = useState();
     const [editpbtype, setEditPBType] = useState("");
 
@@ -66,12 +66,14 @@ const Plasma = ({user}) => {
                                 ? moment(i.data().verified_date.toDate()).calendar()
                                 : "Null",
                 last_update_time:i.data().last_update_time 
-                                    ? moment(i.data().last_update_time.toDate()).calendar()
-                                    : "Null",
+                                ? moment(i.data().last_update_time.toDate()).calendar()
+                                : "Null",
                 available:i.data().available,
                 type:i.data().type,
                 blood_group:i.data().blood_group,
-                covid_recovery_date:i.data().covid_recovery_date,
+                covid_recovery_date:i.data().covid_recovery_date === null 
+                                    ? null
+                                    : i.data().covid_recovery_date,
                 vaccinated:i.data().vaccinated,      
             })));
             });

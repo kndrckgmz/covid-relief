@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import Editbtn from './edit';
+import moment from 'moment';
 const Data = (
     {user,
     id,
@@ -16,7 +17,6 @@ const Data = (
     timings,
     verified,
     verified_by,
-    verified_date,
     available,
     covid_recovery_date,
     vaccinated,
@@ -142,7 +142,7 @@ const Data = (
         }
         else if(oxytype==="2")
         {
-            setMedTypeText("Both");
+            setOxyTypeText("Both");
         }
         else
         {
@@ -158,6 +158,10 @@ const Data = (
         else if(medtype==="1")
         {
             setMedTypeText("Syrup");
+        }
+        else if(medtype==="2")
+        {
+            setMedTypeText("Injection");
         }
         else 
         {
@@ -252,24 +256,21 @@ const Data = (
         {
             setVerifiedText("Verified"); 
             setVerifiedByText(verified_by);
-            setVerifiedDateText(verified_date);
             setColor("var(--green)");
         }
         else if(verified==="1")
         {
             setVerifiedText("Not Verified");
-            setVerifiedByText("Null");
-            setVerifiedDateText("Null");
+            setVerifiedByText("No Data");
             setColor("var(--lgrey)");
         }
         else
         {
             setVerifiedText("Verificaiton Pending");
-            setVerifiedByText("Null");
-            setVerifiedDateText("Null");
+            setVerifiedByText("No Data");
             setColor("var(--yellow)");
         }
-    }, [verified, verified_by, verified_date]);
+    }, [verified, verified_by]);
 
     const getClickableLink = (link_to_go) => {
         return link_to_go.startsWith("http://") || link_to_go.startsWith("https://") ?
@@ -290,10 +291,12 @@ const Data = (
                     </svg>
       
                     <div className="verified-card" id="verified-card">    
-                        <div className="data-container">Verification Status: 
+                        <div className="data-container">
+                            <div className="data-label">Verification Status:</div>
                         <div className="data">{verifiedtext}</div>
                         </div>
-                        <div className="data-container">Verified By: 
+                        <div className="data-container">
+                            <div className="data-label">Verified By:</div>
                         <div className="data">{verifiedbytext}</div>
                         </div>
                     </div>
@@ -368,18 +371,21 @@ const Data = (
 
             <div className="content-flex">
                <div className="details">
-                    <div className="data-container">Description: 
+                    <div className="data-container">
+                        <div className="data-label">Description:</div> 
                         <div className="data">{description !== "" ? description : "No Data"}</div>
                     </div>
-                    <div className="data-container">Location: 
+                    <div className="data-container">
+                        <div className="data-label">Location:</div> 
                         <div className="data">{location_covered !== "" ? location_covered : "No Data"}</div>
                     </div>
-                    <div className="data-container">Contact Details:
+                    <div className="data-container">
+                        <div className="data-label">Contact Details:</div>
                         <div className="contact-info">
-                        <div className="data">{contact_name}/</div>
-                        <a  className="data" href={`tel:${contact_number}`}>{contact_number}/</a>
-                        <div className="data">{contact_email}/</div>
-                        <a href={link_to_go !== "" ? getClickableLink(link_to_go) : ""} target="_blank" without rel="noreferrer" className="data">{link_to_go !== "" ? getClickableLink(link_to_go) : "Link Unavailable"}/</a>             
+                        <div className="contact-data" >{contact_name}/</div>
+                        <a className="contact-data"  href={`tel:${contact_number}`}>{contact_number !== "" ? contact_number : "No Data"}/</a>
+                        <a className="contact-data" href={`mailto:${contact_email !== "" ? contact_email : ""}`} target="_top" >{contact_email !== "" ? contact_email : "No Data"}/</a>
+                        <a className="contact-data" href={link_to_go !== "" ? getClickableLink(link_to_go) : ""} target="_blank" without rel="noreferrer" >{link_to_go !== "" ? getClickableLink(link_to_go) : "no data"}/</a>             
                         </div>
                     </div>
                 </div>    
@@ -389,13 +395,16 @@ const Data = (
             <div className="more-info">
             <div className="info-flex">
             <div className="extra">
-                <div className="data-container">Timings: 
+                <div className="data-container">
+                <div className="data-label">Timings:</div> 
                     <div className="data">{timings !== "" ? timings : "No Data"}</div>
                 </div>
-                <div className="data-container">Comments: 
+                <div className="data-container">
+                <div className="data-label">Comments:</div> 
                     <div className="data">{comments !== "" ? comments : "No Data"}</div>
                 </div>
-                <div className="data-container">Source: 
+                <div className="data-container">
+                <div className="data-label">Source:</div> 
                     <div className="data">{source !== "" ? source : "No Data"}</div>
                 </div>
             </div>
@@ -405,11 +414,13 @@ const Data = (
                 {
                     return (                    
                     <div className="extra">
-                    <div className="data-container">Blood Type: 
-                        <div className="data">{pbtypetext}</div>
+                    <div className="data-container">
+                    <div className="data-label">Blood Type:</div> 
+                        <div className="data">{pbtypetext !== "" ? pbtypetext : "No Data"}</div>
                     </div>
-                    <div className="data-container">Blood Group: 
-                        <div className="data">{blood_group}</div>
+                    <div className="data-container">
+                    <div className="data-label">Blood Group:</div> 
+                        <div className="data">{blood_group !== "" ? blood_group : "No Data"}</div>
                     </div>
                     </div>);
                 }
@@ -417,8 +428,9 @@ const Data = (
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">Type: 
-                            <div className="data">{foodtypetext}</div>
+                        <div className="data-container">
+                        <div className="data-label">Type:</div> 
+                            <div className="data">{foodtypetext !== "" ? foodtypetext : "No Data"}</div>
                         </div>
                         </div>
                     );
@@ -427,17 +439,21 @@ const Data = (
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">Condition: 
-                            <div className="data">{omrconditiontext}</div>
+                        <div className="data-container">
+                        <div className="data-label">Condition:</div> 
+                            <div className="data">{omrconditiontext !== "" ? omrconditiontext : "No Data"}</div>
                         </div>
-                        <div className="data-container">Type: 
-                            <div className="data">{medtypetext}</div>
+                        <div className="data-container">
+                        <div className="data-label">Type:</div> 
+                            <div className="data">{medtypetext !== "" ? medtypetext : "No Data"}</div>
                         </div>
-                        <div className="data-container">Medicine Name: 
-                            <div className="data">{medicine_name}</div>
+                        <div className="data-container">
+                        <div className="data-label">Medicine Name:</div> 
+                            <div className="data">{medicine_name !== "" ? medicine_name : "No Data"}</div>
                         </div>
-                        <div className="data-container">Price: 
-                            <div className="data">{medprice}</div>
+                        <div className="data-container">
+                        <div className="data-label">Price:</div> 
+                            <div className="data">{medprice !== "" ? medprice : "No Data"}</div>
                         </div>
                         </div>
                     );
@@ -446,8 +462,9 @@ const Data = (
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">Condition: 
-                            <div className="data">{consulttext}</div>
+                        <div className="data-container">
+                        <div className="data-label">Condition:</div> 
+                            <div className="data">{consulttext !== "" ? consulttext : "No Data"}</div>
                         </div>
                         </div>
                     );
@@ -456,17 +473,21 @@ const Data = (
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">Condition: 
-                            <div className="data">{omrconditiontext}</div>
+                        <div className="data-container">
+                        <div className="data-label">Condition:</div>
+                            <div className="data">{omrconditiontext !== "" ? omrconditiontext : "No Data"}</div>
                         </div>
-                        <div className="data-container">Type: 
-                            <div className="data">{oxytypetext}</div>
+                        <div className="data-container">
+                        <div className="data-label">Type:</div> 
+                            <div className="data">{oxytypetext !== "" ? oxytypetext : "No Data"}</div>
                         </div>
-                        <div className="data-container">Capacity: 
-                            <div className="data">{oxycapacity}</div>
+                        <div className="data-container">
+                        <div className="data-label">Capacity:</div> 
+                            <div className="data">{oxycapacity !== "" ? oxycapacity : "No Data"}</div>
                         </div>
-                        <div className="data-container">Price: 
-                            <div className="data">{oxyprice}</div>
+                        <div className="data-container">
+                        <div className="data-label">Price:</div> 
+                            <div className="data">{oxyprice !== "" ? oxyprice : "No Data"}</div>
                         </div>
                         </div>
                     );
@@ -475,17 +496,21 @@ const Data = (
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">Blood Group: 
+                        <div className="data-container">
+                        <div className="data-label">Blood Group:</div> 
                             <div className="data">{blood_group  !== "" ? blood_group : "No Data"}</div>
                         </div>
-                        <div className="data-container">Type: 
+                        <div className="data-container">
+                        <div className="data-label">Type:</div> 
                             <div className="data">{pbtypetext  !== "" ? pbtypetext : "No Data"}</div>
                         </div>
-                        <div className="data-container">Covid Recovery Date: 
-                            <div className="data">{covid_recovery_date !== "" ? covid_recovery_date : "No Data"}</div>
-                        </div>
-                        <div className="data-container">Vaccinated: 
-                            <div className="data">{vaccinatedtext}</div>
+                        <div className="data-container">
+                        <div className="data-label">Covid Recovery Date:</div> 
+                            <div className="data">{covid_recovery_date ? moment(covid_recovery_date.toDate()).calendar() : "No Data"}</div>
+                        </div> 
+                        <div className="data-container">
+                        <div className="data-label">Vaccinated:</div> 
+                            <div className="data">{vaccinatedtext !== "" ? vaccinatedtext : "No Data"}</div>
                         </div>
                         </div>
                     );
@@ -494,8 +519,9 @@ const Data = (
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">Condition: 
-                            <div className="data">{omrconditiontext}</div>
+                        <div className="data-container">
+                        <div className="data-label">Condition:</div> 
+                            <div className="data">{omrconditiontext !== "" ? omrconditiontext : "No Data"}</div>
                         </div>
                         </div>
                     );

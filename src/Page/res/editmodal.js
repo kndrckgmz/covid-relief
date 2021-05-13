@@ -1,6 +1,17 @@
 import { useEffect } from "react";
 import {db} from './fire_config';
 import firebase from 'firebase/app';
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import { FormControl } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 
 const Modal = ({
     editid,
@@ -58,8 +69,6 @@ const Modal = ({
     editconsultationtype,
     setEditConsultationType}) => {
 
-
-
     const consultationtypeinput = (e) => {
         setEditConsultationType(e.target.value);
     }
@@ -81,9 +90,9 @@ const Modal = ({
     const vaccinatedinput = (e) => {
         setEditVaccinated(e.target.checked);
     }
-    const recoverydateinput = (e) => {
-        setEditRecoveryDate(e.target.value);
-    }
+    const recoverydateinput = (inputrecoverydate) => {
+        setEditRecoveryDate(inputrecoverydate);
+      }
     const bloodgroupinput = (e) => {
         setEditBloodGroup(e.target.value);
     }
@@ -136,7 +145,7 @@ const Modal = ({
         setEditAvailable(e.target.checked);
     }
 
-    
+    // console.log(editrecoverydate.toDate());
 
     useEffect(()=>{
         if (collectionname==="AmbulanceService"||collectionname==="BedAvailability"||collectionname==="HomeTesting"||collectionname==="TeleCounselling")
@@ -277,7 +286,7 @@ const Modal = ({
                 setEditAvailable(i.available);
                 setEditBloodGroup(i.blood_group);
                 setEditPBType(i.type);
-                setEditRecoveryDate(i.covid_recovery_date);
+                setEditRecoveryDate(i.covid_recovery_date !== null ? i.covid_recovery_date.toDate() : null);
                 setEditVaccinated(i.vaccinated);
             });
         }
@@ -305,6 +314,8 @@ const Modal = ({
 
     const deleteData = () => {
         db.collection(`${collectionname}`).doc(editid).delete();
+        let body = document.querySelector("body");
+        body.style.overflow = "unset"; 
     };
 
     const updateData = () => {
@@ -343,6 +354,8 @@ const Modal = ({
                 setEditComment("");
                 setEditAvailable(false);
                 setEditId("");
+                let body = document.querySelector("body");
+                body.style.overflow = "unset"; 
             });
         }
         else if (collectionname==="BloodDonors")
@@ -383,7 +396,9 @@ const Modal = ({
                 setEditAvailable(false);
                 setEditPBType("");
                 setEditBloodGroup("");
-                setEditId("");           
+                setEditId(""); 
+                let body = document.querySelector("body");
+                body.style.overflow = "unset";          
             });
         }
         else if (collectionname==="Medicine")
@@ -428,7 +443,9 @@ const Modal = ({
                 setEditMedName("");
                 setEditPrice("");
                 setEditOMRCondition("");
-                setEditId("");            
+                setEditId("");     
+                let body = document.querySelector("body");
+                body.style.overflow = "unset";        
             });
         }
         else if (collectionname==="Food")
@@ -467,6 +484,8 @@ const Modal = ({
                 setEditAvailable(false);
                 setEditFoodType("");
                 setEditId(""); 
+                let body = document.querySelector("body");
+                body.style.overflow = "unset"; 
             });
         }
         else if (collectionname==="OnlineDoctorConsultation")
@@ -504,11 +523,9 @@ const Modal = ({
                 setEditComment("");
                 setEditAvailable(false);
                 setEditConsultationType("");
-                let cover = document.getElementById("cover2");
+                setEditId("");
                 let body = document.querySelector("body");
-                cover.style.display = "none";
-                body.style.overflow = "unset";
-                setEditId("");     
+                body.style.overflow = "unset"; 
             });
         }        
         else if (collectionname==="Oxygen")
@@ -552,11 +569,9 @@ const Modal = ({
                 setEditOxygenType("");
                 setEditCapacity("");
                 setEditPrice("");
-                let cover = document.getElementById("cover2");
-                let body = document.querySelector("body");
-                cover.style.display = "none";
-                body.style.overflow = "unset";
                 setEditId("");
+                let body = document.querySelector("body");
+                body.style.overflow = "unset"; 
             });
         }
         else if (collectionname==="Remedesivir")
@@ -595,6 +610,8 @@ const Modal = ({
                 setEditAvailable(false);
                 setEditOMRCondition("");
                 setEditId("");
+                let body = document.querySelector("body");
+                body.style.overflow = "unset"; 
             });
         }
         else if (collectionname==="PlasmaDonors")
@@ -618,7 +635,7 @@ const Modal = ({
                 type: editpbtype,
                 blood_group: editbloodgroup,
                 covid_recovery_date: editrecoverydate,
-                vaccinated:editvaccinated
+                vaccinated: editvaccinated
             })
             .then(() => {
                 setEditName("");
@@ -636,13 +653,47 @@ const Modal = ({
                 setEditAvailable(false);
                 setEditPBType("");
                 setEditBloodGroup("");
-                setEditRecoveryDate("");
+                setEditRecoveryDate(null);
                 setEditVaccinated("");
                 setEditId("");
+                let body = document.querySelector("body");
+                body.style.overflow = "unset"; 
             });
-        }
-               
+        }             
     };
+
+    const useStyles = makeStyles(() => ({
+        formControl:{
+            color:"var(--accent)",
+            width: "60%",
+            fontSize:"0.8rem",
+            fontWeight: 600,
+            marginLeft: "0.5rem",
+            justifyContent:"center",
+        },
+        inputfield:{
+            fontSize:"0.8rem",
+            fontWeight: 600,
+            color:"var(--dgrey)",
+        },
+        input:{
+            color: "var(--lgrey)",
+            fontSize:"0.8rem",
+            fontWeight: 600,
+            marginLeft: "0.5rem",
+        },
+        item:{
+            fontSize:"0.7rem",
+            fontWeight: 600,
+            color:"var(--accent)",
+        },
+        datepicker:{
+            marginLeft:"0.5rem",
+            width:"60%",
+        }
+    }));
+
+    const classes = useStyles();
 
     return (
     <>
@@ -696,8 +747,33 @@ const Modal = ({
 <div className="form-data-title">Meta-data</div>
     <div className="input-flex" >   
         <label className="label">Verified<div className="red">*</div></label>
-        <input className="edit-input" value={editverified} onChange={verifiedinput} type="number" min="0" max="2" placeholder="0:Yes, 1:No, 2:Pending"></input>
-        </div>
+        <FormControl className={classes.formControl}>
+                    <InputLabel 
+                    color="var(--lgrey)" 
+                    fontSize="0.8rem"
+                    fontWeight={500}
+                    className={classes.input}
+                    >Verificaiton Status</InputLabel>
+                    <Select
+                        value={editverified}
+                        onChange={verifiedinput}
+                        placeholder="Verification Status"
+                        className={classes.inputfield}
+                        required
+                        >
+                        <MenuItem value={"0"}
+                        fontSize="0.8rem"
+                        fontWeight={500}
+                        className={classes.item}>Verified</MenuItem>
+                        <MenuItem value={"1"}
+                        fontSize="0.8rem"
+                        className={classes.item}>Not Verified</MenuItem>
+                        <MenuItem value={"2"}
+                        fontSize="0.8rem"
+                        className={classes.item}>Verificaiton Pending</MenuItem>
+                    </Select>
+                    </FormControl>    
+    </div>
     <div className="input-flex" >   
         <label className="label">Verified By</label>
         <input className="edit-input" value={editverifiedby} onChange={verifiedbyinput} type="text" placeholder="Name of Verifier"></input>
@@ -726,14 +802,76 @@ const Modal = ({
         return (
             <div className="form-details" id="form-input">
             <div className="form-data-title">Information</div>
-                <div className="input-flex" >   
-                    <label className="label">Donation Type<div className="red">*</div></label>
-                    <input className="edit-input" value={editpbtype} onChange={pbtypeinput} type="number" min="0" max="2" placeholder="0:Platform, 1:Individual, 2:Blood Bank"></input>
-                </div>
-                <div className="input-flex" >       
-                    <label className="label">Blood Group<div className="red">*</div></label>
-                    <input className="edit-input" value={editbloodgroup} onChange={bloodgroupinput} type="text" placeholder="Eg. +0  (O-Positive)"></input>
-                </div>
+            <div className="input-flex" >   
+                <label className="label">Donation Type<div className="red">*</div></label>
+                <FormControl className={classes.formControl}>
+                    <InputLabel 
+                    color="var(--lgrey)" 
+                    fontSize="0.8rem"
+                    fontWeight={500}
+                    className={classes.input}
+                    >Donation Type</InputLabel>
+                    <Select
+                        value={editpbtype}
+                        onChange={pbtypeinput}
+                        className={classes.inputfield}
+                        required
+                        >
+                        <MenuItem value={"0"}
+                        fontSize="0.8rem"
+                        fontWeight={500}
+                        className={classes.item}>Platform</MenuItem>
+                        <MenuItem value={"1"}
+                        fontSize="0.8rem"
+                        className={classes.item}>Individual</MenuItem>
+                        <MenuItem value={"2"}
+                        fontSize="0.8rem"
+                        className={classes.item}>Blood Bank</MenuItem>
+                    </Select>
+                </FormControl>    
+            </div>
+            <div className="input-flex" >       
+                <label className="label">Blood Group</label>
+                <FormControl className={classes.formControl}>
+                    <InputLabel 
+                    color="var(--lgrey)" 
+                    fontSize="0.8rem"
+                    fontWeight={500}
+                    className={classes.input}
+                    >Blood Group</InputLabel>
+                    <Select
+                        value={editbloodgroup}
+                        onChange={bloodgroupinput}
+                        className={classes.inputfield}
+                        required
+                        >
+                        <MenuItem value={"A+"}
+                        fontSize="0.8rem"
+                        className={classes.item}>A+</MenuItem>
+                        <MenuItem value={"A-"}
+                        fontSize="0.8rem"
+                        className={classes.item}>A-</MenuItem>
+                        <MenuItem value={"B+"}
+                        fontSize="0.8rem"
+                        className={classes.item}>B+</MenuItem>
+                        <MenuItem value={"B-"}
+                        fontSize="0.8rem"
+                        className={classes.item}>B-</MenuItem>
+                        <MenuItem value={"O+"}
+                        fontSize="0.8rem"
+                        className={classes.item}>O+</MenuItem>
+                        <MenuItem value={"O-"}
+                        fontSize="0.8rem"
+                        className={classes.item}>O-</MenuItem>
+                        <MenuItem value={"AB+"}
+                        fontSize="0.8rem"
+                        className={classes.item}>AB+</MenuItem>
+                        <MenuItem value={"AB-"}
+                        fontSize="0.8rem"
+                        className={classes.item}>AB-</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
             </div>
         );
     }
@@ -743,8 +881,31 @@ const Modal = ({
             <div className="form-details" id="form-input">
             <div className="form-data-title">Information</div>
                 <div className="input-flex" >   
-                    <label className="label">Type<div className="red">*</div></label>
-                    <input className="edit-input" value={editfoodtype} onChange={foodtypeinput} type="number" min="0" max="2" placeholder="0:Home Chef, 1:NGO, 2:Others"></input>
+                <label className="label">Type<div className="red">*</div></label>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel 
+                        color="var(--lgrey)" 
+                        fontSize="0.8rem"
+                        fontWeight={500}
+                        className={classes.input}
+                        >Food Type</InputLabel>
+                        <Select
+                            value={editfoodtype}
+                            onChange={foodtypeinput}
+                            className={classes.inputfield}
+                            required
+                            >
+                            <MenuItem value={"0"}
+                            fontSize="0.8rem"
+                            className={classes.item}>Home Chef</MenuItem>
+                            <MenuItem value={"1"}
+                            fontSize="0.8rem"
+                            className={classes.item}>NGO</MenuItem>
+                            <MenuItem value={"2"}
+                            fontSize="0.8rem"
+                            className={classes.item}>Others</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
             </div>
         );
@@ -754,14 +915,66 @@ const Modal = ({
         return (
             <div className="form-details" id="form-input">
             <div className="form-data-title">Information</div>
-                <div className="input-flex" >   
-                    <label className="label">Condition<div className="red">*</div></label>
-                    <input className="edit-input" value={editomrcondition} onChange={omrconditioninput} type="number" min="0" max="4" placeholder="0:No Stock, 1:Black Market, 2:Purchase, 3:Waiting Period, 4:Rental"></input>
-                </div>
-                <div className="input-flex" >       
-                    <label className="label">Type<div className="red">*</div></label>
-                    <input className="edit-input" value={editmedtype} onChange={medtypeinput} type="number" min="0" max="1" placeholder="0:Tablet, 1:Syrup"></input>
-                </div>
+            <div className="input-flex" >   
+                                <label className="label">Condition<div className="red">*</div></label>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Medicine Condition</InputLabel>
+                                    <Select
+                                        value={editomrcondition}
+                                        onChange={omrconditioninput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>No Stock</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Black Market</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Purchase</MenuItem>
+                                        <MenuItem value={"3"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Waiting Period</MenuItem>
+                                        <MenuItem value={"4"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Rental</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </div>
+                            <div className="input-flex" >       
+                                <label className="label">Type<div className="red">*</div></label>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Medicine Type</InputLabel>
+                                    <Select
+                                        value={editmedtype}
+                                        onChange={medtypeinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Tablet</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Syrup</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Injection</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </div>
                 <div className="input-flex" >   
                     <label className="label">Medicine Name<div className="red">*</div></label>
                     <input className="edit-input" value={editmedname} onChange={mednameinput} type="text" placeholder="Name" maxLength="50"></input>
@@ -780,7 +993,27 @@ const Modal = ({
             <div className="form-data-title">Information</div>
                 <div className="input-flex" >   
                     <label className="label">Type<div className="red">*</div></label>
-                    <input className="edit-input" value={editconsultationtype} onChange={consultationtypeinput} type="number" min="0" max="1" placeholder="0:Online, 1:Home"></input>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel 
+                        color="var(--lgrey)" 
+                        fontSize="0.8rem"
+                        fontWeight={500}
+                        className={classes.input}
+                        >Consultation Type</InputLabel>
+                        <Select
+                            value={editconsultationtype}
+                            onChange={consultationtypeinput}
+                            className={classes.inputfield}
+                            required
+                            >
+                            <MenuItem value={"0"}
+                            fontSize="0.8rem"
+                            className={classes.item}>Online</MenuItem>
+                            <MenuItem value={"1"}
+                            fontSize="0.8rem"
+                            className={classes.item}>Home</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
             </div>
         );
@@ -790,14 +1023,66 @@ const Modal = ({
         return (
             <div className="form-details" id="form-input">
             <div className="form-data-title">Information</div>
-                <div className="input-flex" >   
-                    <label className="label">Condition<div className="red">*</div></label>
-                    <input className="edit-input" value={editomrcondition} onChange={omrconditioninput} type="number" min="0" max="4" placeholder="0:No Stock, 1:Black Market, 2:Purchase, 3:Waiting Period, 4:Rental"></input>
-                </div>
-                <div className="input-flex" >       
-                    <label className="label">Type<div className="red">*</div></label>
-                    <input className="edit-input" value={editoxygentype} onChange={oxygentypeinput} type="number" min="0" max="2" placeholder="0:Cylinder, 1:Concentrator, 2:Both"></input>
-                </div>
+            <div className="input-flex" >   
+                                <label className="label">Condition<div className="red">*</div></label>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Oxygen Condition</InputLabel>
+                                    <Select
+                                        value={editomrcondition}
+                                        onChange={omrconditioninput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>No Stock</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Black Market</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Purchase</MenuItem>
+                                        <MenuItem value={"3"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Waiting Period</MenuItem>
+                                        <MenuItem value={"4"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Rental</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </div>
+                            <div className="input-flex" >       
+                                <label className="label">Type<div className="red">*</div></label>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Oxygen Type</InputLabel>
+                                    <Select
+                                        value={editoxygentype}
+                                        onChange={oxygentypeinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Cylinder</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Concentrator</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Both</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </div>
                 <div className="input-flex" >   
                     <label className="label">Capacity</label>
                     <input className="edit-input" value={editcapacity} onChange={capacityinput} type="text" placeholder="Capacity"></input>
@@ -814,17 +1099,96 @@ const Modal = ({
         return (
             <div className="form-details" id="form-input">
             <div className="form-data-title">Information</div>
-                <div className="input-flex" >   
-                    <label className="label">Type<div className="red">*</div></label>
-                    <input className="edit-input" value={editpbtype} onChange={pbtypeinput} type="number" min="0" max="2" placeholder="0:Platform, 1:Individual, 2:Blood Bank"></input>
-                </div>
-                <div className="input-flex" >       
-                    <label className="label">Blood Group<div className="red">*</div></label>
-                    <input className="edit-input" value={editbloodgroup} onChange={bloodgroupinput} type="text" placeholder="Eg. +0  (O-Positive)"></input>
-                </div>
+            <div className="input-flex" >   
+                                <label className="label">Donation Type<div className="red">*</div></label>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Donation Type</InputLabel>
+                                    <Select
+                                        value={editpbtype}
+                                        onChange={pbtypeinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        fontWeight={500}
+                                        className={classes.item}>Platform</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Individual</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Blood Bank</MenuItem>
+                                    </Select>
+                                </FormControl>    
+                            </div>
+                            <div className="input-flex" >       
+                                <label className="label">Blood Group</label>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Blood Group</InputLabel>
+                                    <Select
+                                        value={editbloodgroup}
+                                        onChange={bloodgroupinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"A+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>A+</MenuItem>
+                                        <MenuItem value={"A-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>A-</MenuItem>
+                                        <MenuItem value={"B+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>B+</MenuItem>
+                                        <MenuItem value={"B-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>B-</MenuItem>
+                                        <MenuItem value={"O+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>O+</MenuItem>
+                                        <MenuItem value={"O-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>O-</MenuItem>
+                                        <MenuItem value={"AB+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>AB+</MenuItem>
+                                        <MenuItem value={"AB-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>AB-</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </div>
                 <div className="input-flex" >   
                     <label className="label">COVID Recovery Date</label>
-                    <input className="edit-input" value={editrecoverydate} onChange={recoverydateinput} type="text" placeholder="Date"></input>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                    placeholder="Recovery Date"
+                                    disableToolbar
+                                    variant="inline"
+                                    format="dd/MM/yyyy"
+                                    margin="normal"
+                                    id="recovery-date-picker-inline"
+                                    value={editrecoverydate}
+                                    onChange={recoverydateinput}
+                                    autoOk={true}
+                                    KeyboardButtonProps={{
+                                        "aria-label": "change date",
+                                    }}
+                                    className={classes.datepicker}
+                                    />
+                                </MuiPickersUtilsProvider>
+                    {/* <input className="edit-input" value={editrecoverydate} onChange={recoverydateinput} type="text" placeholder="Date"></input> */}
                 </div>
                 <div className="input-flex">
                     <label className="label">Vaccinated</label>
@@ -841,10 +1205,36 @@ const Modal = ({
         return (
             <div className="form-details" id="form-input">
             <div className="form-data-title">Information</div>
-                <div className="input-flex" >   
-                    <label className="label">Condition<div className="red">*</div></label>
-                    <input className="edit-input" value={editomrcondition} onChange={omrconditioninput} type="number" min="0" max="4" placeholder="0:No Stock, 1:Black Market, 2:Purchase, 3:Waiting Period, 4:Rental"></input>
-                </div>
+            <div className="input-flex" >   
+                <label className="label">Condition<div className="red">*</div></label>
+                <FormControl className={classes.formControl}>
+                    <InputLabel 
+                    color="var(--lgrey)" 
+                    fontSize="0.8rem"
+                    fontWeight={500}
+                    className={classes.input}
+                    >Remdesivir Condition</InputLabel>
+                    <Select
+                        value={editomrcondition}
+                        onChange={omrconditioninput}
+                        className={classes.inputfield}
+                        required
+                        >
+                        <MenuItem value={"0"}
+                        fontSize="0.8rem"
+                        className={classes.item}>No Stock</MenuItem>
+                        <MenuItem value={"1"}
+                        fontSize="0.8rem"
+                        className={classes.item}>Black Market</MenuItem>
+                        <MenuItem value={"2"}
+                        fontSize="0.8rem"
+                        className={classes.item}>Purchase</MenuItem>
+                        <MenuItem value={"3"}
+                        fontSize="0.8rem"
+                        className={classes.item}>Waiting Period</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
             </div>
         );
     }        

@@ -30,7 +30,7 @@ const Ambulance = ({user}) => {
     const [editcontactnum, setEditCNum] = useState("");
     const [editcontactemail, setEditCEmail] = useState("");
     const [editlink, setEditLink] = useState("");
-    const [editverified, setEditVerified] = useState();
+    const [editverified, setEditVerified] = useState("");
     const [editverifiedby, setEditVerifiedBy] = useState("");
     const [editcomments, setEditComment] = useState("");
     const [editavailable, setEditAvailable] = useState();

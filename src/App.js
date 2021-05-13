@@ -112,9 +112,13 @@ function Main() {
     if  (admincheck===true)
     {
       let body = document.querySelector("body");
-      let cover = document.getElementById("admin-cover");
-      body.style.overflow = "hidden";      
+      body.style.overflow = "hidden";  
+      let cover = document.getElementById("admin-cover");         
       cover.style.display = "grid";
+      let donor = document.getElementById("donate");
+      donor.style.pointerEvents="none";
+      donor.style.color="var(--white)";
+      donor.style.stroke="var(--white)";
     }
     else if  (admincheck===false)
     {
@@ -122,6 +126,10 @@ function Main() {
       let cover = document.getElementById("admin-cover");
       body.style.overflow = "unset";      
       cover.style.display = "none";
+      let donor = document.getElementById("donate");
+      donor.style.pointerEvents="unset";
+      donor.style.color="unset";
+      donor.style.stroke="var(--accent)";
     }
   },[admincheck]);
 
@@ -130,7 +138,7 @@ function Main() {
   };
 
   const closemodal = () => {
-      setAdminCheck(false);
+    setAdminCheck(false);
   };
 
   return (

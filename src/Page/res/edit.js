@@ -233,8 +233,6 @@ const Editbtn = ({
         if(editid==="")
         {
             setCover("none")
-            let body = document.querySelector("body");
-            body.style.overflow = "unset";
         }
     },[editid])
 

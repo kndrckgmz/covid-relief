@@ -1,6 +1,17 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {db} from './fire_config';
 import firebase from 'firebase/app';
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import { FormControl } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 
 const Form = ({collectionname}) =>{
 
@@ -23,14 +34,14 @@ const Form = ({collectionname}) =>{
     const [inputcapacity, setInputCapacity] = useState("");
     const [inputmedname, setInputMedName] = useState("");
     const [inputbloodgroup, setInputBloodGroup] = useState("");
-    const [inputrecoverydate, setInputRecoveryDate] = useState("");
+    const [inputrecoverydate, setInputRecoveryDate] = useState(null);
     const [inputvaccinated, setInputVaccinated] = useState(false);
     const [inputomrcondition, setInputOMRCondition] = useState("");
     const [inputoxygentype, setInputOxygenType] = useState("");
     const [inputmedtype, setInputMedType] = useState("");
     const [inputpbtype, setInputPBType] = useState("");
     const [inputfoodtype, setInputFoodType] = useState("");
-    const [inputcosultationtype, setInputConsultationType] = useState("");
+    const [inputconsultationtype, setInputConsultationType] = useState("");
 
 
     const consultationtypeinput = (e) => {
@@ -54,9 +65,9 @@ const Form = ({collectionname}) =>{
     const vaccinatedinput = (e) => {
         setInputVaccinated(e.target.checked);
     }
-    const recoverydateinput = (e) => {
-        setInputRecoveryDate(e.target.value);
-    }
+    const recoverydateinput = (inputrecoverydate) => {
+        setInputRecoveryDate(inputrecoverydate);
+      }
     const bloodgroupinput = (e) => {
         setInputBloodGroup(e.target.value);
     }
@@ -156,7 +167,8 @@ const Form = ({collectionname}) =>{
                     setTry("Your Link has Been Added Below.")
                     let success = document.getElementById("add-link");
                     success.style.opacity = 1;
-                    success.style.color = "var(--accent)";
+                    success.style.color = "var(--white)";
+                    success.style.backgroundColor = "var(--accent)";
                     setTimeout(()=>{
                         success.style.color = "unset";
                         success.style.opacity = 0;
@@ -168,7 +180,7 @@ const Form = ({collectionname}) =>{
             }
             else if (collectionname==="BloodDonors")
             {   
-                if(inputbloodgroup!==""&&inputpbtype!=="")
+                if(inputpbtype!=="")
                 {
                 setBtnTxt("PLEASE WAIT");
                 let btn = document.getElementById("add-btn");
@@ -214,7 +226,8 @@ const Form = ({collectionname}) =>{
                     setTry("Your Link has Been Added Below.")
                     let success = document.getElementById("add-link");
                     success.style.opacity = 1;
-                    success.style.color = "var(--accent)";
+                    success.style.color = "var(--white)";
+                    success.style.backgroundColor = "var(--accent)";
                     setTimeout(()=>{
                         success.style.color = "unset";
                         success.style.opacity = 0;
@@ -229,7 +242,8 @@ const Form = ({collectionname}) =>{
                     setTry("Please Enter Required Fields.")
                     let fail = document.getElementById("add-link");
                     fail.style.opacity = 1;
-                    fail.style.color = "var(--red)";
+                    fail.style.color = "var(--white)";
+                    fail.style.backgroundColor = "var(--red)";
                     setTimeout(()=>{
                         fail.style.color = "unset";
                         fail.style.opacity = 0;
@@ -288,7 +302,8 @@ const Form = ({collectionname}) =>{
                     setTry("Your Link has Been Added Below.")
                     let success = document.getElementById("add-link");
                     success.style.opacity = 1;
-                    success.style.color = "var(--accent)";
+                    success.style.color = "var(--white)";
+                    success.style.backgroundColor = "var(--accent)";
                     setTimeout(()=>{
                         success.style.color = "unset";
                         success.style.opacity = 0;
@@ -303,7 +318,8 @@ const Form = ({collectionname}) =>{
                 setTry("Please Enter Required Fields.")
                 let fail = document.getElementById("add-link");
                 fail.style.opacity = 1;
-                fail.style.color = "var(--red)";
+                fail.style.color = "var(--white)";
+                fail.style.backgroundColor = "var(--red)";
                 setTimeout(()=>{
                     fail.style.color = "unset";
                     fail.style.opacity = 0;
@@ -356,7 +372,8 @@ const Form = ({collectionname}) =>{
                     setTry("Your Link has Been Added Below.")
                     let success = document.getElementById("add-link");
                     success.style.opacity = 1;
-                    success.style.color = "var(--accent)";
+                    success.style.color = "var(--white)";
+                    success.style.backgroundColor = "var(--accent)";
                     setTimeout(()=>{
                         success.style.color = "unset";
                         success.style.opacity = 0;
@@ -371,7 +388,8 @@ const Form = ({collectionname}) =>{
                 setTry("Please Enter Required Fields.")
                 let fail = document.getElementById("add-link");
                 fail.style.opacity = 1;
-                fail.style.color = "var(--red)";
+                fail.style.color = "var(--white)";
+                fail.style.backgroundColor = "var(--red)";
                 setTimeout(()=>{
                     fail.style.color = "unset";
                     fail.style.opacity = 0;
@@ -380,7 +398,7 @@ const Form = ({collectionname}) =>{
             }
             else if (collectionname==="OnlineDoctorConsultation")
             {   
-                if(inputcosultationtype!=="")
+                if(inputconsultationtype!=="")
                 {
                 setBtnTxt("PLEASE WAIT");
                 let btn = document.getElementById("add-btn");
@@ -404,7 +422,7 @@ const Form = ({collectionname}) =>{
                     comments : inputcomments,
                     last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
                     available : inputavailable,
-                    type : inputcosultationtype,
+                    type : inputconsultationtype,
                 })
                 .then(() => {
                     setInputName("");
@@ -424,7 +442,8 @@ const Form = ({collectionname}) =>{
                     setTry("Your Link has Been Added Below.")
                     let success = document.getElementById("add-link");
                     success.style.opacity = 1;
-                    success.style.color = "var(--accent)";
+                    success.style.color = "var(--white)";
+                    success.style.backgroundColor = "var(--accent)";
                     setTimeout(()=>{
                         success.style.color = "unset";
                         success.style.opacity = 0;
@@ -439,7 +458,8 @@ const Form = ({collectionname}) =>{
                 setTry("Please Enter Required Fields.")
                 let fail = document.getElementById("add-link");
                 fail.style.opacity = 1;
-                fail.style.color = "var(--red)";
+                fail.style.color = "var(--white)";
+                fail.style.backgroundColor = "var(--red)";
                 setTimeout(()=>{
                     fail.style.color = "unset";
                     fail.style.opacity = 0;
@@ -498,7 +518,8 @@ const Form = ({collectionname}) =>{
                     setTry("Your Link has Been Added Below.")
                     let success = document.getElementById("add-link");
                     success.style.opacity = 1;
-                    success.style.color = "var(--accent)";
+                    success.style.color = "var(--white)";
+                    success.style.backgroundColor = "var(--accent)";
                     setTimeout(()=>{
                         success.style.color = "unset";
                         success.style.opacity = 0;
@@ -513,7 +534,8 @@ const Form = ({collectionname}) =>{
                 setTry("Please Enter Required Fields.")
                 let fail = document.getElementById("add-link");
                 fail.style.opacity = 1;
-                fail.style.color = "var(--red)";
+                fail.style.color = "var(--white)";
+                fail.style.backgroundColor = "var(--red)";
                 setTimeout(()=>{
                     fail.style.color = "unset";
                     fail.style.opacity = 0;
@@ -522,7 +544,7 @@ const Form = ({collectionname}) =>{
             }
             else if (collectionname==="PlasmaDonors")
             {   
-                if(inputpbtype!==""&&inputbloodgroup!=="")
+                if(inputpbtype!=="")
                 {
                 setBtnTxt("PLEASE WAIT");
                 let btn = document.getElementById("add-btn");
@@ -567,12 +589,13 @@ const Form = ({collectionname}) =>{
                     setInputAvailable(false);
                     setInputPBType("");
                     setInputBloodGroup("");
-                    setInputRecoveryDate("");
+                    setInputRecoveryDate(null);
                     setInputVaccinated(false);
                     setTry("Your Link has Been Added Below.")
                     let success = document.getElementById("add-link");
                     success.style.opacity = 1;
-                    success.style.color = "var(--accent)";
+                    success.style.color = "var(--white)";
+                    success.style.backgroundColor = "var(--accent)";
                     setTimeout(()=>{
                         success.style.color = "unset";
                         success.style.opacity = 0;
@@ -587,7 +610,8 @@ const Form = ({collectionname}) =>{
                 setTry("Please Enter Required Fields.")
                 let fail = document.getElementById("add-link");
                 fail.style.opacity = 1;
-                fail.style.color = "var(--red)";
+                fail.style.color = "var(--white)";
+                fail.style.backgroundColor = "var(--red)";
                 setTimeout(()=>{
                     fail.style.color = "unset";
                     fail.style.opacity = 0;
@@ -640,7 +664,8 @@ const Form = ({collectionname}) =>{
                     setTry("Your Link has Been Added Below.")
                     let success = document.getElementById("add-link");
                     success.style.opacity = 1;
-                    success.style.color = "var(--accent)";
+                    success.style.color = "var(--white)";
+                    success.style.backgroundColor = "var(--accent)";
                     setTimeout(()=>{
                         success.style.color = "unset";
                         success.style.opacity = 0;
@@ -655,7 +680,8 @@ const Form = ({collectionname}) =>{
                 setTry("Please Enter Required Fields.")
                 let fail = document.getElementById("add-link");
                 fail.style.opacity = 1;
-                fail.style.color = "var(--red)";
+                fail.style.color = "var(--white)";
+                fail.style.backgroundColor = "var(--red)";
                 setTimeout(()=>{
                     fail.style.color = "unset";
                     fail.style.opacity = 0;
@@ -667,7 +693,8 @@ const Form = ({collectionname}) =>{
             setTry("Please Enter Required Fields.")
             let fail = document.getElementById("add-link");
             fail.style.opacity = 1;
-            fail.style.color = "var(--red)";
+            fail.style.color = "var(--white)";
+            fail.style.backgroundColor = "var(--red)";
             setTimeout(()=>{
                 fail.style.color = "unset";
                 fail.style.opacity = 0;
@@ -687,6 +714,39 @@ const Form = ({collectionname}) =>{
         let btn = document.getElementById("btn-flex");
         btn.classList.toggle("btn-flex-open");
     };
+
+    const useStyles = makeStyles(() => ({
+        formControl:{
+            color:"var(--accent)",
+            width: "60%",
+            fontSize:"0.8rem",
+            fontWeight: 600,
+            marginLeft: "0.5rem",
+            justifyContent:"center",
+        },
+        inputfield:{
+            fontSize:"0.8rem",
+            fontWeight: 600,
+            color:"var(--dgrey)",
+        },
+        input:{
+            color: "var(--lgrey)",
+            fontSize:"0.8rem",
+            fontWeight: 600,
+            marginLeft: "0.5rem",
+        },
+        item:{
+            fontSize:"0.7rem",
+            fontWeight: 600,
+            color:"var(--accent)",
+        },
+        datepicker:{
+            marginLeft:"0.5rem",
+            width:"60%",
+        }
+    }));
+
+    const classes = useStyles();
 
     return( 
       <div className="entry-form" id="form">
@@ -747,8 +807,33 @@ const Form = ({collectionname}) =>{
             <div className="form-data-title">Meta-data</div>
                 <div className="input-flex" >   
                     <label className="label">Verified<div className="red">*</div></label>
-                    <input className="input" value={inputverified} onChange={verifiedinput} type="number" min="0" max="2" placeholder="0:Yes, 1:No, 2:Pending"></input>
-                    </div>
+                    <FormControl className={classes.formControl}>
+                    <InputLabel 
+                    color="var(--lgrey)" 
+                    fontSize="0.8rem"
+                    fontWeight={500}
+                    className={classes.input}
+                    >Verificaiton Status</InputLabel>
+                    <Select
+                        value={inputverified}
+                        onChange={verifiedinput}
+                        placeholder="Verification Status"
+                        className={classes.inputfield}
+                        required
+                        >
+                        <MenuItem value={"0"}
+                        fontSize="0.8rem"
+                        fontWeight={500}
+                        className={classes.item}>Verified</MenuItem>
+                        <MenuItem value={"1"}
+                        fontSize="0.8rem"
+                        className={classes.item}>Not Verified</MenuItem>
+                        <MenuItem value={"2"}
+                        fontSize="0.8rem"
+                        className={classes.item}>Verificaiton Pending</MenuItem>
+                    </Select>
+                    </FormControl>
+                </div>
                 <div className="input-flex" >   
                     <label className="label">Verified By</label>
                     <input className="input" value={inputverifiedby} onChange={verifiedbyinput} type="text" placeholder="Name of Verifier"></input>
@@ -779,11 +864,73 @@ const Form = ({collectionname}) =>{
                         <div className="form-data-title">Information</div>
                             <div className="input-flex" >   
                                 <label className="label">Donation Type<div className="red">*</div></label>
-                                <input className="input" value={inputpbtype} onChange={pbtypeinput} type="number" min="0" max="2" placeholder="0:Platform, 1:Individual, 2:Blood Bank"></input>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Donation Type</InputLabel>
+                                    <Select
+                                        value={inputpbtype}
+                                        onChange={pbtypeinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        fontWeight={500}
+                                        className={classes.item}>Platform</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Individual</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Blood Bank</MenuItem>
+                                    </Select>
+                                </FormControl>    
                             </div>
                             <div className="input-flex" >       
-                                <label className="label">Blood Group<div className="red">*</div></label>
-                                <input className="input" value={inputbloodgroup} onChange={bloodgroupinput} type="text" placeholder="Eg. +0  (O-Positive)"></input>
+                                <label className="label">Blood Group</label>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Blood Group</InputLabel>
+                                    <Select
+                                        id="blooddonor"
+                                        value={inputbloodgroup}
+                                        onChange={bloodgroupinput}
+                                        className={classes.inputfield}
+                                        >
+                                        <MenuItem value={"A+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>A+</MenuItem>
+                                        <MenuItem value={"A-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>A-</MenuItem>
+                                        <MenuItem value={"B+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>B+</MenuItem>
+                                        <MenuItem value={"B-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>B-</MenuItem>
+                                        <MenuItem value={"O+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>O+</MenuItem>
+                                        <MenuItem value={"O-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>O-</MenuItem>
+                                        <MenuItem value={"AB+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>AB+</MenuItem>
+                                        <MenuItem value={"AB-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>AB-</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                         </div>
                     );
@@ -795,7 +942,30 @@ const Form = ({collectionname}) =>{
                         <div className="form-data-title">Information</div>
                             <div className="input-flex" >   
                                 <label className="label">Type<div className="red">*</div></label>
-                                <input className="input" value={inputfoodtype} onChange={foodtypeinput} type="number" min="0" max="2" placeholder="0:Home Chef, 1:NGO, 2:Others"></input>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Food Type</InputLabel>
+                                    <Select
+                                        value={inputfoodtype}
+                                        onChange={foodtypeinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Home Chef</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>NGO</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Others</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                         </div>
                     );
@@ -807,11 +977,63 @@ const Form = ({collectionname}) =>{
                         <div className="form-data-title">Information</div>
                             <div className="input-flex" >   
                                 <label className="label">Condition<div className="red">*</div></label>
-                                <input className="input" value={inputomrcondition} onChange={omrconditioninput} type="number" min="0" max="4" placeholder="0:No Stock, 1:Black Market, 2:Purchase, 3:Waiting Period, 4:Rental"></input>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Medicine Condition</InputLabel>
+                                    <Select
+                                        value={inputomrcondition}
+                                        onChange={omrconditioninput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>No Stock</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Black Market</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Purchase</MenuItem>
+                                        <MenuItem value={"3"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Waiting Period</MenuItem>
+                                        <MenuItem value={"4"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Rental</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                             <div className="input-flex" >       
                                 <label className="label">Type<div className="red">*</div></label>
-                                <input className="input" value={inputmedtype} onChange={medtypeinput} type="number" min="0" max="1" placeholder="0:Tablet, 1:Syrup"></input>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Medicine Type</InputLabel>
+                                    <Select
+                                        value={inputmedtype}
+                                        onChange={medtypeinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Tablet</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Syrup</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Injection</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                             <div className="input-flex" >   
                                 <label className="label">Medicine Name<div className="red">*</div></label>
@@ -831,7 +1053,27 @@ const Form = ({collectionname}) =>{
                         <div className="form-data-title">Information</div>
                             <div className="input-flex" >   
                                 <label className="label">Type<div className="red">*</div></label>
-                                <input className="input" value={inputcosultationtype} onChange={consultationtypeinput} type="number" min="0" max="1" placeholder="0:Online, 1:Home"></input>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Consultation Type</InputLabel>
+                                    <Select
+                                        value={inputconsultationtype}
+                                        onChange={consultationtypeinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Online</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Home</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                         </div>
                     );
@@ -843,11 +1085,63 @@ const Form = ({collectionname}) =>{
                         <div className="form-data-title">Information</div>
                             <div className="input-flex" >   
                                 <label className="label">Condition<div className="red">*</div></label>
-                                <input className="input" value={inputomrcondition} onChange={omrconditioninput} type="number" min="0" max="4" placeholder="0:No Stock, 1:Black Market, 2:Purchase, 3:Waiting Period, 4:Rental"></input>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Oxygen Condition</InputLabel>
+                                    <Select
+                                        value={inputomrcondition}
+                                        onChange={omrconditioninput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>No Stock</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Black Market</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Purchase</MenuItem>
+                                        <MenuItem value={"3"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Waiting Period</MenuItem>
+                                        <MenuItem value={"4"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Rental</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                             <div className="input-flex" >       
                                 <label className="label">Type<div className="red">*</div></label>
-                                <input className="input" value={inputoxygentype} onChange={oxygentypeinput} type="number" min="0" max="2" placeholder="0:Cylinder, 1:Concentrator, 2:Both"></input>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Oxygen Type</InputLabel>
+                                    <Select
+                                        value={inputoxygentype}
+                                        onChange={oxygentypeinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Cylinder</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Concentrator</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Both</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                             <div className="input-flex" >   
                                 <label className="label">Capacity</label>
@@ -865,17 +1159,95 @@ const Form = ({collectionname}) =>{
                     return (
                         <div className="form-details" id="form-input">
                         <div className="form-data-title">Information</div>
-                            <div className="input-flex" >   
-                                <label className="label">Type<div className="red">*</div></label>
-                                <input className="input" value={inputpbtype} onChange={pbtypeinput} type="number" min="0" max="2" placeholder="0:Platform, 1:Individual, 2:Blood Bank"></input>
+                        <div className="input-flex" >   
+                                <label className="label">Donation Type<div className="red">*</div></label>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Donation Type</InputLabel>
+                                    <Select
+                                        value={inputpbtype}
+                                        onChange={pbtypeinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        fontWeight={500}
+                                        className={classes.item}>Platform</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Individual</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Blood Bank</MenuItem>
+                                    </Select>
+                                </FormControl>    
                             </div>
                             <div className="input-flex" >       
-                                <label className="label">Blood Group<div className="red">*</div></label>
-                                <input className="input" value={inputbloodgroup} onChange={bloodgroupinput} type="text" placeholder="Eg. +0  (O-Positive)"></input>
+                                <label className="label">Blood Group</label>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Blood Group</InputLabel>
+                                    <Select
+                                        value={inputbloodgroup}
+                                        onChange={bloodgroupinput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"A+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>A+</MenuItem>
+                                        <MenuItem value={"A-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>A-</MenuItem>
+                                        <MenuItem value={"B+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>B+</MenuItem>
+                                        <MenuItem value={"B-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>B-</MenuItem>
+                                        <MenuItem value={"O+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>O+</MenuItem>
+                                        <MenuItem value={"O-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>O-</MenuItem>
+                                        <MenuItem value={"AB+"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>AB+</MenuItem>
+                                        <MenuItem value={"AB-"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>AB-</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                             <div className="input-flex" >   
                                 <label className="label">COVID Recovery Date</label>
-                                <input className="input" value={inputrecoverydate} onChange={recoverydateinput} type="text" placeholder="Date"></input>
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                    placeholder="Recovery Date"
+                                    disableToolbar
+                                    variant="inline"
+                                    format="dd/MM/yyyy"
+                                    margin="normal"
+                                    id="recovery-date-picker-inline"
+                                    value={inputrecoverydate}
+                                    onChange={recoverydateinput}
+                                    autoOk={true}
+                                    KeyboardButtonProps={{
+                                        "aria-label": "change date",
+                                    }}
+                                    className={classes.datepicker}
+                                    />
+                                </MuiPickersUtilsProvider>    
                             </div>
                             <div className="input-flex">
                                 <label className="label">Vaccinated</label>
@@ -894,21 +1266,37 @@ const Form = ({collectionname}) =>{
                         <div className="form-data-title">Information</div>
                             <div className="input-flex" >   
                                 <label className="label">Condition<div className="red">*</div></label>
-                                <input className="input" value={inputomrcondition} onChange={omrconditioninput} type="number" min="0" max="4" placeholder="0:No Stock, 1:Black Market, 2:Purchase, 3:Waiting Period, 4:Rental"></input>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel 
+                                    color="var(--lgrey)" 
+                                    fontSize="0.8rem"
+                                    fontWeight={500}
+                                    className={classes.input}
+                                    >Remdesivir Condition</InputLabel>
+                                    <Select
+                                        value={inputomrcondition}
+                                        onChange={omrconditioninput}
+                                        className={classes.inputfield}
+                                        required
+                                        >
+                                        <MenuItem value={"0"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>No Stock</MenuItem>
+                                        <MenuItem value={"1"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Black Market</MenuItem>
+                                        <MenuItem value={"2"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Purchase</MenuItem>
+                                        <MenuItem value={"3"}
+                                        fontSize="0.8rem"
+                                        className={classes.item}>Waiting Period</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                         </div>
                     );
-                }
-                else if (collectionname==="TeleCounselling")
-                {
-                    return (<></>);
-                }
-                else if (collectionname==="HomeTesting")
-                {
-                    return (<></>);
-                }
-
-                    
+                }                    
                 })()
             }
              </div>
@@ -916,7 +1304,7 @@ const Form = ({collectionname}) =>{
         </div>
         <div className="btn-flex" id="btn-flex">
             <div className="try" id="add-link">{inputtry}</div>
-            <button className="add-link-btn" onClick={setLink} id="add-btn">{btntxt}</button>
+            <button type="submit" className="add-link-btn" onClick={setLink} id="add-btn">{btntxt}</button>
         </div>
     </div>      
     );
