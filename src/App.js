@@ -15,6 +15,11 @@ import Widget from './Page/res/widget';
 import Donor from './Page/res/donor';
 import fire from './Page/res/fire_config';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import Login from './Page/Login';
+import qs from 'qs';
+import axios from 'axios';
+
+
 
 function Main() {
 
@@ -25,35 +30,62 @@ function Main() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [admincheck, setAdminCheck] = useState(false);
+  
 
-  const handleLogin = () => {
+  const submit =  (e) => {
     clearErrors();
-    fire
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .catch((err) => {
-      if(err.code==="auth/invalid-email"||err.code==="auth/user-disabled"||err.code==="auth/user-not-found")
-    { 
-      let e = document.getElementById("errore");
-      e.style.opacity=1;
-      setEmailError(err.message);
-      setTimeout(()=>{
-        setEmailError("");
-        e.style.opacity=0;
-      },10000);
+    e.preventDefault();
+    const data = {
+        email: email,
+        password: password
     }
-    else if(err.code==="auth/wrong-password")
-    {
-      let e = document.getElementById("errorp");
-      e.style.opacity=1;
-      setPasswordError(err.message);
-      setTimeout(()=>{
-        setPasswordError("");
-        e.style.opacity=0;
-      },10000);
-    }
-    });
-  }
+    if(localStorage.getItem('token-data'))
+      {
+        setLoginCheck(true);
+      }
+
+    axios({
+        method: 'post',
+        url: 'https://covid-relief-backend-karnataka.herokuapp.com/api/login',
+        data: qs.stringify({
+          email: email,
+        password: password
+        }),
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      })
+      .
+        then(res => {
+          console.log(res.data.data)
+            localStorage.setItem('token-data',res.data.data)
+            setLoginCheck(true);
+        }).catch(error => {
+            console.log(error.response.data.error)
+            if(error.response.data.error==="Invalid email-ID/password")
+            { 
+              let e = document.getElementById("errore");
+              e.style.opacity=1;
+              setEmailError(error.response.data.error);
+               setTimeout(()=>{
+                    setEmailError("");
+                    e.style.opacity=0;
+                },10000);
+            }
+            else if(error.response.data.error==="Invalid email-ID/password")
+            {
+              let e = document.getElementById("errorp");
+              e.style.opacity=1;
+              setPasswordError(error.response.data.error);
+              setTimeout(()=>{
+                setPasswordError("");
+                e.style.opacity=0;
+              },10000);
+            }
+  })
+}
+
+  
 
   const clearInputs = () =>{
     setEmail("");
@@ -69,8 +101,11 @@ function Main() {
     fire.auth().signOut();
   }
 
-  const userListener = () => {
-    fire.auth().onAuthStateChanged((logincheck) =>{
+  const userListener = (logincheck) => {
+      if(localStorage.getItem('token-data') !== "")
+      {
+        setLoginCheck(true);
+      }
       if(logincheck)
       {
         clearInputs();
@@ -80,7 +115,7 @@ function Main() {
       {
         setLoginCheck(false);
       }
-    });
+    
   }
 
   useEffect(()=>{
@@ -177,7 +212,8 @@ function Main() {
         </div>
         </div>
 
-        {logincheck ?
+        {
+        logincheck ?
           ( 
           <div className="admin-cover" id="admin-cover">
             <div className="login-tab">
@@ -231,7 +267,7 @@ function Main() {
               <input className="checkbox" type="checkbox" id="passwordcheck" onClick={showpass}/>
               <label htmlFor="passwordcheck" className="switch"/>      
             </div>  
-            <button className="log" onClick={handleLogin}>LOGIN</button>
+            <button className="log" onClick={submit}>LOGIN</button>
             </div>
             </div>
             </div>
