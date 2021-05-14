@@ -31,6 +31,7 @@ function Main() {
   const [passwordError, setPasswordError] = useState("");
   const [admincheck, setAdminCheck] = useState(false);
   
+  
 
   const submit =  (e) => {
     clearErrors();
@@ -39,10 +40,7 @@ function Main() {
         email: email,
         password: password
     }
-    if(localStorage.getItem('token-data'))
-      {
-        setLoginCheck(true);
-      }
+    
 
     axios({
         method: 'post',
@@ -98,15 +96,12 @@ function Main() {
   } 
 
   const handleLogOut = () => {
-    fire.auth().signOut();
+    localStorage.removeItem('token-data');
+    setLoginCheck(false);
   }
 
   const userListener = (logincheck) => {
-      if(localStorage.getItem('token-data') !== "")
-      {
-        setLoginCheck(true);
-      }
-      if(logincheck)
+      if(logincheck ||  localStorage.getItem('token-data') !== null)
       {
         clearInputs();
         setLoginCheck(logincheck);
@@ -132,7 +127,8 @@ function Main() {
       }
 
   useEffect(()=>{
-    if(logincheck!==false)
+
+    if(logincheck!==false || localStorage.getItem('token-data') !== null)
     {
       setUser(true);
     }
@@ -213,7 +209,8 @@ function Main() {
         </div>
 
         {
-        logincheck ?
+          
+        (logincheck || localStorage.getItem('token-data') !== null) ?
           ( 
           <div className="admin-cover" id="admin-cover">
             <div className="login-tab">
