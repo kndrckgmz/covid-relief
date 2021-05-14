@@ -55,9 +55,34 @@ function Main() {
       })
       .
         then(res => {
-          console.log(res.data.data)
+          console.log(res)
+          if(res.data.status === "ok"){
             localStorage.setItem('token-data',res.data.data)
             setLoginCheck(true);
+          }
+          if(res.data.status === "error"){
+            if(res.data.error==="Invalid email-ID/password")
+            { 
+              let e = document.getElementById("errore");
+              e.style.opacity=1;
+              setEmailError(res.data.error);
+               setTimeout(()=>{
+                    setEmailError("");
+                    e.style.opacity=0;
+                },10000);
+            }
+            else if(res.data.error==="Password length should be more than 8 characters")
+            {
+              let e = document.getElementById("errorp");
+              e.style.opacity=1;
+              setPasswordError(res.data.error);
+              setTimeout(()=>{
+                setPasswordError("");
+                e.style.opacity=0;
+              },10000);
+            }
+          }
+           
         }).catch(error => {
             console.log(error.response.data.error)
             if(error.response.data.error==="Invalid email-ID/password")
