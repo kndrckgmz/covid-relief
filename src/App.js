@@ -9,12 +9,14 @@ import Med from './Page/Medicine'
 import Food from './Page/Food';
 import Oxygen from './Page/Oxygen';
 import Plasma from './Page/Plasma';
-import Rem from './Page/Remedesivir';
+import Rem from './Page/Remdesivir';
 import Testing from './Page/Testing';
 import Widget from './Page/res/widget';
-import Donor from './Page/res/donor';
-import fire from './Page/res/fire_config';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import qs from 'qs';
+import {axios} from './Page/res/axios';
+
+
 
 function Main() {
 
@@ -25,35 +27,73 @@ function Main() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [admincheck, setAdminCheck] = useState(false);
+  
+  
 
-  const handleLogin = () => {
+  const submit =  (e) => {
     clearErrors();
-    fire
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .catch((err) => {
-      if(err.code==="auth/invalid-email"||err.code==="auth/user-disabled"||err.code==="auth/user-not-found")
-    { 
-      let e = document.getElementById("errore");
-      e.style.opacity=1;
-      setEmailError(err.message);
-      setTimeout(()=>{
-        setEmailError("");
-        e.style.opacity=0;
-      },10000);
-    }
-    else if(err.code==="auth/wrong-password")
-    {
-      let e = document.getElementById("errorp");
-      e.style.opacity=1;
-      setPasswordError(err.message);
-      setTimeout(()=>{
-        setPasswordError("");
-        e.style.opacity=0;
-      },10000);
-    }
-    });
-  }
+    e.preventDefault();
+    
+    axios.post("/login", 
+      qs.stringify({
+          email: email,
+          password: password
+      }))
+      .then(res => {
+          console.log(res)
+          if(res.data.status === "ok"){
+            localStorage.setItem('token-data',res.data.data)
+            setLoginCheck(true);
+          }
+          if(res.data.status === "error"){
+            if(res.data.error==="Invalid email-ID/password")
+            { 
+              let e = document.getElementById("errore");
+              e.style.opacity=1;
+              setEmailError(res.data.error);
+               setTimeout(()=>{
+                    setEmailError("");
+                    e.style.opacity=0;
+                },10000);
+            }
+            else if(res.data.error==="Password length should be more than 8 characters")
+            {
+              let e = document.getElementById("errorp");
+              e.style.opacity=1;
+              setPasswordError(res.data.error);
+              setTimeout(()=>{
+                setPasswordError("");
+                e.style.opacity=0;
+              },10000);
+            }
+          }
+           
+        }).catch(error => {
+            console.log(error.response.data.error)
+            if(error.response.data.error==="Invalid email-ID/password")
+            { 
+              let e = document.getElementById("errore");
+              e.style.opacity=1;
+              setEmailError(error.response.data.error);
+               setTimeout(()=>{
+                    setEmailError("");
+                    e.style.opacity=0;
+                },10000);
+            }
+            else if(error.response.data.error==="Invalid email-ID/password")
+            {
+              let e = document.getElementById("errorp");
+              e.style.opacity=1;
+              setPasswordError(error.response.data.error);
+              setTimeout(()=>{
+                setPasswordError("");
+                e.style.opacity=0;
+              },10000);
+            }
+  })
+}
+
+  
 
   const clearInputs = () =>{
     setEmail("");
@@ -66,12 +106,12 @@ function Main() {
   } 
 
   const handleLogOut = () => {
-    fire.auth().signOut();
+    localStorage.removeItem('token-data');
+    setLoginCheck(false);
   }
 
-  const userListener = () => {
-    fire.auth().onAuthStateChanged((logincheck) =>{
-      if(logincheck)
+  const userListener = (logincheck) => {
+      if(logincheck ||  localStorage.getItem('token-data') !== null)
       {
         clearInputs();
         setLoginCheck(logincheck);
@@ -80,7 +120,7 @@ function Main() {
       {
         setLoginCheck(false);
       }
-    });
+    
   }
 
   useEffect(()=>{
@@ -97,7 +137,8 @@ function Main() {
       }
 
   useEffect(()=>{
-    if(logincheck!==false)
+
+    if(logincheck!==false || localStorage.getItem('token-data') !== null)
     {
       setUser(true);
     }
@@ -115,10 +156,6 @@ function Main() {
       body.style.overflow = "hidden";  
       let cover = document.getElementById("admin-cover");         
       cover.style.display = "grid";
-      let donor = document.getElementById("donate");
-      donor.style.pointerEvents="none";
-      donor.style.color="var(--white)";
-      donor.style.stroke="var(--white)";
     }
     else if  (admincheck===false)
     {
@@ -126,10 +163,6 @@ function Main() {
       let cover = document.getElementById("admin-cover");
       body.style.overflow = "unset";      
       cover.style.display = "none";
-      let donor = document.getElementById("donate");
-      donor.style.pointerEvents="unset";
-      donor.style.color="unset";
-      donor.style.stroke="var(--accent)";
     }
   },[admincheck]);
 
@@ -148,7 +181,6 @@ function Main() {
       <div className="header">
         <div className="title-container">
           <div className="title">COVID RELIEF</div>
-          <Donor/>
         </div>
         <div className="navbar">
           <div className="login-btn" id="admin-btn" 
@@ -171,13 +203,15 @@ function Main() {
                 <NavLink to="/Consultation" className="link">Online Consultation</NavLink>
                 <NavLink to="/Oxygen" className="link">Oxygen</NavLink>
                 <NavLink to="/Plasma" className="link">Plasma Donors</NavLink>
-                <NavLink to="/Remedesivir" className="link">Remdesivir</NavLink>
+                <NavLink to="/Remdesivir" className="link">Remdesivir</NavLink>
                 <NavLink to="/Counselling" className="link">TeleCounselling</NavLink>
             </div>
         </div>
         </div>
 
-        {logincheck ?
+        {
+          
+        (logincheck || localStorage.getItem('token-data') !== null) ?
           ( 
           <div className="admin-cover" id="admin-cover">
             <div className="login-tab">
@@ -214,13 +248,13 @@ function Main() {
 
             <div className="login-title" id="signin">ADMINISTRATOR LOGIN</div>
 
-            <input className="login-input" type="email" id="name" placeholder="Email"
+            <input className="login-input" type="email" placeholder="Email"
             required
             onChange={(e) => setEmail(e.target.value)}
             id="email"></input>
             <p className="logerror" id="errore">{emailError}</p> 
 
-            <input className="login-input" type="password" id="pass" placeholder="Password"
+            <input className="login-input" type="password" placeholder="Password"
             required
             onChange={(e) => setPassword(e.target.value)}
             id="password"></input>
@@ -231,7 +265,7 @@ function Main() {
               <input className="checkbox" type="checkbox" id="passwordcheck" onClick={showpass}/>
               <label htmlFor="passwordcheck" className="switch"/>      
             </div>  
-            <button className="log" onClick={handleLogin}>LOGIN</button>
+            <button className="log" onClick={submit}>LOGIN</button>
             </div>
             </div>
             </div>
@@ -248,7 +282,7 @@ function Main() {
         <Route path="/Consultation" component={props => (<Consultation {...props} user={user}/>)}></Route>
         <Route path="/Oxygen" component={props => (<Oxygen {...props} user={user}/>)}></Route>
         <Route path="/Plasma" component={props => (<Plasma {...props} user={user}/>)}></Route>
-        <Route path="/Remedesivir" component={props => (<Rem {...props} user={user}/>)}></Route>
+        <Route path="/Remdesivir" component={props => (<Rem {...props} user={user}/>)}></Route>
         <Route path="/Counselling" component={props => (<Counselling {...props} user={user}/>)}></Route>
       </Switch>
       <Widget/>

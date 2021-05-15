@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import Editbtn from './edit';
-import moment from 'moment';
+import moment from 'moment'
 const Data = (
     {user,
     id,
@@ -95,8 +95,13 @@ const Data = (
     const [availablecolor, setAvailableColor] = useState();     
     const [verifiedtext, setVerifiedText] = useState();
     const [verifiedbytext, setVerifiedByText] = useState();
-    const [verifieddatetext, setVerifiedDateText] = useState();
     const [color, setColor] = useState();
+    const [numcolor, setNumColor] = useState();
+    const [numpoint, setNumPoint] = useState();
+    const [ecolor, setEColor] = useState();
+    const [epoint, setEPoint] = useState();
+    const [linkcolor, setLinkColor] = useState();
+    const [linkpoint, setLinkPoint] = useState();
     const [pbtypetext, setPBTypetext] = useState();
     const [foodtypetext, setFoodTypetext] = useState();
     const [consulttext, setConsultConditionText] = useState();
@@ -114,7 +119,7 @@ const Data = (
         }
         else if(available===false)
         {
-            setAvailableText("Currently Unavailable");
+            setAvailableText("Unavailable");
             setAvailableColor("var(--lgrey)");
         }
     },[available]);
@@ -258,26 +263,77 @@ const Data = (
             setVerifiedByText(verified_by);
             setColor("var(--green)");
         }
-        else if(verified==="1")
+        else if(verified==="2")
+        {
+            setVerifiedText("Verificaiton Pending");
+            setVerifiedByText("No Data");
+            setColor("var(--yellow)");
+            
+        }
+        else
         {
             setVerifiedText("Not Verified");
             setVerifiedByText("No Data");
             setColor("var(--lgrey)");
         }
+    }, [verified, verified_by]);
+
+    useEffect(()=>{
+        if (contact_email!=="")
+        {
+            setEColor("var(--accent)");
+            setEPoint("unset");
+        }
         else
         {
-            setVerifiedText("Verificaiton Pending");
-            setVerifiedByText("No Data");
-            setColor("var(--yellow)");
+            setEColor("var(--back)");
+            setEPoint("none");
+        }   
+        
+        if (contact_number!=="")
+        {
+            setNumColor("var(--accent)");
+            setNumPoint("unset");
         }
-    }, [verified, verified_by]);
+        else
+        {
+            setNumColor("var(--back)");
+            setNumPoint("none");
+        }
+        
+        if (link_to_go!=="")
+        {
+            setLinkColor("var(--accent)");
+            setLinkPoint("unset");
+        }
+        else
+        {
+            setLinkColor("var(--back)");
+            setLinkPoint("none");
+        }
+    },[contact_number, link_to_go, contact_email])
 
     const getClickableLink = (link_to_go) => {
         return link_to_go.startsWith("http://") || link_to_go.startsWith("https://") ?
         link_to_go:`https://${link_to_go}`;
       };
+    
+    const detailsbtn = () => {
+        let cover = document.getElementById(id);
+        cover.style.display="grid";
+        let body = document.querySelector("body");
+        body.style.overflow="hidden";
+    }
+
+    const closemodalx = () => {
+        let cover = document.getElementById(id);
+        cover.style.display = "none";
+        let body = document.querySelector("body");
+        body.style.overflow="unset";
+    }
 
     return(
+        <>
         <div className="card">
             <div className="name-container">
                 <div className="name">{name}</div>
@@ -292,7 +348,7 @@ const Data = (
       
                     <div className="verified-card" id="verified-card">    
                         <div className="data-container">
-                            <div className="data-label">Verification Status:</div>
+                            <div className="data-label">Status:</div>
                         <div className="data">{verifiedtext}</div>
                         </div>
                         <div className="data-container">
@@ -369,157 +425,224 @@ const Data = (
             editconsultationtype={editconsultationtype}
             setEditConsultationType={setEditConsultationType}/>
 
-            <div className="content-flex">
-               <div className="details">
-                    <div className="data-container">
-                        <div className="data-label">Description:</div> 
-                        <div className="data">{description !== "" ? description : "No Data"}</div>
-                    </div>
-                    <div className="data-container">
-                        <div className="data-label">Location:</div> 
-                        <div className="data">{location_covered !== "" ? location_covered : "No Data"}</div>
-                    </div>
-                    <div className="data-container">
-                        <div className="data-label">Contact Details:</div>
-                        <div className="contact-info">
-                        <div className="contact-data" >{contact_name}/</div>
-                        <a className="contact-data"  href={`tel:${contact_number}`}>{contact_number !== "" ? contact_number : "No Data"}/</a>
-                        <a className="contact-data" href={`mailto:${contact_email !== "" ? contact_email : ""}`} target="_top" >{contact_email !== "" ? contact_email : "No Data"}/</a>
-                        <a className="contact-data" href={link_to_go !== "" ? getClickableLink(link_to_go) : ""} target="_blank" without rel="noreferrer" >{link_to_go !== "" ? getClickableLink(link_to_go) : "no data"}/</a>             
+
+            <div className="desc-container">
+                <div className="desc-label">Description:</div> 
+                <div className="desc">{description !== "" ? description : "No Data"}</div>
+            </div>
+            <div className="data-container">
+            <div className="details" onClick={detailsbtn}>Details</div> 
+                <div className="contact-info">
+                <a href={`tel:${contact_number}`}
+                style={{pointerEvents: `${numpoint}`}}>
+                    <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 24 24"
+                    className="contact-icon"
+                    style={{fill: `${numcolor}`, pointerEvents: `${numpoint}`}}>
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.28-.28.67-.36 1.02-.25c1.12.37 2.32.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57c.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                </a>
+                <a href={`mailto:${contact_email !== "" ? contact_email : ""}`}
+                style={{pointerEvents: `${epoint}`}}
+                target="_top">
+                    <svg 
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className="contact-icon"
+                    style={{fill: `${ecolor}`, pointerEvents: `${epoint}`}}>
+                        <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6m-2 0l-8 5l-8-5h16m0 12H4V8l8 5l8-5v10z"/>
+                    </svg>
+                </a>
+                <a href={link_to_go !== "" ? getClickableLink(link_to_go) : ""}
+                style={{pointerEvents: `${linkpoint}`}}
+                target="_blank" 
+                rel="noreferrer" >
+                    <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 24 24"
+                    className="contact-icon"
+                    style={{fill: `${linkcolor}`, pointerEvents: `${linkpoint}`}}>
+                        <path d="M10.59 13.41c.41.39.41 1.03 0 1.42c-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0a5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.982 2.982 0 0 0 0-4.24a2.982 2.982 0 0 0-4.24 0l-3.53 3.53a2.982 2.982 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0a5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.982 2.982 0 0 0 0 4.24a2.982 2.982 0 0 0 4.24 0l3.53-3.53a2.982 2.982 0 0 0 0-4.24a.973.973 0 0 1 0-1.42z"/>
+                    </svg>
+                </a>             
+                </div>
+            </div>
+        </div>
+
+        <div className="details-card-cover" id={id}>
+
+            <div className="details-card-container">
+            <div className="details-head-container">
+                <div className="details-close-popup" onClick={closemodalx}>
+                    <div className="details-x1"></div>
+                    <div className="details-x2"></div>
+                </div>
+            </div>
+
+            <div className="details-card">
+            <div className="name-container">
+                <div className="dname">{name}</div>
+                <div className="av-container">
+                    <div className="davailable" style={{backgroundColor: `${availablecolor}`}}>{availabletext}</div>
+                    <div className="dverified-btn">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 24 24">
+                        <path className="dverification-icon" style={{fill: `${color}`}} id="verification-icon" d="M22.42 11.34l-1.86-2.13l.26-2.82c.05-.5-.29-.96-.77-1.07l-2.76-.62l-1.44-2.44c-.26-.43-.79-.61-1.26-.41L12 2.96L9.41 1.85c-.46-.2-1-.02-1.25.41L6.71 4.69l-2.75.62c-.49.11-.83.56-.78 1.06l.26 2.83l-1.87 2.14c-.33.38-.33.94 0 1.32l1.87 2.13l-.26 2.83c-.05.5.29.96.77 1.07l2.76.63l1.44 2.43c.26.43.8.61 1.26.41L12 21.03l2.59 1.11c.46.2 1 .02 1.25-.41l1.44-2.43l2.76-.63c.49-.11.82-.57.77-1.07l-.26-2.82l1.86-2.13a.98.98 0 0 0 .01-1.31zm-12.19 3.49l-2.12-2.12a.996.996 0 1 1 1.41-1.41l1.41 1.41l3.54-3.54a.996.996 0 1 1 1.41 1.41l-4.24 4.24c-.38.4-1.02.4-1.41.01z"/>
+                    </svg>
+      
+                    <div className="dverified-card" id="verified-card">    
+                        <div className="extra-container">
+                            <div className="data-label">Status:</div>
+                        <div className="data">{verifiedtext}</div>
+                        </div>
+                        <div className="extra-container">
+                            <div className="data-label">Verified By:</div>
+                        <div className="data">{verifiedbytext}</div>
                         </div>
                     </div>
-                </div>    
-                
-
+                    </div>
+                </div>
             </div>
-            <div className="more-info">
-            <div className="info-flex">
+
+            <div className="time-container" >
+                <div className="dtime-data">Last Updated: {moment(last_update_time.toString()).calendar()}</div>
+            </div>
+            
+            <div className="extra-container">
+                <div className="ddesc-label">Description:</div> 
+                <div className="ddesc">{description !== "" ? description : "No Data"}</div>
+            </div>
+
+            <div className="card-flex">
             <div className="extra">
-                <div className="data-container">
+                <div className="extra-container">
+                    <div className="data-label">Location:</div> 
+                    <div className="data">{location_covered !== "" ? location_covered : "No Data"}</div>
+                </div>
+                <div className="extra-container">
                 <div className="data-label">Timings:</div> 
                     <div className="data">{timings !== "" ? timings : "No Data"}</div>
                 </div>
-                <div className="data-container">
-                <div className="data-label">Comments:</div> 
-                    <div className="data">{comments !== "" ? comments : "No Data"}</div>
-                </div>
-                <div className="data-container">
+                <div className="extra-container">
                 <div className="data-label">Source:</div> 
                     <div className="data">{source !== "" ? source : "No Data"}</div>
                 </div>
             </div>
-           {
+
+                {
                 (()=> {
-                if (collectionname==="BloodDonors")
+                if (collectionname==="/blooddonor")
                 {
                     return (                    
                     <div className="extra">
-                    <div className="data-container">
+                    <div className="extra-container">
                     <div className="data-label">Blood Type:</div> 
                         <div className="data">{pbtypetext !== "" ? pbtypetext : "No Data"}</div>
                     </div>
-                    <div className="data-container">
+                    <div className="extra-container">
                     <div className="data-label">Blood Group:</div> 
                         <div className="data">{blood_group !== "" ? blood_group : "No Data"}</div>
                     </div>
                     </div>);
                 }
-                else if (collectionname==="Food")
+                else if (collectionname==="/food")
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Type:</div> 
                             <div className="data">{foodtypetext !== "" ? foodtypetext : "No Data"}</div>
                         </div>
                         </div>
                     );
                 }
-                else if (collectionname==="Medicine")
+                else if (collectionname==="/medicine")
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Condition:</div> 
                             <div className="data">{omrconditiontext !== "" ? omrconditiontext : "No Data"}</div>
                         </div>
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Type:</div> 
                             <div className="data">{medtypetext !== "" ? medtypetext : "No Data"}</div>
                         </div>
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Medicine Name:</div> 
                             <div className="data">{medicine_name !== "" ? medicine_name : "No Data"}</div>
                         </div>
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Price:</div> 
                             <div className="data">{medprice !== "" ? medprice : "No Data"}</div>
                         </div>
                         </div>
                     );
                 }
-                else if (collectionname==="OnlineDoctorConsultation")
+                else if (collectionname==="/onlinedoc")
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Condition:</div> 
                             <div className="data">{consulttext !== "" ? consulttext : "No Data"}</div>
                         </div>
                         </div>
                     );
                 }
-                else if (collectionname==="Oxygen")
+                else if (collectionname==="/oxygen")
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Condition:</div>
                             <div className="data">{omrconditiontext !== "" ? omrconditiontext : "No Data"}</div>
                         </div>
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Type:</div> 
                             <div className="data">{oxytypetext !== "" ? oxytypetext : "No Data"}</div>
                         </div>
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Capacity:</div> 
                             <div className="data">{oxycapacity !== "" ? oxycapacity : "No Data"}</div>
                         </div>
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Price:</div> 
                             <div className="data">{oxyprice !== "" ? oxyprice : "No Data"}</div>
                         </div>
                         </div>
                     );
                 }
-                else if (collectionname==="PlasmaDonors")
+                else if (collectionname==="/plasma")
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Blood Group:</div> 
                             <div className="data">{blood_group  !== "" ? blood_group : "No Data"}</div>
                         </div>
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Type:</div> 
                             <div className="data">{pbtypetext  !== "" ? pbtypetext : "No Data"}</div>
                         </div>
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Covid Recovery Date:</div> 
-                            <div className="data">{covid_recovery_date ? moment(covid_recovery_date.toDate()).calendar() : "No Data"}</div>
+                            <div className="data">{covid_recovery_date ? moment(covid_recovery_date.toString()).calendar() : "No Data"}</div>
                         </div> 
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Vaccinated:</div> 
                             <div className="data">{vaccinatedtext !== "" ? vaccinatedtext : "No Data"}</div>
                         </div>
                         </div>
                     );
                 }
-                else if (collectionname==="Remedesivir")
+                else if (collectionname==="/remdesivir")
                 {
                     return (
                         <div className="extra">
-                        <div className="data-container">
+                        <div className="extra-container">
                         <div className="data-label">Condition:</div> 
                             <div className="data">{omrconditiontext !== "" ? omrconditiontext : "No Data"}</div>
                         </div>
@@ -529,14 +652,50 @@ const Data = (
 
                 })()
             }
-            </div>    
-                <svg xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 24 24" 
-                 className="svg-container">
-                    <path className="arrow" d="M18 15a1 1 0 0 1-.64-.23L12 10.29l-5.37 4.32a1 1 0 0 1-1.41-.15a1 1 0 0 1 .15-1.41l6-4.83a1 1 0 0 1 1.27 0l6 5a1 1 0 0 1 .13 1.41A1 1 0 0 1 18 15z"/>
-                </svg>   
-            </div>          
+            </div>
+            <div className="data-container">
+            <div className="contact-label">{contact_name}</div> 
+                <div className="contact-info">
+                <a className="contact-icon"  
+                href={`tel:${contact_number}`}
+                style={{fill: `${numcolor}`, pointerEvents: `${numpoint}`}}>
+                    <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 24 24"
+                    padding="0.5rem">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.28-.28.67-.36 1.02-.25c1.12.37 2.32.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57c.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                </a>
+                <a className="contact-icon" 
+                href={`mailto:${contact_email !== "" ? contact_email : ""}`}
+                style={{fill: `${ecolor}`, pointerEvents: `${epoint}`}}
+                target="_top">
+                    <svg 
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                        <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6m-2 0l-8 5l-8-5h16m0 12H4V8l8 5l8-5v10z"/>
+                    </svg>
+                </a>
+                <a className="contact-icon" 
+                
+                href={link_to_go !== "" ? getClickableLink(link_to_go) : ""} 
+                style={{fill: `${linkcolor}`, pointerEvents: `${linkpoint}`}}
+                target="_blank" 
+                rel="noreferrer" >
+                    <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 24 24">
+                        <path d="M10.59 13.41c.41.39.41 1.03 0 1.42c-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0a5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.982 2.982 0 0 0 0-4.24a2.982 2.982 0 0 0-4.24 0l-3.53 3.53a2.982 2.982 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0a5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.982 2.982 0 0 0 0 4.24a2.982 2.982 0 0 0 4.24 0l3.53-3.53a2.982 2.982 0 0 0 0-4.24a.973.973 0 0 1 0-1.42z"/>
+                    </svg>
+                </a>             
+                </div>
+            </div>
+
+            </div>
+            </div>
+
         </div>
+        </>
     );
 };
 

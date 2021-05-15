@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import Modal from './editmodal';
+import moment from 'moment';
 
 const Editbtn = ({
     user,
@@ -10,7 +11,6 @@ const Editbtn = ({
     linklist,
     editid,
     setEditId,
-    available,
     last_update_time,
     editname,
     setEditName,
@@ -61,7 +61,7 @@ const Editbtn = ({
     editfoodtype,
     setEditFoodType,
     editconsultationtype,
-    setEditConsultationType,}) => {
+    setEditConsultationType}) => {
 
 
     const [cover, setCover] = useState("none");
@@ -79,7 +79,7 @@ const Editbtn = ({
 ;
 
     useEffect(()=>{
-        if (collectionname==="AmbulanceService"||collectionname==="BedAvailability"||collectionname==="HomeTesting"||collectionname==="TeleCounselling")
+        if (collectionname==="/ambulance"||collectionname==="/bed"||collectionname==="/hometesting"||collectionname==="/tele")
         {
             setEditName("");
             setEditDesc("");
@@ -95,7 +95,7 @@ const Editbtn = ({
             setEditComment("");
             setEditAvailable(false);
         }
-        else if (collectionname==="BloodDonors")
+        else if (collectionname==="/blooddonor")
         {   
             setEditName("");
             setEditDesc("");
@@ -113,7 +113,7 @@ const Editbtn = ({
             setEditPBType("");
             setEditBloodGroup("");
         }
-        else if (collectionname==="Medicine")
+        else if (collectionname==="/medicine")
         {   
             setEditName("");
             setEditDesc("");
@@ -134,7 +134,7 @@ const Editbtn = ({
             setEditPrice("");
             
         }
-        else if (collectionname==="Food")
+        else if (collectionname==="/food")
         {   
             setEditName("");
             setEditDesc("");
@@ -151,7 +151,7 @@ const Editbtn = ({
             setEditAvailable(false);
             setEditFoodType("");
         }
-        else if (collectionname==="OnlineDoctorConsultation")
+        else if (collectionname==="/onlinedoc")
         {   
             setEditName("");
             setEditDesc("");
@@ -168,7 +168,7 @@ const Editbtn = ({
             setEditAvailable(false);;
             setEditConsultationType("");
         }
-        else if (collectionname==="Oxygen")
+        else if (collectionname==="/oxygen")
         {   
             setEditName("");
             setEditDesc("");
@@ -188,7 +188,7 @@ const Editbtn = ({
             setEditCapacity("");
             setEditPrice("");
         }
-        else if (collectionname==="PlasmaDonors")
+        else if (collectionname==="/plasma")
         {   
             setEditName("");
             setEditDesc("");
@@ -208,7 +208,7 @@ const Editbtn = ({
             setEditRecoveryDate("");
             setEditVaccinated(false);
         }
-        else if (collectionname==="Remedesivir")
+        else if (collectionname==="/remdesivir")
         {   
             setEditName("");
             setEditDesc("");
@@ -245,7 +245,7 @@ const Editbtn = ({
     }
 
     useEffect(()=>{
-        setEditList(linklist.filter(i=>i.id===editid));
+        setEditList(linklist.filter(i=>i._id===editid));
     },[editid, linklist, setEditList])
 
     const closemodal = (e) => {
@@ -268,7 +268,7 @@ const Editbtn = ({
     return(
         <div className="edit-container" >
 
-            <div className="time-data">Last Updated: {last_update_time}</div>
+            <div className="time-data">Last Updated: {moment(last_update_time.toString()).calendar()}</div>
                 
             <div className="edit-btn" style={{display: `${edit}`}} onClick={popup} idvalue={id}>EDIT</div>
             

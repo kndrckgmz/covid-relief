@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { db } from "./fire_config";
+import React, { useState } from "react";
+import { db } from "../../../BIN/fire_config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "date-fns";

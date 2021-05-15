@@ -1,6 +1,4 @@
 import { useEffect } from "react";
-import {db} from './fire_config';
-import firebase from 'firebase/app';
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -12,6 +10,8 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
+import {axios} from './axios';
+import qs from 'qs';    
 
 const Modal = ({
     editid,
@@ -145,10 +145,8 @@ const Modal = ({
         setEditAvailable(e.target.checked);
     }
 
-    // console.log(editrecoverydate.toDate());
-
     useEffect(()=>{
-        if (collectionname==="AmbulanceService"||collectionname==="BedAvailability"||collectionname==="HomeTesting"||collectionname==="TeleCounselling")
+        if (collectionname==="/ambulance"||collectionname==="/bed"||collectionname==="/hometesting"||collectionname==="/tele")
         {
             editlist.forEach(i=>{
                 setEditName(i.name);
@@ -166,7 +164,7 @@ const Modal = ({
                 setEditAvailable(i.available);
             });
         }
-        else if (collectionname==="BloodDonors")
+        else if (collectionname==="/blooddonor")
         {   
             editlist.forEach(i=>{
                 setEditName(i.name);
@@ -186,7 +184,7 @@ const Modal = ({
                 setEditBloodGroup(i.blood_group);
             });
         }
-        else if (collectionname==="Medicine")
+        else if (collectionname==="/medicine")
         {   
             editlist.forEach(i=>{
                 setEditName(i.name);
@@ -208,7 +206,7 @@ const Modal = ({
                 setEditPrice(i.price);
             });
         }
-        else if (collectionname==="Food")
+        else if (collectionname==="/food")
         {   
             editlist.forEach(i=>{
                 setEditName(i.name);
@@ -227,7 +225,7 @@ const Modal = ({
                 setEditFoodType(i.type);
             });
         }
-        else if (collectionname==="OnlineDoctorConsultation")
+        else if (collectionname==="/onlinedoc")
         {   
             editlist.forEach(i=>{
                 setEditName(i.name);
@@ -246,7 +244,7 @@ const Modal = ({
                 setEditConsultationType(i.type);
             });
         }
-        else if (collectionname==="Oxygen")
+        else if (collectionname==="/oxygen")
         {   
             editlist.forEach(i=>{
                 setEditName(i.name);
@@ -268,7 +266,7 @@ const Modal = ({
                 setEditPrice(i.price);
             });
         }
-        else if (collectionname==="PlasmaDonors")
+        else if (collectionname==="/plasma")
         {   
             editlist.forEach(i=>{
                 setEditName(i.name );
@@ -286,11 +284,11 @@ const Modal = ({
                 setEditAvailable(i.available);
                 setEditBloodGroup(i.blood_group);
                 setEditPBType(i.type);
-                setEditRecoveryDate(i.covid_recovery_date !== null ? i.covid_recovery_date.toDate() : null);
+                setEditRecoveryDate(i.covid_recovery_date !== null ? i.covid_recovery_date.toString() : null);
                 setEditVaccinated(i.vaccinated);
             });
         }
-        else if (collectionname==="Remedesivir")
+        else if (collectionname==="/remdesivir")
         {   
             editlist.forEach(i=>{
                 setEditName(i.name);
@@ -313,16 +311,22 @@ const Modal = ({
     },[editlist, editid]);
 
     const deleteData = () => {
-        db.collection(`${collectionname}`).doc(editid).delete();
+        axios.delete(`${collectionname}/${editid}`)
+        .then((res) => {
+            setEditId(""); 
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
         let body = document.querySelector("body");
         body.style.overflow = "unset"; 
     };
 
     const updateData = () => {
-        if (collectionname==="AmbulanceService"||collectionname==="BedAvailability"||collectionname==="HomeTesting"||collectionname==="TeleCounselling")
-        {
-            db.collection(`${collectionname}`).doc(editid).update({
-                id:editid,
+        if (collectionname==="/ambulance"||collectionname==="/bed"||collectionname==="/hometesting"||collectionname==="/tele")
+        {   
+            axios.patch(`${collectionname}/${editid}`, 
+            qs.stringify({
                 name : editname,
                 description : editdesc,
                 location_covered : editlocation,
@@ -333,13 +337,11 @@ const Modal = ({
                 link_to_go : editlink,
                 verified : editverified,
                 verified_by : editverifiedby,
-                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
                 source : editsource,
                 comments : editcomments,
-                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
-                available : editavailable
-            })
-            .then(() => {
+                available : editavailable,
+              }))
+            .then((res) => {
                 setEditName("");
                 setEditDesc("");
                 setEditLoc("");
@@ -354,14 +356,18 @@ const Modal = ({
                 setEditComment("");
                 setEditAvailable(false);
                 setEditId("");
+                console.log(res);
                 let body = document.querySelector("body");
                 body.style.overflow = "unset"; 
+            })
+            .catch((err)=>{
+                console.log(err);
             });
         }
-        else if (collectionname==="BloodDonors")
+        else if (collectionname==="/blooddonor")
         {   
-            db.collection(`${collectionname}`).doc(editid).update({
-                id: editid,
+            axios.patch(`${collectionname}/${editid}`, 
+            qs.stringify({
                 name : editname,
                 description : editdesc,
                 location_covered : editlocation,
@@ -372,14 +378,12 @@ const Modal = ({
                 link_to_go : editlink,
                 verified : editverified,
                 verified_by : editverifiedby,
-                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
                 source : editsource,
                 comments : editcomments,
-                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
                 available : editavailable,
                 type: editpbtype,
                 blood_group: editbloodgroup
-            })
+            }))
             .then(() => {
                 setEditName("");
                 setEditDesc("");
@@ -399,12 +403,15 @@ const Modal = ({
                 setEditId(""); 
                 let body = document.querySelector("body");
                 body.style.overflow = "unset";          
+            })
+            .catch((err)=>{
+                console.log(err);
             });
         }
-        else if (collectionname==="Medicine")
+        else if (collectionname==="/medicine")
         {   
-            db.collection(`${collectionname}`).doc(editid).update({
-                id:editid,
+            axios.patch(`${collectionname}/${editid}`, 
+            qs.stringify({
                 name : editname,
                 description : editdesc,
                 location_covered : editlocation,
@@ -415,16 +422,14 @@ const Modal = ({
                 link_to_go : editlink,
                 verified : editverified,
                 verified_by : editverifiedby,
-                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
                 source : editsource,
                 comments : editcomments,
-                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
                 available : editavailable,
                 type: editmedtype,
                 condition : editomrcondition,
                 medicine_name : editmedname,
                 price : editprice
-            })
+            }))
             .then(() => {
                 setEditName("");
                 setEditDesc("");
@@ -446,11 +451,15 @@ const Modal = ({
                 setEditId("");     
                 let body = document.querySelector("body");
                 body.style.overflow = "unset";        
+            })
+            .catch((err)=>{
+                console.log(err);
             });
         }
-        else if (collectionname==="Food")
+        else if (collectionname==="/food")
         {   
-            db.collection(`${collectionname}`).doc(editid).update({
+            axios.patch(`${collectionname}/${editid}`, 
+            qs.stringify({
                 name : editname,
                 description : editdesc,
                 location_covered : editlocation,
@@ -461,13 +470,11 @@ const Modal = ({
                 link_to_go : editlink,
                 verified : editverified,
                 verified_by : editverifiedby,
-                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
                 source : editsource,
                 comments : editcomments,
-                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
                 available : editavailable,
                 type: editfoodtype,
-            })
+            }))
             .then(() => {
                 setEditName("");
                 setEditDesc("");
@@ -488,9 +495,10 @@ const Modal = ({
                 body.style.overflow = "unset"; 
             });
         }
-        else if (collectionname==="OnlineDoctorConsultation")
+        else if (collectionname==="/onlinedoc")
         {   
-            db.collection(`${collectionname}`).doc(editid).update({
+            axios.patch(`${collectionname}/${editid}`, 
+            qs.stringify({
                 name : editname,
                 description : editdesc,
                 location_covered : editlocation,
@@ -501,13 +509,11 @@ const Modal = ({
                 link_to_go : editlink,
                 verified : editverified,
                 verified_by : editverifiedby,
-                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
                 source : editsource,
                 comments : editcomments,
-                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
                 available : editavailable,
                 type: editconsultationtype,
-            })
+            }))
             .then(() => {
                 setEditName("");
                 setEditDesc("");
@@ -528,9 +534,10 @@ const Modal = ({
                 body.style.overflow = "unset"; 
             });
         }        
-        else if (collectionname==="Oxygen")
+        else if (collectionname==="/oxygen")
         {   
-            db.collection(`${collectionname}`).doc(editid).update({
+            axios.patch(`${collectionname}/${editid}`, 
+            qs.stringify({
                 name : editname,
                 description : editdesc,
                 location_covered : editlocation,
@@ -541,16 +548,14 @@ const Modal = ({
                 link_to_go : editlink,
                 verified : editverified,
                 verified_by : editverifiedby,
-                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
                 source : editsource,
                 comments : editcomments,
-                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
                 available : editavailable,
                 condition : editomrcondition,
                 type : editoxygentype,
                 capacity : editcapacity,
                 price : editprice
-            })
+            }))
             .then(() => {
                 setEditName("");
                 setEditDesc("");
@@ -574,9 +579,10 @@ const Modal = ({
                 body.style.overflow = "unset"; 
             });
         }
-        else if (collectionname==="Remedesivir")
+        else if (collectionname==="/remdesivir")
         {   
-            db.collection(`${collectionname}`).doc(editid).update({
+            axios.patch(`${collectionname}/${editid}`, 
+            qs.stringify({
                 name : editname,
                 description : editdesc,
                 location_covered : editlocation,
@@ -587,13 +593,11 @@ const Modal = ({
                 link_to_go : editlink,
                 verified : editverified,
                 verified_by : editverifiedby,
-                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
                 source : editsource,
                 comments : editcomments,
-                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
                 available : editavailable,
                 condition : editomrcondition,
-            })
+            }))
             .then(() => {
                 setEditName("");
                 setEditDesc("");
@@ -614,9 +618,10 @@ const Modal = ({
                 body.style.overflow = "unset"; 
             });
         }
-        else if (collectionname==="PlasmaDonors")
+        else if (collectionname==="/plasma")
         {   
-            db.collection(`${collectionname}`).doc(editid).update({
+            axios.patch(`${collectionname}/${editid}`, 
+            qs.stringify({
                 name : editname,
                 description : editdesc,
                 location_covered : editlocation,
@@ -627,16 +632,14 @@ const Modal = ({
                 link_to_go : editlink,
                 verified : editverified,
                 verified_by : editverifiedby,
-                verified_date : new firebase.firestore.FieldValue.serverTimestamp(),
                 source : editsource,
                 comments : editcomments,
-                last_update_time : new firebase.firestore.FieldValue.serverTimestamp(),
                 available : editavailable,
                 type: editpbtype,
                 blood_group: editbloodgroup,
                 covid_recovery_date: editrecoverydate,
                 vaccinated: editvaccinated
-            })
+            }))
             .then(() => {
                 setEditName("");
                 setEditDesc("");
@@ -797,7 +800,7 @@ const Modal = ({
             
 {
     (()=> {
-    if (collectionname==="BloodDonors")
+    if (collectionname==="/blood")
     {
         return (
             <div className="form-details" id="form-input">
@@ -875,7 +878,7 @@ const Modal = ({
             </div>
         );
     }
-    else if (collectionname==="Food")
+    else if (collectionname==="/food")
     {
         return (
             <div className="form-details" id="form-input">
@@ -910,7 +913,7 @@ const Modal = ({
             </div>
         );
     }
-    else if (collectionname==="Medicine")
+    else if (collectionname==="/medicine")
     {
         return (
             <div className="form-details" id="form-input">
@@ -980,13 +983,13 @@ const Modal = ({
                     <input className="edit-input" value={editmedname} onChange={mednameinput} type="text" placeholder="Name" maxLength="50"></input>
                 </div>
                 <div className="input-flex" >       
-                    <label className="label">Price</label>
+                    <label className="label">Price<div className="red">*</div></label>
                     <input className="edit-input" value={editprice} onChange={priceinput} type="text" placeholder="Price (Rupees)"></input>
                 </div>
             </div>
         );
     }
-    else if (collectionname==="OnlineDoctorConsultation")
+    else if (collectionname==="/onlinedoc")
     {
         return (
             <div className="form-details" id="form-input">
@@ -1018,7 +1021,7 @@ const Modal = ({
             </div>
         );
     }
-    else if (collectionname==="Oxygen")
+    else if (collectionname==="/oxygen")
     {
         return (
             <div className="form-details" id="form-input">
@@ -1094,7 +1097,7 @@ const Modal = ({
             </div>
         );
     }
-    else if (collectionname==="PlasmaDonors")
+    else if (collectionname==="/plasma")
     {
         return (
             <div className="form-details" id="form-input">
@@ -1200,7 +1203,7 @@ const Modal = ({
             </div>
         );
     }
-    else if (collectionname==="Remedesivir")
+    else if (collectionname==="/remdesivir")
     {
         return (
             <div className="form-details" id="form-input">
