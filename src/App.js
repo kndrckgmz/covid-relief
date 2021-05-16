@@ -28,7 +28,6 @@ function Main() {
   const [passwordError, setPasswordError] = useState("");
   const [admincheck, setAdminCheck] = useState(false);
   
-  
 
   const submit =  (e) => {
     clearErrors();

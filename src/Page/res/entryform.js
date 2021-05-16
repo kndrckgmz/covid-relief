@@ -29,7 +29,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
     const [inputlink, setInputLink] = useState("");
     const [inputverified, setInputVerified] = useState("");
     const [inputverifiedby, setInputVerifiedBy] = useState("");
-    const [inputcomments, setInputComment] = useState("");
     const [inputavailable, setInputAvailable] = useState(false);
     const [inputprice, setInputPrice] = useState("");
     const [inputcapacity, setInputCapacity] = useState("");
@@ -113,9 +112,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
     }
     const verifiedbyinput = (e) => {
         setInputVerifiedBy(e.target.value);
-    }       
-    const commentinput = (e) => {
-        setInputComment(e.target.value);
     }           
     const availableinput = (e) => {
         setInputAvailable(e.target.checked);
@@ -144,7 +140,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 verified : inputverified,
                 verified_by : inputverifiedby,
                 source : inputsource,
-                comments : inputcomments,
                 available : inputavailable
             }))
             .then(() => {
@@ -158,17 +153,14 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setInputLink("");
                 setInputVerified("");
                 setInputVerifiedBy("");
-                setInputSource("");
-                setInputComment("");
+                setInputSource("");                
                 setInputAvailable(false);
                 setStateUpdate(true);
                 setTry("Your Entry has Been Added Below.")
                 let success = document.getElementById("add-link");
                 success.style.opacity = 1;
-                success.style.color = "var(--white)";
                 success.style.backgroundColor = "var(--accent)";
                 setTimeout(()=>{
-                    success.style.color = "unset";
                     success.style.opacity = 0;
                     btn.disabled=false;
                     btn.style.backgroundColor="var(--accent)";
@@ -197,7 +189,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 verified : inputverified,
                 verified_by : inputverifiedby,
                 source : inputsource,
-                comments : inputcomments,
                 available : inputavailable,
                 type : inputpbtype,
                 blood_group : inputbloodgroup,
@@ -213,8 +204,7 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setInputLink("");
                 setInputVerified("");
                 setInputVerifiedBy("");
-                setInputSource("");
-                setInputComment("");
+                setInputSource("");                
                 setInputAvailable(false);
                 setInputBloodGroup("")
                 setInputPBType("");
@@ -222,10 +212,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setTry("Your Entry has Been Added Below.")
                 let success = document.getElementById("add-link");
                 success.style.opacity = 1;
-                success.style.color = "var(--white)";
                 success.style.backgroundColor = "var(--accent)";
                 setTimeout(()=>{
-                    success.style.color = "unset";
                     success.style.opacity = 0;
                     btn.disabled=false;
                     btn.style.backgroundColor="var(--accent)";
@@ -238,10 +226,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setTry("Please Enter Required Fields.")
                 let fail = document.getElementById("add-link");
                 fail.style.opacity = 1;
-                fail.style.color = "var(--white)";
                 fail.style.backgroundColor = "var(--red)";
                 setTimeout(()=>{
-                    fail.style.color = "unset";
                     fail.style.opacity = 0;
                 },2000);
             }
@@ -267,7 +253,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 verified : inputverified,
                 verified_by : inputverifiedby,
                 source : inputsource,
-                comments : inputcomments,
                 available : inputavailable,
                 type : inputmedtype,
                 condition : inputomrcondition,
@@ -285,8 +270,7 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setInputLink("");
                 setInputVerified("");
                 setInputVerifiedBy("");
-                setInputSource("");
-                setInputComment("");
+                setInputSource("");                
                 setInputAvailable(false);
                 setInputMedType("");
                 setInputMedName("");
@@ -296,10 +280,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setTry("Your Entry has Been Added Below.")
                 let success = document.getElementById("add-link");
                 success.style.opacity = 1;
-                success.style.color = "var(--white)";
                 success.style.backgroundColor = "var(--accent)";
                 setTimeout(()=>{
-                    success.style.color = "unset";
                     success.style.opacity = 0;
                     btn.disabled=false;
                     btn.style.backgroundColor="var(--accent)";
@@ -314,10 +296,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
             setTry("Please Enter Required Fields.")
             let fail = document.getElementById("add-link");
             fail.style.opacity = 1;
-            fail.style.color = "var(--white)";
             fail.style.backgroundColor = "var(--red)";
             setTimeout(()=>{
-                fail.style.color = "unset";
                 fail.style.opacity = 0;
             },2000);
             }
@@ -343,7 +323,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 verified : inputverified,
                 verified_by : inputverifiedby,
                 source : inputsource,
-                comments : inputcomments,
                 available : inputavailable,
                 type : inputfoodtype,
             }))
@@ -358,18 +337,15 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setInputLink("");
                 setInputVerified("");
                 setInputVerifiedBy("");
-                setInputSource("");
-                setInputComment("");
+                setInputSource("");                
                 setInputAvailable(false);
                 setInputFoodType("");
                 setStateUpdate(true);
                 setTry("Your Entry has Been Added Below.")
                 let success = document.getElementById("add-link");
                 success.style.opacity = 1;
-                success.style.color = "var(--white)";
                 success.style.backgroundColor = "var(--accent)";
                 setTimeout(()=>{
-                    success.style.color = "unset";
                     success.style.opacity = 0;
                     btn.disabled=false;
                     btn.style.backgroundColor="var(--accent)";
@@ -382,10 +358,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
             setTry("Please Enter Required Fields.")
             let fail = document.getElementById("add-link");
             fail.style.opacity = 1;
-            fail.style.color = "var(--white)";
             fail.style.backgroundColor = "var(--red)";
             setTimeout(()=>{
-                fail.style.color = "unset";
                 fail.style.opacity = 0;
             },2000);
             }
@@ -411,7 +385,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 verified : inputverified,
                 verified_by : inputverifiedby,
                 source : inputsource,
-                comments : inputcomments,
                 available : inputavailable,
                 type : inputconsultationtype,
             }))
@@ -426,18 +399,15 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setInputLink("");
                 setInputVerified("");
                 setInputVerifiedBy("");
-                setInputSource("");
-                setInputComment("");
+                setInputSource("");                
                 setInputAvailable(false);
                 setInputConsultationType();
                 setStateUpdate(true);
                 setTry("Your Entry has Been Added Below.")
                 let success = document.getElementById("add-link");
                 success.style.opacity = 1;
-                success.style.color = "var(--white)";
                 success.style.backgroundColor = "var(--accent)";
                 setTimeout(()=>{
-                    success.style.color = "unset";
                     success.style.opacity = 0;
                     btn.disabled=false;
                     btn.style.backgroundColor="var(--accent)";
@@ -450,10 +420,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
             setTry("Please Enter Required Fields.")
             let fail = document.getElementById("add-link");
             fail.style.opacity = 1;
-            fail.style.color = "var(--white)";
             fail.style.backgroundColor = "var(--red)";
             setTimeout(()=>{
-                fail.style.color = "unset";
                 fail.style.opacity = 0;
             },2000);
             }
@@ -479,7 +447,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 verified : inputverified,
                 verified_by : inputverifiedby,
                 source : inputsource,
-                comments : inputcomments,
                 available : inputavailable,
                 condition : inputomrcondition,
                 type : inputoxygentype,
@@ -497,8 +464,7 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setInputLink("");
                 setInputVerified("");
                 setInputVerifiedBy("");
-                setInputSource("");
-                setInputComment("");
+                setInputSource("");                
                 setInputAvailable(false);
                 setInputOMRCondition("");
                 setInputOxygenType("");
@@ -508,10 +474,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setTry("Your Entry has Been Added Below.")
                 let success = document.getElementById("add-link");
                 success.style.opacity = 1;
-                success.style.color = "var(--white)";
                 success.style.backgroundColor = "var(--accent)";
                 setTimeout(()=>{
-                    success.style.color = "unset";
                     success.style.opacity = 0;
                     btn.disabled=false;
                     btn.style.backgroundColor="var(--accent)";
@@ -524,10 +488,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
             setTry("Please Enter Required Fields.")
             let fail = document.getElementById("add-link");
             fail.style.opacity = 1;
-            fail.style.color = "var(--white)";
             fail.style.backgroundColor = "var(--red)";
             setTimeout(()=>{
-                fail.style.color = "unset";
                 fail.style.opacity = 0;
             },2000);
             }
@@ -553,7 +515,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 verified : inputverified,
                 verified_by : inputverifiedby,
                 source : inputsource,
-                comments : inputcomments,
                 available : inputavailable,
                 type : inputpbtype,
                 blood_group : inputbloodgroup,
@@ -571,8 +532,7 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setInputLink("");
                 setInputVerified("");
                 setInputVerifiedBy("");
-                setInputSource("");
-                setInputComment("");
+                setInputSource("");                
                 setInputAvailable(false);
                 setInputPBType("");
                 setInputBloodGroup("");
@@ -582,10 +542,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setTry("Your Entry has Been Added Below.")
                 let success = document.getElementById("add-link");
                 success.style.opacity = 1;
-                success.style.color = "var(--white)";
                 success.style.backgroundColor = "var(--accent)";
                 setTimeout(()=>{
-                    success.style.color = "unset";
                     success.style.opacity = 0;
                     btn.disabled=false;
                     btn.style.backgroundColor="var(--accent)";
@@ -598,10 +556,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
             setTry("Please Enter Required Fields.")
             let fail = document.getElementById("add-link");
             fail.style.opacity = 1;
-            fail.style.color = "var(--white)";
             fail.style.backgroundColor = "var(--red)";
             setTimeout(()=>{
-                fail.style.color = "unset";
                 fail.style.opacity = 0;
             },2000);
             }
@@ -627,7 +583,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 verified : inputverified,
                 verified_by : inputverifiedby,
                 source : inputsource,
-                comments : inputcomments,
                 available : inputavailable,
                 condition : inputomrcondition,
             }))
@@ -642,18 +597,15 @@ const Form = ({collectionname, setStateUpdate}) =>{
                 setInputLink("");
                 setInputVerified("");
                 setInputVerifiedBy("");
-                setInputSource("");
-                setInputComment("");
+                setInputSource("");                
                 setInputAvailable(false);
                 setInputOMRCondition("");
                 setStateUpdate(true);
                 setTry("Your Entry has Been Added Below.")
                 let success = document.getElementById("add-link");
                 success.style.opacity = 1;
-                success.style.color = "var(--white)";
                 success.style.backgroundColor = "var(--accent)";
                 setTimeout(()=>{
-                    success.style.color = "unset";
                     success.style.opacity = 0;
                     btn.disabled=false;
                     btn.style.backgroundColor="var(--accent)";
@@ -666,10 +618,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
             setTry("Please Enter Required Fields.")
             let fail = document.getElementById("add-link");
             fail.style.opacity = 1;
-            fail.style.color = "var(--white)";
             fail.style.backgroundColor = "var(--red)";
             setTimeout(()=>{
-                fail.style.color = "unset";
                 fail.style.opacity = 0;
             },2000);
             }
@@ -679,10 +629,8 @@ const Form = ({collectionname, setStateUpdate}) =>{
             setTry("Please Enter Required Fields.")
             let fail = document.getElementById("add-link");
             fail.style.opacity = 1;
-            fail.style.color = "var(--white)";
             fail.style.backgroundColor = "var(--red)";
             setTimeout(()=>{
-                fail.style.color = "unset";
                 fail.style.opacity = 0;
             },2000);
         }
@@ -795,7 +743,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                     <label className="label">Verified<div className="red">*</div></label>
                     <FormControl className={classes.formControl}>
                     <InputLabel 
-                    color="var(--lgrey)" 
                     fontSize="0.8rem"
                     fontWeight={500}
                     className={classes.input}
@@ -828,10 +775,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                     <label className="label">Source</label>
                     <input className="input" value={inputsource} onChange={sourceinput} type="text" placeholder="Enter Source" maxLength="50"></input>
                 </div>
-                <div className="input-flex" >       
-                    <label className="label">Comments</label>
-                    <input className="input" value={inputcomments} onChange={commentinput} type="text" placeholder="Comments" maxLength="50"></input>
-                </div>
                 <div className="input-flex">
                     <label className="label">Available</label>
                     <div className="checkbox-container">
@@ -851,8 +794,7 @@ const Form = ({collectionname, setStateUpdate}) =>{
                             <div className="input-flex" >   
                                 <label className="label">Donation Type<div className="red">*</div></label>
                                 <FormControl className={classes.formControl}>
-                                    <InputLabel 
-                                    color="var(--lgrey)" 
+                                    <InputLabel
                                     fontSize="0.8rem"
                                     fontWeight={500}
                                     className={classes.input}
@@ -880,7 +822,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                                 <label className="label">Blood<div className="red">*</div></label>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel 
-                                    color="var(--lgrey)" 
                                     fontSize="0.8rem"
                                     fontWeight={500}
                                     className={classes.input}
@@ -930,7 +871,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                                 <label className="label">Type<div className="red">*</div></label>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel 
-                                    color="var(--lgrey)" 
                                     fontSize="0.8rem"
                                     fontWeight={500}
                                     className={classes.input}
@@ -965,7 +905,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                                 <label className="label">Condition<div className="red">*</div></label>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel 
-                                    color="var(--lgrey)" 
                                     fontSize="0.8rem"
                                     fontWeight={500}
                                     className={classes.input}
@@ -998,7 +937,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                                 <label className="label">Type<div className="red">*</div></label>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel 
-                                    color="var(--lgrey)" 
                                     fontSize="0.8rem"
                                     fontWeight={500}
                                     className={classes.input}
@@ -1041,7 +979,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                                 <label className="label">Type<div className="red">*</div></label>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel 
-                                    color="var(--lgrey)" 
                                     fontSize="0.8rem"
                                     fontWeight={500}
                                     className={classes.input}
@@ -1073,7 +1010,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                                 <label className="label">Condition<div className="red">*</div></label>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel 
-                                    color="var(--lgrey)" 
                                     fontSize="0.8rem"
                                     fontWeight={500}
                                     className={classes.input}
@@ -1149,7 +1085,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                                 <label className="label">Donation Type<div className="red">*</div></label>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel 
-                                    color="var(--lgrey)" 
                                     fontSize="0.8rem"
                                     fontWeight={500}
                                     className={classes.input}
@@ -1177,7 +1112,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                                 <label className="label">Blood Group<div className="red">*</div></label>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel 
-                                    color="var(--lgrey)" 
                                     fontSize="0.8rem"
                                     fontWeight={500}
                                     className={classes.input}
@@ -1254,7 +1188,6 @@ const Form = ({collectionname, setStateUpdate}) =>{
                                 <label className="label">Condition<div className="red">*</div></label>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel 
-                                    color="var(--lgrey)" 
                                     fontSize="0.8rem"
                                     fontWeight={500}
                                     className={classes.input}

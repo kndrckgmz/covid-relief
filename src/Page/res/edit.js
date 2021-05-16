@@ -34,8 +34,6 @@ const Editbtn = ({
     setEditVerified,
     editverifiedby,
     setEditVerifiedBy,
-    editcomments,
-    setEditComment,
     editavailable,
     setEditAvailable,
     editprice,
@@ -91,8 +89,7 @@ const Editbtn = ({
             setEditLink("");
             setEditVerified("");
             setEditVerifiedBy("");
-            setEditSource("");
-            setEditComment("");
+            setEditSource("");            
             setEditAvailable(false);
         }
         else if (collectionname==="/blooddonor")
@@ -107,8 +104,7 @@ const Editbtn = ({
             setEditLink("");
             setEditVerified("");
             setEditVerifiedBy("");
-            setEditSource("");
-            setEditComment("");
+            setEditSource("");            
             setEditAvailable(false);
             setEditPBType("");
             setEditBloodGroup("");
@@ -125,8 +121,7 @@ const Editbtn = ({
             setEditLink("");
             setEditVerified("");
             setEditVerifiedBy("");
-            setEditSource("");
-            setEditComment("");
+            setEditSource("");            
             setEditAvailable(false);
             setEditMedType("");
             setEditMedName("");
@@ -146,8 +141,7 @@ const Editbtn = ({
             setEditLink("");
             setEditVerified("");
             setEditVerifiedBy("");
-            setEditSource("");
-            setEditComment("");
+            setEditSource("");            
             setEditAvailable(false);
             setEditFoodType("");
         }
@@ -163,8 +157,7 @@ const Editbtn = ({
             setEditLink("");
             setEditVerified("");
             setEditVerifiedBy("");
-            setEditSource("");
-            setEditComment("");
+            setEditSource("");            
             setEditAvailable(false);;
             setEditConsultationType("");
         }
@@ -180,8 +173,7 @@ const Editbtn = ({
             setEditLink("");
             setEditVerified("");
             setEditVerifiedBy("");
-            setEditSource("");
-            setEditComment("");
+            setEditSource("");            
             setEditAvailable(false);
             setEditOMRCondition("");
             setEditOxygenType("");
@@ -200,8 +192,7 @@ const Editbtn = ({
             setEditLink("");
             setEditVerified("");
             setEditVerifiedBy("");
-            setEditSource("");
-            setEditComment("");
+            setEditSource("");            
             setEditAvailable(false);
             setEditBloodGroup("");
             setEditPBType("");
@@ -221,7 +212,6 @@ const Editbtn = ({
             setEditVerified("");
             setEditVerifiedBy("");
             setEditSource("");
-            setEditComment("");
             setEditAvailable(false);
             setEditOMRCondition("");
         }        
@@ -313,8 +303,6 @@ const Editbtn = ({
             setEditVerified={setEditVerified}
             editverifiedby={editverifiedby}
             setEditVerifiedBy={setEditVerifiedBy}
-            editcomments={editcomments}
-            setEditComment={setEditComment}
             editavailable={editavailable}
             setEditAvailable={setEditAvailable}
 
