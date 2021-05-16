@@ -1,6 +1,0 @@
-{
-  "projects": {
-    "default": "cov-info-test",
-    "test": "cov-info-test"
-  }
-}
