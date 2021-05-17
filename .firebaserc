@@ -1,6 +1,7 @@
 {
   "projects": {
     "default": "cov-info-test",
-    "test": "cov-info-test"
+    "test": "cov-info-test",
+    "production": "covid-19-relief-project"
   }
 }
