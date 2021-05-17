@@ -28,7 +28,7 @@
   },
   "scripts": {
     "build:test": "npm run build && firebase deploy -P test",
-    "build:prod": "npm run build && firebase deploy -P production",
+    "build:prod": "npm run build && firebase deploy -P prod",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
