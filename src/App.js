@@ -31,6 +31,8 @@ function Main() {
   const [emailR, setEmailR] = useState("");
   const [passwordR, setPasswordR] = useState("");
   const [success, setSuccess] = useState("");
+  const [nameR, setnameR] = useState("");
+  const [nameError, setnameError] = useState("");
   
 
   const submit =  (e) => {
@@ -46,6 +48,8 @@ function Main() {
           console.log(res)
           if(res.data.status === "ok"){
             localStorage.setItem('token-data',res.data.data)
+            localStorage.setItem('name',res.data.name)
+            setnameR("");
             setLoginCheck(true);
           }
           if(res.data.status === "error"){
@@ -110,6 +114,7 @@ function Main() {
 
   const handleLogOut = () => {
     localStorage.removeItem('token-data');
+    localStorage.removeItem('name');
     setLoginCheck(false);
   }
 
@@ -187,6 +192,7 @@ function Main() {
     }
     
     let data = {
+      name: nameR,
       email: emailR,
       password: passwordR
     }
@@ -227,6 +233,16 @@ function Main() {
                 e.style.opacity=0;
               },10000);
         }
+        else if(result.data.error==="Invalid name")
+        {
+          let e = document.getElementById("errorname");
+              e.style.opacity=1;
+              setnameError(result.data.error);
+              setTimeout(()=>{
+                setnameError("");
+                e.style.opacity=0;
+              },10000);
+        }
       }
     })
   }
@@ -238,6 +254,9 @@ function Main() {
       <div className="header">
         <div className="title-container">
           <div className="title">COVID RELIEF</div>
+          <div>
+            <a href="https://forms.gle/FXoAnjJtufRcoDGJ9" target="_blank" rel="noopener noreferrer">Donate Plasma!</a>
+          </div>
         </div>
         <div className="navbar">
           <div className="login-btn" id="admin-btn" 
@@ -281,14 +300,22 @@ function Main() {
             </div>      
             <div className="login">
             <div className="sv"></div> 
-            <div className="login-title" id="signin">YOU ARE LOGGED IN !</div>
+            <div className="login-title" id="signin">You are Logged in as {localStorage.getItem('name')}!</div>
             <button className="log" onClick={handleLogOut}>LOGOUT</button> 
             <div className="login-title" id="signin">REGISTER A USER</div>
+
+            <input className="login-input" type="text" placeholder="Name"
+            required
+            onChange={(e) => setnameR(e.target.value)}
+            id="name"></input>
+            <p className="logerror" id="errorname">{nameError}</p>
+
             <input className="login-input" type="email" placeholder="Email"
             required
             onChange={(e) => setEmailR(e.target.value)}
             id="email"></input>
             <p className="logerror" id="erroree">{emailError}</p> 
+
             <input className="login-input" type="password" placeholder="Password"
             required
             onChange={(e) => setPasswordR(e.target.value)}
