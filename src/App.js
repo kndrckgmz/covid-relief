@@ -15,6 +15,7 @@ import Widget from './Page/res/widget';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import qs from 'qs';
 import {axios} from './Page/res/axios';
+import { blue, green } from '@material-ui/core/colors';
 
 
 
@@ -27,6 +28,9 @@ function Main() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [admincheck, setAdminCheck] = useState(false);
+  const [emailR, setEmailR] = useState("");
+  const [passwordR, setPasswordR] = useState("");
+  const [success, setSuccess] = useState("");
   
 
   const submit =  (e) => {
@@ -173,6 +177,60 @@ function Main() {
     setAdminCheck(false);
   };
 
+  const register = (e) => {
+    clearErrors();
+    e.preventDefault();
+    let config = {
+      headers: {
+        Authorization : 'Bearer '+ localStorage.getItem('token-data'),
+      }
+    }
+    
+    let data = {
+      email: emailR,
+      password: passwordR
+    }
+
+    axios.post("/register",qs.stringify(data),config)
+    .then(result  => {
+      console.log(result)
+      if(result.data.status === "ok")
+      {
+        let e = document.getElementById("successm");
+          e.style.opacity=1;
+          e.style.color= green
+          setSuccess(result.data.data)
+          setTimeout(()=>{
+            setSuccess("");
+            e.style.opacity=0;
+        },10000);
+      }
+      if(result.data.status === "error")
+      {
+        if(result.data.error === "Email ID already exists.")
+        {
+        let e = document.getElementById("erroree");
+              e.style.opacity=1;
+              setEmailError(result.data.error);
+               setTimeout(()=>{
+                    setEmailError("");
+                    e.style.opacity=0;
+                },10000);
+        }
+        else if(result.data.error==="Password length should be more than 8 characters")
+        {
+              let e = document.getElementById("errorppc");
+              e.style.opacity=1;
+              setPasswordError(result.data.error);
+              setTimeout(()=>{
+                setPasswordError("");
+                e.style.opacity=0;
+              },10000);
+        }
+      }
+    })
+  }
+
   return (
     <>
     <Router>
@@ -224,9 +282,26 @@ function Main() {
             <div className="login">
             <div className="sv"></div> 
             <div className="login-title" id="signin">YOU ARE LOGGED IN !</div>
-            <button className="log" onClick={handleLogOut}>
-            LOGOUT
-            </button> 
+            <button className="log" onClick={handleLogOut}>LOGOUT</button> 
+            <div className="login-title" id="signin">REGISTER A USER</div>
+            <input className="login-input" type="email" placeholder="Email"
+            required
+            onChange={(e) => setEmailR(e.target.value)}
+            id="email"></input>
+            <p className="logerror" id="erroree">{emailError}</p> 
+            <input className="login-input" type="password" placeholder="Password"
+            required
+            onChange={(e) => setPasswordR(e.target.value)}
+            id="password"></input>
+            <p className="logerror" id="errorppc">{passwordError}</p>
+
+            <div className="login-flex">
+              <label className="password-check-label">Show Password</label>
+              <input className="checkbox" type="checkbox" id="passwordcheck" onClick={showpass}/>
+              <label htmlFor="passwordcheck" className="switch"/>      
+            </div>  
+            <button className="log" onClick={register}>Register</button>
+            <p className="logerror" id="successm">{success}</p>
             </div>
             </div>
           </div>
